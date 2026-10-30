@@ -1,0 +1,22 @@
+import Link from 'next/link';
+import {notFound} from 'next/navigation';
+import {departments,type Lang,departmentTitle,languages} from '@/lib/site';
+import {departmentDetails} from '@/lib/content';
+import {ArrowLeft,ArrowUpRight,BookOpen,ScrollText,ShieldCheck} from 'lucide-react';
+
+export function generateStaticParams(){return languages.flatMap(lang=>departments.map(d=>({lang,section:d.slug})));}
+const copy={
+ hi:{crumb:'मुखपृष्ठ',intro:'विभाग का परिचय',scope:'इस विभाग के अध्ययन-विषय',sources:'स्रोत एवं प्रामाणिकता',sourceText:'प्रकाशित सामग्री के साथ लेखक, मूल स्रोत, संस्करण, पृष्ठ और श्लोक-सन्दर्भ यथासम्भव दिए जाएँगे।',library:'डिजिटल पुस्तकालय देखें',policy:'सम्पादकीय नीति पढ़ें',planned:'विषय-सूची',plannedText:'इस विषय की विस्तृत सामग्री स्रोत-समीक्षा और सम्पादन के बाद प्रकाशित की जाएगी।'},
+ sa:{crumb:'मुखपृष्ठम्',intro:'विभागपरिचयः',scope:'अध्ययनविषयाः',sources:'स्रोतः प्रामाणिकता च',sourceText:'प्रकाशितसामग्र्या सह लेखकः, मूलस्रोतः, संस्करणम्, पृष्ठम्, श्लोकसन्दर्भश्च यथासम्भवं प्रदास्यते।',library:'अङ्कीयग्रन्थालयं पश्यतु',policy:'सम्पादकीयनीतिं पठतु',planned:'विषयसूची',plannedText:'अस्य विषयस्य विस्तृतसामग्री स्रोतसमीक्षायाः सम्पादनस्य च अनन्तरं प्रकाशयिष्यते।'},
+ en:{crumb:'Home',intro:'Department overview',scope:'Topics covered in this department',sources:'Sources & authenticity',sourceText:'Published entries will include author, original source, edition, page and verse references wherever available.',library:'Explore the digital library',policy:'Read the editorial policy',planned:'Topics',plannedText:'Detailed material will be published after source review and editorial verification.'}
+};
+export default async function DepartmentPage({params}:{params:Promise<{lang:Lang;section:string}>}){
+ const {lang,section}=await params;const d=departments.find(x=>x.slug===section);if(!d)notFound();
+ const t=copy[lang];const title=departmentTitle(d,lang);const detail=departmentDetails[d.slug];
+ return <main className="inner-page"><div className="inner-hero"><div className="eyebrow">SHRI NIMBARKA SAMPRADAYA · {d.no}</div><h1>{title}</h1><p>{lang==='en'?d.en:lang==='sa'?d.sa:d.desc}</p><div className="breadcrumb"><Link href={`/${lang}`}>{t.crumb}</Link><span>/</span>{title}</div></div>
+ <div className="inner-content"><div className="content-main"><span className="eyebrow">{t.intro}</span><h2>{title}</h2><p>{lang==='en'?detail.purpose:lang==='sa'?d.sa+' — '+detail.purpose:detail.purpose}</p><p>{lang==='en'?'The portal distinguishes traditional accounts, primary-source evidence and modern scholarship. Entries will be labelled with their source and verification status.':lang==='sa'?'परम्परागतवृत्तान्ताः, प्राथमिकस्रोतांसि, आधुनिकशोधश्च पृथक्-पृथक् सन्दर्भैः सह प्रदर्शयिष्यन्ते।':'इस मंच पर परम्परागत विवरण, प्राथमिक स्रोत और आधुनिक शोध को उनके अपने संदर्भ में अलग-अलग प्रस्तुत किया जाएगा।'}</p>
+ <h2 className="department-subheading">{t.scope}</h2><div className="topic-grid">{d.items.map((item,i)=><article className="topic-card" key={item}><div className="topic-no">{String(i+1).padStart(2,'0')}</div><div><h3>{item}</h3><p>{t.plannedText}</p><span className="coming-soon">{lang==='en'?'Content under editorial preparation':lang==='sa'?'सम्पादनकार्यं प्रचलति':'सामग्री सम्पादनाधीन'}</span></div><ArrowUpRight size={17}/></article>)}</div>
+ <div className="department-actions"><Link className="text-link" href={`/${lang}/library`}><BookOpen size={16}/>{t.library}</Link><Link className="text-link" href={`/${lang}/editorial-policy`}><ShieldCheck size={16}/>{t.policy}</Link></div></div>
+ <aside className="content-aside"><div className="aside-box"><BookOpen size={25}/><h3>{lang==='en'?'Study resources':'सम्बन्धित अध्ययन'}</h3><p>{lang==='en'?'The digital library will catalogue texts, editions, manuscripts and research references.':'मूल ग्रन्थ, संस्करण, पाण्डुलिपि और शोध-सन्दर्भों को डिजिटल पुस्तकालय में सूचीबद्ध किया जाएगा।'}</p></div><div className="aside-box"><ScrollText size={25}/><h3>{t.sources}</h3><p>{t.sourceText}</p></div><div className="aside-box"><ShieldCheck size={25}/><h3>{lang==='en'?'Editorial care':'पाठ-समीक्षा'}</h3><p>{lang==='en'?'Unclear or missing source text will be marked, never silently reconstructed.':'अस्पष्ट अथवा अनुपलब्ध मूल पाठ को अनुमान से पूरा नहीं किया जाएगा; उसे स्पष्ट रूप से चिह्नित किया जाएगा।'}</p></div></aside></div>
+ <div className="back-home"><Link href={`/${lang}`}><ArrowLeft size={16}/> {t.crumb}</Link></div></main>
+}
