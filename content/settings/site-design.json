@@ -18,7 +18,7 @@
   "featureCols": 2,
   "featureHeight": 180,
   "sectionWidth": 1250,
-  "sectionOrder": "departments,acharya,features,lower",
+  "sectionOrder": "acharya,departments,features,lower",
   "hiddenSections": "",
-  "updatedAt": "2026-10-31T17:11:10.374Z"
+  "updatedAt": "2026-10-31T17:14:28.500Z"
 }
