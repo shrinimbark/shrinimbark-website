@@ -45,3 +45,15 @@
 .department-card{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
 .department-card:hover{transform:translateY(-3px);box-shadow:0 10px 26px #4b241014;border-color:#b8945d}
 @media(max-width:700px){.department-section{padding-top:42px;padding-bottom:42px}.department-section .section-heading{padding:0 8px}.department-section .section-heading p{font-size:12px}}
+
+
+/* Readable article typography: headings are rendered as elements, never raw Markdown marks */
+.article-prose{color:var(--ink);font-size:16px;line-height:2.15;overflow-wrap:anywhere}
+.article-prose p{margin:0 0 18px;text-align:justify}
+.article-prose h2{font-size:23px;line-height:1.65;color:var(--maroon);font-weight:700;margin:34px 0 14px;padding:0 0 9px;border-bottom:1px solid var(--line)}
+.article-prose h2.article-heading{font-size:27px;margin-top:8px}
+.article-prose h3{font-size:19px;line-height:1.7;color:#80552c;margin:25px 0 10px}
+.article-prose strong{color:var(--maroon);font-weight:700}
+.article-prose .article-space{height:8px}
+.article-prose .article-list-item{padding-left:12px;text-align:left;margin-bottom:8px}
+@media(max-width:700px){.article-prose{font-size:15px;line-height:2}.article-prose h2{font-size:20px;margin-top:27px}.article-prose h2.article-heading{font-size:23px}.article-prose h3{font-size:17px}}
