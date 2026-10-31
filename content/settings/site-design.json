@@ -7,7 +7,7 @@
   "background": "#f6eddd",
   "text": "#39252a",
   "logo": "/uploads/1793465604312-395835.jpg",
-  "acharyaImage": "/uploads/1793465696506-418203.png",
+  "acharyaImage": "/images/acharya-study.jpg",
   "logoSize": 88,
   "heroFit": "cover",
   "heroPosition": "center center",
@@ -20,5 +20,5 @@
   "sectionWidth": 1250,
   "sectionOrder": "departments,acharya,features,lower",
   "hiddenSections": "",
-  "updatedAt": "2026-10-31T17:06:12.921Z"
+  "updatedAt": "2026-10-31T17:11:10.374Z"
 }
