@@ -29,7 +29,7 @@ export default function AdminPanel(){
  const [heroImage,setHeroImage]=useState('/images/radha-krishna-hero.jpg'),[heroBusy,setHeroBusy]=useState(false);
  const current=sections.find(s=>s[0]===section)!; const slug=`topic-${String(topic+1).padStart(2,'0')}`;
  async function login(e:React.FormEvent){e.preventDefault();setBusy(true);setNotice('');const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});const d=await r.json();setBusy(false);if(r.ok){setLogged(true);setNotice('आप सुरक्षित रूप से लॉगिन हो गए हैं।')}else setNotice(d.error||'लॉगिन असफल।')}
- async function load(){setBusy(true);setNotice('सामग्री देखी जा रही है…');const r=await fetch(`/api/admin/content?lang=${lang}&slug=${slug}`);const d=await r.json();setRecord(d.content?{...empty,...d.content}: {...empty,title:current[2][topic]});setNotice(d.content?'पहले से सुरक्षित सामग्री लोड हो गई।':'यह नया विषय है।');setBusy(false)}
+ async function load(){setBusy(true);setNotice('सामग्री देखी जा रही है…');const r=await fetch(`/api/admin/content?lang=${lang}&section=${section}&slug=${slug}`);const d=await r.json();setRecord(d.content?{...empty,...d.content}: {...empty,title:current[2][topic]});setNotice(d.content?'पहले से सुरक्षित सामग्री लोड हो गई।':'यह नया विषय है।');setBusy(false)}
  useEffect(()=>{if(logged){load();loadHeroImage();}},[logged,lang,section,topic]);
  async function loadHeroImage(){const r=await fetch('/api/admin/homepage-image');const d=await r.json();if(r.ok&&d.image)setHeroImage(d.image);}
  async function uploadHeroImage(file?:File){
@@ -44,7 +44,7 @@ export default function AdminPanel(){
   if(saved.ok){setHeroImage(up.url);setNotice(result.message||'मुखपृष्ठ चित्र सुरक्षित हो गया।');}
   else setNotice(result.error||'चित्र सुरक्षित नहीं हो सका।');
  }
- async function save(status:'draft'|'published'){setBusy(true);setNotice('GitHub पर सुरक्षित किया जा रहा है…');const r=await fetch('/api/admin/content',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ ...record,lang,slug,status })});const d=await r.json();setBusy(false);setNotice(r.ok?d.message:(d.error||'सहेजना असफल रहा।'));if(r.ok)setRecord(v=>({...v,status}));}
+ async function save(status:'draft'|'published'){setBusy(true);setNotice('GitHub पर सुरक्षित किया जा रहा है…');const r=await fetch('/api/admin/content',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ ...record,lang,section,slug,status })});const d=await r.json();setBusy(false);setNotice(r.ok?d.message:(d.error||'सहेजना असफल रहा।'));if(r.ok)setRecord(v=>({...v,status}));}
  async function upload(file?:File){if(!file)return;setBusy(true);setNotice('फ़ाइल अपलोड हो रही है…');const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();setBusy(false);if(r.ok){const key=file.type==='application/pdf'?'pdf':'image';setRecord(v=>({...v,[key]:d.url}));setNotice('फ़ाइल अपलोड हो गई।');}else setNotice(d.error||'अपलोड असफल।')}
  async function logout(){await fetch('/api/admin/logout',{method:'POST'});setLogged(false);setPassword('');setNotice('')}
  const field=(label:string,key:'title'|'summary'|'body'|'source'|'author',area=false)=><label className="admin-field"><span>{label}</span>{area?<textarea rows={key==='body'?14:3} value={record[key]} onChange={e=>setRecord(v=>({...v,[key]:e.target.value}))}/>:<input value={record[key]} onChange={e=>setRecord(v=>({...v,[key]:e.target.value}))}/>}</label>;
