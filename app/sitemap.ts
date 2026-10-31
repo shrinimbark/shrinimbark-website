@@ -1,12 +1,2 @@
-import type { MetadataRoute } from 'next';
-import {departments,languages} from '@/lib/site';
-export default function sitemap():MetadataRoute.Sitemap {
- const base='https://shrinimbark.org';
- const fixed=['about','contact','departments','library','parampara','editorial-policy','contribute'];
- return [
-  ...languages.map(lang=>({url:`${base}/${lang}`,lastModified:new Date(),changeFrequency:'weekly' as const,priority:1})),
-  ...languages.flatMap(lang=>departments.map(d=>({url:`${base}/${lang}/${d.slug}`,lastModified:new Date(),changeFrequency:'monthly' as const,priority:0.7}))),
-  ...languages.flatMap(lang=>fixed.map(path=>({url:`${base}/${lang}/${path}`,lastModified:new Date(),changeFrequency:'monthly' as const,priority:0.5}))),
-  {url:`${base}/privacy`,lastModified:new Date(),changeFrequency:'yearly',priority:0.2}
- ];
-}
+import type { MetadataRoute } from 'next'; import {departments,languages} from '@/lib/site';
+export default function sitemap():MetadataRoute.Sitemap {const base='https://shrinimbark.org';return [{url:base+'/hi',lastModified:new Date(),changeFrequency:'weekly',priority:1},...languages.flatMap(lang=>[...departments.map(d=>({url:`${base}/${lang}/${d.slug}`,lastModified:new Date(),changeFrequency:'monthly' as const,priority:0.7})),{url:`${base}/${lang}/editorial-policy`,lastModified:new Date(),changeFrequency:'yearly' as const,priority:0.4},...departments.flatMap(d=>d.items.map((_,i)=>({url:`${base}/${lang}/${d.slug}/topic-${String(i+1).padStart(2,'0')}`,lastModified:new Date(),changeFrequency:'monthly' as const,priority:0.5})))])];}

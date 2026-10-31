@@ -1,82 +1,43 @@
 # श्रीनिम्बार्क सम्प्रदाय — shrinimbark.org
 
-यह Next.js आधारित बहुभाषी वेबसाइट परियोजना है। इसका उद्देश्य श्रीनिम्बार्क सम्प्रदाय के दर्शन, ग्रन्थ, आचार्य-परम्परा, उपासना, इतिहास और सांस्कृतिक धरोहर के लिए स्वतंत्र, सार्वजनिक और निःशुल्क वैश्विक पोर्टल बनाना है।
+मोबाइल-अनुकूल Next.js वेबसाइट का अद्यतन प्रारम्भिक संस्करण।
 
-## इस संस्करण में क्या तैयार है
+## इसमें क्या है
+- जयपुरी राजसी शैली: मरून, प्राचीन स्वर्णिम और हाथीदाँत रंग।
+- साफ़ मुख्य चित्र; पहले वाले पूरे पृष्ठ के स्क्रीनशॉट को मुख्य चित्र के रूप में उपयोग नहीं किया गया।
+- हिन्दी, संस्कृत और अंग्रेज़ी के लिए अलग URL मार्ग (`/hi`, `/sa`, `/en`)।
+- 16 विभागों के पृष्ठ और साझा विभाग-सूची।
+- परिचय, सम्पर्क, विभाग सूची, गोपनीयता, sitemap और robots पृष्ठ।
+- मोबाइल स्क्रीन के लिए responsive layout।
 
-- जयपुर-प्रेरित राजसी मरून, प्राचीन स्वर्ण और हाथीदाँत रंग-संयोजन।
-- मोबाइल और कम्प्यूटर के लिए उत्तरदायी (responsive) वेबसाइट।
-- हिन्दी (`/hi`), संस्कृत (`/sa`) और अंग्रेजी (`/en`) के लिए अलग URL संरचना।
-- सभी 16 मुख्य विभाग और प्रत्येक विभाग की विषय-सूची।
-- विभागों के लिए अलग पृष्ठ, डिजिटल पुस्तकालय की खोज/फ़िल्टर सूची, गुरु-परम्परा का परिचयात्मक दृश्य।
-- सम्पादकीय एवं प्रमाण नीति, योगदान निर्देश, परिचय, सम्पर्क और गोपनीयता पृष्ठ।
-- SEO metadata, Open Graph, sitemap और robots निर्देश।
-- सामग्री में अस्पष्ट पाठ को अनुमान से पूरा न करने और स्रोत-सत्यापन के लिए सम्पादकीय दिशानिर्देश।
+## महत्वपूर्ण स्थिति
+यह वेबसाइट का front-end starter है। विभागों के पृष्ठों में अभी परिचयात्मक/प्रारम्भिक सामग्री है। पूर्ण डिजिटल पुस्तकालय, वास्तविक खोज, प्रशासन पैनल, डेटाबेस, सदस्य प्रबंधन और सम्पादकीय workflow अभी जुड़े नहीं हैं। इन्हें अगले चरणों में बनाना होगा। संस्कृत, सिद्धान्त, इतिहास, मन्त्र और पूजा-विधि की सामग्री स्रोत-सत्यापन और योग्य विद्वानों की समीक्षा के बाद ही प्रकाशित करें।
 
-## महत्त्वपूर्ण सीमा
+## आवश्यकताएँ
+Node.js 20.9 या नया।
 
-यह वेबसाइट का विस्तृत प्रथम संस्करण है, पर अभी इसे पूर्ण संचालन-तैयार संस्थागत पोर्टल नहीं कहा जा सकता। वास्तविक CMS/Admin panel, डेटाबेस, सुरक्षित योगदान फ़ॉर्म, प्रमाणित डिजिटल पुस्तकें/PDF, वास्तविक संस्थागत संपर्क, विस्तृत अनुवाद और सम्पादकीय टीम की स्वीकृत सामग्री अभी जोड़नी है। पुस्तकालय में दिखाई गई प्रविष्टियाँ सूचीकरण-योजना हैं, डाउनलोड योग्य मूल ग्रन्थ नहीं। किसी पीठ या मठ की आधिकारिक सम्बद्धता का दावा नहीं किया गया है।
-
-## Windows 10 पर वेबसाइट खोलने के निर्देश
-
-1. `shrinimbark-nextjs-starter.zip` को डाउनलोड करके Windows के `Downloads` फ़ोल्डर में रखें।
-2. ZIP पर right-click करके **Extract All…** चुनें। निकला हुआ `shrinimbark-nextjs` फ़ोल्डर खोलें।
-3. Node.js का LTS संस्करण (कम-से-कम 20.9) आधिकारिक वेबसाइट से स्थापित करें: https://nodejs.org/ । स्थापना के बाद कम्प्यूटर एक बार restart करें।
-4. `shrinimbark-nextjs` फ़ोल्डर के खाली स्थान पर Shift दबाकर right-click करें और **Open PowerShell window here** चुनें। Windows 11 में **Open in Terminal** दिख सकता है।
-5. खुली हुई नीली/काली विंडो में यह कमांड लिखकर Enter दबाएँ:
-
-   ```powershell
-   npm install
-   ```
-
-   पहली बार इसमें कुछ मिनट लग सकते हैं। इंटरनेट चालू रखें।
-6. स्थापना पूरी होने पर यह कमांड लिखें:
-
-   ```powershell
-   npm run dev
-   ```
-
-7. Chrome में यह पता खोलें: http://localhost:3000 । यह वेबसाइट केवल आपके कम्प्यूटर पर खुलेगी; अभी दुनिया के लिए live नहीं होगी।
-8. वेबसाइट बन्द करने के लिए PowerShell विंडो में `Ctrl + C` दबाएँ।
-
-## इंटरनेट पर shrinimbark.org को live करने की प्रस्तावित प्रक्रिया
-
-इस परियोजना के लिए Vercel + GitHub एक सरल Next.js deployment विकल्प है। Vercel में Git repository import करके deploy किया जा सकता है; उसके बाद Project Settings → Domains में अपना domain जोड़कर registrar के DNS में Vercel द्वारा दिखाए गए रिकॉर्ड लगाने होंगे। DNS रिकॉर्ड हर खाते/सेटअप के अनुसार बदल सकते हैं, इसलिए यहाँ कोई अनुमानित IP या रिकॉर्ड नहीं दिया गया है।
-
-1. GitHub खाता बनाएँ/खोलें।
-2. इस परियोजना का पूरा फ़ोल्डर GitHub पर एक **Private repository** में अपलोड करें।
-3. Vercel पर GitHub से sign in करें और **Add New → Project** चुनें।
-4. अपनी repository import करें। Framework `Next.js` स्वतः पहचाना जाना चाहिए। Root Directory परियोजना का मुख्य फ़ोल्डर रखें।
-5. **Deploy** दबाएँ। पहले Vercel का अस्थायी `vercel.app` पता मिलेगा।
-6. Vercel में Project → Settings → Domains खोलें और `shrinimbark.org` जोड़ें। चाहें तो `www.shrinimbark.org` भी जोड़ें।
-7. Vercel जो DNS records दिखाए, उन्हें उसी domain registrar के DNS पैनल में अक्षरशः जोड़ें जहाँ आपने domain खरीदा है। पुराने conflicting records हटाने से पहले सावधानी रखें; domain की email सेवा चल रही हो तो MX records न हटाएँ।
-8. Vercel में domain verification पूरा होने और HTTPS चालू होने की प्रतीक्षा करें। फिर मोबाइल डेटा और Wi-Fi दोनों से वेबसाइट जाँचें।
-
-**सुरक्षा:** अपना registrar, GitHub या Vercel पासवर्ड किसी को चैट में न भेजें। किसी तकनीकी व्यक्ति को मदद के लिए जोड़ना हो तो सीमित access दें और काम के बाद access वापस लें।
-
-## आगे जिन चीज़ों की आवश्यकता होगी
-
-- आधिकारिक लोगो/प्रतीक और स्वीकृत उच्च-गुणवत्ता चित्र।
-- सम्पर्क हेतु आधिकारिक ईमेल पता।
-- तीनों भाषाओं के पूर्ण, मानवीय रूप से समीक्षित अनुवाद।
-- प्रत्येक ऐतिहासिक/दार्शनिक/अनुष्ठानिक लेख के मूल स्रोत, संस्करण और पृष्ठ-सन्दर्भ।
-- वास्तविक PDF/पाण्डुलिपि फाइलें और उनके उपयोग/प्रकाशन अधिकार।
-- सुरक्षित CMS, admin login, database, backups और content approval workflow।
-
-## परियोजना चलाने की तकनीकी कमांड
-
+## चलाने के लिए
 ```bash
 npm install
 npm run dev
-npm run typecheck
-npm run build
-npm run start
 ```
+फिर `http://localhost:3000` खोलें।
 
-## निर्देशिका
+## Production build जाँच
+```bash
+npm run build
+```
+इस पैकेज को इस वातावरण में build-test किया हुआ नहीं बताया जा रहा है। Vercel पर deploy होने के बाद Deployment Logs में build परिणाम देखें।
 
-- `app/` — वेबसाइट के पृष्ठ, भाषा-मार्ग, SEO, sitemap और robots।
-- `components/` — header, footer, homepage, पुस्तकालय खोज और गुरु-परम्परा दृश्य।
-- `lib/` — विभागों और पोर्टल सामग्री का संरचित डेटा।
-- `public/images/` — स्थानीय चित्र।
-- `docs/` — उपयोगकर्ता निर्देश और आगे के संचालन नोट्स।
+## डोमेन
+Vercel पर `shrinimbark.org` और `www.shrinimbark.org` कनेक्ट किए जा चुके हैं। DNS बदलावों को दोबारा बदलने की आवश्यकता नहीं, जब तक Vercel स्वयं कोई त्रुटि न दिखाए।
+
+## Editorial and topic-page framework (Phase 2)
+
+- Every topic listed under the 16 departments now opens its own structured topic record.
+- Topic records expose publication status and bibliographic/source fields. They intentionally do not invent article content or historical claims.
+- Added a trilingual editorial and source policy at `/{lang}/editorial-policy`.
+- Department topic cards are navigable, and topic/policy routes are included in the sitemap.
+- Unpublished topics are explicitly labelled as being in preparation. They should only be marked published after source review and editorial approval.
+
+This phase still does not include a database, CMS, admin login, or contributor workflow. Those require selecting and configuring a persistent content backend before production use.
