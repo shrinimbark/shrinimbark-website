@@ -164,3 +164,30 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .mobile-links{grid-template-columns:1fr}
  .mobile-admin-link{grid-column:auto}
 }
+
+
+/* Owner-configurable image fitting and section geometry */
+.hero{height:var(--hero-height,480px);min-height:0;display:block;overflow:hidden;background:#24151a}
+.hero-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.hero-art img{object-fit:var(--hero-fit,contain)!important;object-position:var(--hero-position,center center)!important}
+.hero-intro{position:relative}
+.section{max-width:var(--section-width,1250px)}
+.department-grid{grid-template-columns:repeat(var(--department-cols,4),minmax(0,1fr))}
+.feature-grid{grid-template-columns:repeat(var(--feature-cols,2),minmax(0,1fr))}
+.feature-visual{height:var(--feature-height,180px);background-size:cover;background-repeat:no-repeat}
+.acharya-image img{object-fit:var(--acharya-fit,contain)!important;object-position:center center!important;background:#ead8b8}
+.masthead .seal{width:var(--logo-size,88px);height:var(--logo-size,88px);flex-basis:var(--logo-size,88px);overflow:visible}
+.masthead .seal img{width:100%!important;height:100%!important;object-fit:contain!important;border-radius:0!important}
+.closing-quote{background:#4b1728!important;color:#f3dfba!important}
+.closing-quote h2{color:#f3dfba!important}
+.closing-quote p,.closing-quote span{color:#e4c58e!important}
+@media(max-width:700px){
+ .hero{height:var(--hero-mobile-height,300px);min-height:0}
+ .hero-art img{object-fit:var(--hero-fit,contain)!important;object-position:var(--hero-position,center center)!important}
+ .department-grid{grid-template-columns:repeat(min(var(--department-cols,2),2),minmax(0,1fr))}
+ .feature-grid{grid-template-columns:repeat(min(var(--feature-cols,2),2),minmax(0,1fr))}
+ .masthead .seal{width:min(var(--logo-size,88px),68px);height:min(var(--logo-size,88px),68px);flex-basis:min(var(--logo-size,88px),68px)}
+ .acharya-image{min-height:260px}
+ .acharya-image img{object-fit:contain!important}
+}
+@media(max-width:380px){.department-grid,.feature-grid{grid-template-columns:1fr}}
