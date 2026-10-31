@@ -259,3 +259,136 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .feature-grid{grid-template-columns:repeat(min(var(--feature-cols,2),2),minmax(0,1fr))}
 }
 @media(max-width:390px){.department-grid,.feature-grid{grid-template-columns:1fr}}
+
+
+/* Mobile homepage: compact layout without changing desktop presentation */
+@media (max-width: 700px) {
+  main:has(> .department-section) > .section {
+    padding: 30px 14px;
+  }
+  main:has(> .department-section) > .department-section {
+    padding-top: 30px;
+    padding-bottom: 26px;
+  }
+  .department-section .section-heading {
+    margin-bottom: 20px;
+  }
+  .department-grid,
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 9px;
+  }
+  .department-card {
+    min-height: 142px;
+    padding: 17px 9px 18px;
+  }
+  .department-card .department-icon {
+    width: 27px;
+    height: 27px;
+    margin-bottom: 7px;
+  }
+  .department-card h3 {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+  .department-card p {
+    font-size: 10px;
+    line-height: 1.55;
+  }
+  .all-departments {
+    margin-top: 19px;
+  }
+  .acharya-band {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .acharya-image {
+    min-height: 145px !important;
+    height: 145px;
+  }
+  .acharya-image img {
+    object-fit: cover !important;
+    object-position: center 35% !important;
+  }
+  .acharya-copy {
+    padding: 20px 18px 12px;
+  }
+  .acharya-copy h2 {
+    font-size: 21px;
+    margin: 6px 0;
+  }
+  .acharya-copy h3 {
+    font-size: 13px;
+    margin: 4px 0 8px;
+  }
+  .acharya-copy p {
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 0 0 10px;
+  }
+  .acharya-side {
+    margin: 8px 14px 16px;
+    padding: 13px;
+  }
+  .acharya-side div {
+    padding: 7px 0;
+  }
+  .feature-section {
+    padding-top: 28px !important;
+    padding-bottom: 28px !important;
+  }
+  .feature-section .section-heading {
+    margin-bottom: 18px;
+  }
+  .feature-visual {
+    height: 92px !important;
+  }
+  .feature-body {
+    padding: 10px;
+  }
+  .feature-body h3 {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .feature-body p {
+    font-size: 10px;
+    line-height: 1.6;
+    min-height: 0;
+  }
+  .lower-panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin: 0 auto 26px;
+    padding: 0 14px;
+  }
+  .lower-panel {
+    padding: 13px;
+  }
+  .lower-panel:last-child {
+    grid-column: 1 / -1;
+  }
+  .lower-panel h2 {
+    font-size: 13px;
+  }
+  .lower-panel p {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .closing-quote {
+    padding: 22px 14px;
+  }
+  .closing-quote h2 {
+    font-size: 21px;
+  }
+}
+/* Keep two useful columns even on narrow phones */
+@media (max-width: 390px) {
+  .department-grid,
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .department-card {
+    min-height: 136px;
+  }
+}
