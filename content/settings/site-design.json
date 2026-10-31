@@ -1,7 +1,7 @@
 {
   "siteName": "श्रीनिम्बार्क सम्प्रदाय",
   "tagline": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
-  "invocation": "॥ श्रीसर्वेश्वरो जयति ॥",
+  "invocation": "",
   "primary": "#4b1728",
   "gold": "#b08a4e",
   "background": "#f6eddd",
@@ -18,7 +18,7 @@
   "featureCols": 2,
   "featureHeight": 180,
   "sectionWidth": 1250,
-  "sectionOrder": "acharya,departments,features,lower",
+  "sectionOrder": "acharya,features,departments,lower",
   "hiddenSections": "",
-  "updatedAt": "2026-10-31T17:15:40.819Z"
+  "updatedAt": "2026-10-31T17:17:57.713Z"
 }
