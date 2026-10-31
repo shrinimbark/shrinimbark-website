@@ -24,7 +24,7 @@ type RecordData = { title:string; summary:string; body:string; status:'draft'|'p
 const empty:RecordData={title:'',summary:'',body:'',status:'draft',source:'',author:'',image:'',pdf:''};
 const labels:Record<Lang,string>={hi:'हिन्दी',sa:'संस्कृत',en:'English'};
 export default function AdminPanel(){
- const [logged,setLogged]=useState(false),[password,setPassword]=useState(''),[busy,setBusy]=useState(false),[notice,setNotice]=useState('');
+ const [logged,setLogged]=useState(false),[authChecked,setAuthChecked]=useState(false),[password,setPassword]=useState(''),[busy,setBusy]=useState(false),[notice,setNotice]=useState('');
  const [lang,setLang]=useState<Lang>('hi'),[section,setSection]=useState('sampradaya'),[topic,setTopic]=useState(0),[record,setRecord]=useState<RecordData>(empty);
  const [heroImage,setHeroImage]=useState('/images/radha-krishna-hero.jpg'),[heroBusy,setHeroBusy]=useState(false);
  const [inventory,setInventory]=useState<Array<{lang:Lang;section:string;slug:string;path:string}>>([]),[inventoryBusy,setInventoryBusy]=useState(false),[inventoryQuery,setInventoryQuery]=useState('');
