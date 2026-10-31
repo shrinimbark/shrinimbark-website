@@ -8,5 +8,17 @@
   "text": "#39252a",
   "logo": "/uploads/1793461508133-395835.jpg",
   "acharyaImage": "/uploads/1793461552628-418203.png",
-  "updatedAt": "2026-10-31T15:46:00.527Z"
+  "logoSize": 88,
+  "heroFit": "contain",
+  "heroPosition": "center center",
+  "heroHeight": 480,
+  "heroMobileHeight": 300,
+  "acharyaFit": "contain",
+  "departmentCols": 4,
+  "featureCols": 2,
+  "featureHeight": 180,
+  "sectionWidth": 1046,
+  "sectionOrder": "departments,acharya,features,lower",
+  "hiddenSections": "",
+  "updatedAt": "2026-10-31T16:48:50.206Z"
 }
