@@ -18,9 +18,9 @@ export async function GET() {
     if (!response.ok) throw new Error(`GitHub सूची प्राप्त नहीं हुई (${response.status})`);
     const data = await response.json();
     const files = (data.tree || []).filter((item: { path?: string; type?: string }) =>
-      item.type === 'blob' && /^content\\/articles\\/(hi|sa|en)\\/([a-z0-9-]+)\\/topic-[a-z0-9-]+\\.json$/.test(item.path || '')
+      item.type === 'blob' && /^content\/articles\/(hi|sa|en)\/([a-z0-9-]+)\/topic-[a-z0-9-]+\\.json$/.test(item.path || '')
     ).map((item: { path: string }) => {
-      const match = /^content\\/articles\\/(hi|sa|en)\\/([a-z0-9-]+)\\/(topic-[a-z0-9-]+)\\.json$/.exec(item.path);
+      const match = /^content\/articles\/(hi|sa|en)\/([a-z0-9-]+)\/(topic-[a-z0-9-]+)\\.json$/.exec(item.path);
       return match ? { lang: match[1], section: match[2], slug: match[3], path: item.path } : null;
     }).filter(Boolean);
     return NextResponse.json({ files, truncated: Boolean(data.truncated) });
