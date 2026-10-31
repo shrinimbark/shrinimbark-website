@@ -18,8 +18,9 @@ const destinations = [
   ['/granth','/library','/upasana','/research'],
   ['/peeth','/global','/support','/contact','/admin']
 ];
+type FooterSettings = { [K in keyof typeof defaults]: string };
 export default async function SiteFooter({lang}:{lang:Lang}) {
-  let settings: typeof defaults = defaults;
+  let settings: FooterSettings = defaults;
   try { const raw = await readRepoFile('content/settings/site-design.json'); if (raw) settings = {...defaults, ...JSON.parse(raw)}; } catch {}
   const groups = [
     {title:settings.footerGroup1, labels:[settings.footerLink1,settings.footerLink2,settings.footerLink3,settings.footerLink4], paths:destinations[0]},
