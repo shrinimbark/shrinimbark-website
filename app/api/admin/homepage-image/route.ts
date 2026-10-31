@@ -20,7 +20,7 @@ export async function PUT(request: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: 'लॉगिन आवश्यक है।' }, { status: 401 });
   const data = await request.json().catch(() => null);
   const image = typeof data?.image === 'string' ? data.image : '';
-  if (!image || !/^\\/uploads\\/[a-zA-Z0-9._-]+$/.test(image) && !/^\\/images\\/[a-zA-Z0-9._-]+$/.test(image)) {
+  if (!image || !(image.startsWith('/uploads/') || image.startsWith('/images/')) || image.includes('..') || image.includes('\\')) {
     return NextResponse.json({ error: 'मान्य वेबसाइट चित्र चुनें।' }, { status: 400 });
   }
   try {
