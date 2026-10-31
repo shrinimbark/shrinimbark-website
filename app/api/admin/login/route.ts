@@ -8,6 +8,6 @@ export async function POST(request: Request) {
   const a = Buffer.from(password); const b = Buffer.from(expected);
   if (a.length !== b.length || !timingSafeEqual(a, b)) return NextResponse.json({ error: 'पासवर्ड सही नहीं है।' }, { status: 401 });
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(adminCookieName, createSession(), { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', path: '/', maxAge: 60 * 60 * 12 });
+  response.cookies.set(adminCookieName, createSession(), { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', path: '/', maxAge: 60 * 60 * 24 * 365 });
   return response;
 }
