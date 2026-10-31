@@ -6,7 +6,7 @@ export default async function HomePage({lang}:{lang:Lang}) {
  const cards=departments.slice(0,8);
  let heroImage='/images/radha-krishna-hero.jpg'; let acharyaImage='/images/acharya-study.jpg'; let design:any={};
  try {
-  const design=await readRepoFile('content/settings/site-design.json'); if(design){const d=JSON.parse(design);design=d;if(typeof d.acharyaImage==='string'&&d.acharyaImage.startsWith('/'))acharyaImage=d.acharyaImage;}
+  const rawDesign=await readRepoFile('content/settings/site-design.json'); if(rawDesign){design=JSON.parse(rawDesign);if(typeof design.acharyaImage==='string'&&design.acharyaImage.startsWith('/'))acharyaImage=design.acharyaImage;}
   const saved=await readRepoFile('content/settings/homepage.json');
   if(saved){const settings=JSON.parse(saved);if(typeof settings.image==='string' && (settings.image.startsWith('/uploads/') || settings.image.startsWith('/images/')) && !settings.image.includes('..')) heroImage=settings.image;}
  } catch { /* Keep the bundled default image if settings cannot be read. */ } const title=(hi:string,en:string,sa:string)=>lang==='en'?en:lang==='sa'?sa:hi;
