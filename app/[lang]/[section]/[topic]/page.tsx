@@ -11,6 +11,27 @@ export function generateStaticParams() {
   ));
 }
 
+function renderInline(text: string) {
+  return text.split(/(\\*\\*.*?\\*\\*)/g).map((part, index) =>
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={index}>{part.slice(2, -2)}</strong>
+      : <span key={index}>{part}</span>
+  );
+}
+
+function ArticleBody({ body }: { body: string }) {
+  const lines = body.split(/\\r?\\n/);
+  return <div className="article-prose">{lines.map((line, index) => {
+    const value = line.trim();
+    if (!value) return <div className="article-space" key={index} />;
+    if (value.startsWith('### ')) return <h3 key={index}>{renderInline(value.slice(4))}</h3>;
+    if (value.startsWith('## ')) return <h2 key={index}>{renderInline(value.slice(3))}</h2>;
+    if (value.startsWith('# ')) return <h2 className="article-heading" key={index}>{renderInline(value.slice(2))}</h2>;
+    if (value.startsWith('- ')) return <p className="article-list-item" key={index}>• {renderInline(value.slice(2))}</p>;
+    return <p key={index}>{renderInline(value)}</p>;
+  })}</div>;
+}
+
 export default async function TopicPage({ params }: { params: Promise<{ lang: Lang; section: string; topic: string }> }) {
   const { lang, section, topic } = await params;
   const department = departments.find(item => item.slug === section);
@@ -46,6 +67,6 @@ export default async function TopicPage({ params }: { params: Promise<{ lang: La
   };
   return <main className="inner-page">
     <div className="inner-hero"><div className="eyebrow">SHRI NIMBARKA SAMPRADAYA · {department.no} · {String(index + 1).padStart(2, '0')}</div><h1>{title}</h1><p>{department.desc}</p><div className="breadcrumb"><Link href={`/${lang}`}>{labels.home}</Link><span>/</span><Link href={`/${lang}/${section}`}>{departmentName}</Link><span>/</span>{labels.intro}</div></div>
-    <div className="topic-detail-wrap"><article className="topic-detail-main"><div className="topic-status"><span className="status-dot"/><div><small>{labels.status}</small><strong>{published ? (isEnglish ? 'Published' : isSanskrit ? 'प्रकाशितम्' : 'प्रकाशित') : labels.pending}</strong></div></div>{published ? <><p className="topic-note">{article?.summary}</p>{article?.image && <img className="topic-article-image" src={article.image} alt={title}/>}<div className="topic-article-body">{article?.body}</div>{article?.pdf && <p><a className="text-link" href={article.pdf} target="_blank" rel="noreferrer">PDF / ग्रन्थ खोलें <FileText size={15}/></a></p>}{(article?.author || article?.source) && <section className="detail-panel"><h2>ग्रन्थ-सन्दर्भ एवं लेखक</h2><p>{article?.author}</p><p>{article?.source}</p></section>}</> : <p className="topic-note">{labels.note}</p>}<section className="detail-panel"><div className="detail-panel-heading"><BookOpen/><h2>{labels.source}</h2></div><p>{labels.sourceText}</p><div className="bibliography-grid">{labels.fields.map(field => <div className="bibliography-field" key={field}><span>{field}</span><strong>—</strong></div>)}</div></section><section className="detail-panel"><div className="detail-panel-heading"><ShieldCheck/><h2>{labels.accuracy}</h2></div><p>{labels.accuracyText}</p><Link className="text-link" href={`/${lang}/editorial-policy`}>{isEnglish ? 'Read the editorial policy' : isSanskrit ? 'सम्पादननीतिं पठतु' : 'सम्पादकीय नीति पढ़ें'} <FileText size={15}/></Link></section><Link className="back-topic" href={`/${lang}/${section}`}><ArrowLeft size={16}/>{labels.back}</Link></article><aside className="topic-detail-aside"><div className="aside-box"><span className="eyebrow">DEPARTMENT</span><h3>{departmentName}</h3><p>{department.desc}</p></div><div className="aside-box"><h3>{isEnglish ? 'Public access' : isSanskrit ? 'सार्वजनिकोपलब्धिः' : 'सार्वजनिक उपलब्धता'}</h3><p>{isEnglish ? 'All published material on this platform is intended to remain freely accessible.' : isSanskrit ? 'अस्मिन् मञ्चे प्रकाशितं सर्वं साहित्यं निःशुल्कं सार्वजनिकोपलब्धं भविष्यति।' : 'इस मंच पर प्रकाशित सामग्री सार्वजनिक एवं निःशुल्क उपलब्ध कराने का उद्देश्य है।'}</p></div></aside></div>
+    <div className="topic-detail-wrap"><article className="topic-detail-main"><div className="topic-status"><span className="status-dot"/><div><small>{labels.status}</small><strong>{published ? (isEnglish ? 'Published' : isSanskrit ? 'प्रकाशितम्' : 'प्रकाशित') : labels.pending}</strong></div></div>{published ? <><p className="topic-note">{article?.summary}</p>{article?.image && <img className="topic-article-image" src={article.image} alt={title}/>}<ArticleBody body={article?.body || ""}/>{article?.pdf && <p><a className="text-link" href={article.pdf} target="_blank" rel="noreferrer">PDF / ग्रन्थ खोलें <FileText size={15}/></a></p>}{(article?.author || article?.source) && <section className="detail-panel"><h2>ग्रन्थ-सन्दर्भ एवं लेखक</h2><p>{article?.author}</p><p>{article?.source}</p></section>}</> : <p className="topic-note">{labels.note}</p>}<section className="detail-panel"><div className="detail-panel-heading"><BookOpen/><h2>{labels.source}</h2></div><p>{labels.sourceText}</p><div className="bibliography-grid">{labels.fields.map(field => <div className="bibliography-field" key={field}><span>{field}</span><strong>—</strong></div>)}</div></section><section className="detail-panel"><div className="detail-panel-heading"><ShieldCheck/><h2>{labels.accuracy}</h2></div><p>{labels.accuracyText}</p><Link className="text-link" href={`/${lang}/editorial-policy`}>{isEnglish ? 'Read the editorial policy' : isSanskrit ? 'सम्पादननीतिं पठतु' : 'सम्पादकीय नीति पढ़ें'} <FileText size={15}/></Link></section><Link className="back-topic" href={`/${lang}/${section}`}><ArrowLeft size={16}/>{labels.back}</Link></article><aside className="topic-detail-aside"><div className="aside-box"><span className="eyebrow">DEPARTMENT</span><h3>{departmentName}</h3><p>{department.desc}</p></div><div className="aside-box"><h3>{isEnglish ? 'Public access' : isSanskrit ? 'सार्वजनिकोपलब्धिः' : 'सार्वजनिक उपलब्धता'}</h3><p>{isEnglish ? 'All published material on this platform is intended to remain freely accessible.' : isSanskrit ? 'अस्मिन् मञ्चे प्रकाशितं सर्वं साहित्यं निःशुल्कं सार्वजनिकोपलब्धं भविष्यति।' : 'इस मंच पर प्रकाशित सामग्री सार्वजनिक एवं निःशुल्क उपलब्ध कराने का उद्देश्य है।'}</p></div></aside></div>
   </main>;
 }
