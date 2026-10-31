@@ -12,7 +12,7 @@ export function generateStaticParams() {
 }
 
 function renderInline(text: string) {
-  return text.split(/(\\*\\*.*?\\*\\*)/g).map((part, index) =>
+  return text.split(/(\*\*.*?\*\*)/g).map((part, index) =>
     part.startsWith('**') && part.endsWith('**')
       ? <strong key={index}>{part.slice(2, -2)}</strong>
       : <span key={index}>{part}</span>
@@ -20,7 +20,7 @@ function renderInline(text: string) {
 }
 
 function ArticleBody({ body }: { body: string }) {
-  const lines = body.split(/\\r?\\n/);
+  const lines = body.split(/\r?\n/);
   return <div className="article-prose">{lines.map((line, index) => {
     const value = line.trim();
     if (!value) return <div className="article-space" key={index} />;
