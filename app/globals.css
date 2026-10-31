@@ -215,3 +215,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .admin-home-image{padding:15px}
  .admin-home-image .admin-two{grid-template-columns:1fr}
 }
+
+
+/* Mobile administrator shortcut: keep it visible without opening the menu */
+.mobile-admin-top{display:none}
+@media(max-width:700px){
+ .topbar{height:38px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+ .mobile-admin-top{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#f6e8cf;border:1px solid #b28a4e;border-radius:2px;padding:4px 9px;font-size:11px;line-height:1.4}
+ .toplinks>a{display:none}
+ .topbar>span{font-size:10px;white-space:nowrap}
+}
