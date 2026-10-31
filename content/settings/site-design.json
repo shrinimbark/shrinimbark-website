@@ -14,11 +14,11 @@
   "heroHeight": 480,
   "heroMobileHeight": 300,
   "acharyaFit": "cover",
-  "departmentCols": 4,
+  "departmentCols": 2,
   "featureCols": 2,
   "featureHeight": 180,
   "sectionWidth": 1250,
   "sectionOrder": "departments,acharya,features,lower",
   "hiddenSections": "",
-  "updatedAt": "2026-10-31T16:56:13.204Z"
+  "updatedAt": "2026-10-31T17:06:12.921Z"
 }
