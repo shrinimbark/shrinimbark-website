@@ -19,7 +19,7 @@ export default async function TopicPage({ params }: { params: Promise<{ lang: La
   if (!department || index < 0 || index >= department.items.length) notFound();
   const defaultTitle = department.items[index];
   let article: { title?: string; summary?: string; body?: string; status?: string; source?: string; author?: string; image?: string; pdf?: string } | null = null;
-  try { article = JSON.parse(await readFile(path.join(process.cwd(), 'content', 'articles', lang, `${topic}.json`), 'utf8')); } catch { article = null; }
+  try { article = JSON.parse(await readFile(path.join(process.cwd(), 'content', 'articles', lang, section, `${topic}.json`), 'utf8')); } catch { article = null; }
   const published = article?.status === 'published';
   const title = published && article?.title ? article.title : defaultTitle;
   const departmentName = departmentTitle(department, lang);
