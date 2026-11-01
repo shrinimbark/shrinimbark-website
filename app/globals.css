@@ -516,3 +516,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .admin-card-editor[open]>summary{background:#f5ead5;border-bottom:1px solid #dfcfad}
 .admin-card-editor-body{padding:12px}
 @media(max-width:700px){.admin-card-editor>summary{padding:12px}.admin-card-editor>summary strong{font-size:14px}.admin-card-editor>summary span{font-size:10px}.admin-card-editor-body{padding:8px}}
+
+
+/* Opening gallery: sacred emblem above, two supplied paintings below. */
+.opening-gallery{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"emblem emblem" "title title" "left right";gap:20px 34px;align-items:center;max-width:1420px;margin:0 auto;padding:34px clamp(18px,4vw,64px) 42px;background:radial-gradient(ellipse at 50% 35%,#fff9ec 0%,#f6eddd 72%,#ead9b8 100%);overflow:hidden}
+.opening-gallery:before{content:"";position:absolute;inset:14px;border:1px solid #b08a4e66;pointer-events:none}
+.opening-emblem{grid-area:emblem;position:relative;width:min(100%,560px);height:250px;justify-self:center;margin:0 auto 2px;background:#fff7e8;border:5px double #a77b32;box-shadow:0 5px 18px #4b17281c}
+.opening-title{grid-area:title;position:relative;text-align:center;max-width:900px;margin:0 auto;padding:0 18px;color:var(--site-text)}
+.opening-title .hero-kicker{color:#94713c;font-size:clamp(16px,2vw,24px);letter-spacing:1px}
+.opening-title .hero-flourish{color:#a77b32;font-size:25px;margin:8px 0}
+.opening-title h1{font-size:clamp(34px,5.3vw,66px);line-height:1.25;color:var(--site-primary);margin:8px 0;font-weight:800}
+.opening-title h2{font-size:clamp(18px,2.5vw,30px);color:#8e642d;font-weight:500;margin:8px 0;letter-spacing:.04em}
+.opening-title p{max-width:760px;margin:12px auto 0;font-size:15px;line-height:1.9;color:#6e5b48}
+.opening-title .hero-actions{justify-content:center;margin-top:18px}
+.opening-title .hero-caption{margin-top:14px;color:#997747;font-size:12px;letter-spacing:.08em}
+.opening-side{position:relative;height:clamp(230px,28vw,390px);background:#fff8e9;border:5px double #a77b32;padding:5px;box-shadow:0 6px 18px #4b17281b}
+.opening-side img{object-fit:contain!important}
+.opening-side-left{grid-area:left}
+.opening-side-right{grid-area:right}
+@media(max-width:700px){.opening-gallery{grid-template-columns:1fr;grid-template-areas:"emblem" "title" "left" "right";gap:16px;padding:22px 15px 28px}.opening-emblem{height:180px;width:min(100%,420px)}.opening-title{padding:0 8px}.opening-title p{font-size:13px}.opening-side{height:270px}.opening-gallery:before{inset:8px}}
