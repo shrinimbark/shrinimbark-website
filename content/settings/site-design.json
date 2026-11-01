@@ -1,7 +1,7 @@
 {
   "siteName": "श्रीनिम्बार्क सम्प्रदाय",
   "englishName": "SHRI NIMBARKA SAMPRADAYA",
-  "logoWidth": 344,
+  "logoWidth": 403,
   "logoHeight": 84,
   "mastheadPadding": 34,
   "brandAlignment": "center",
@@ -25,7 +25,7 @@
   "rightImageWidth": 100,
   "rightImageHeight": 100,
   "leftImageWidthPx": 424,
-  "leftImageHeightPx": 300,
+  "leftImageHeightPx": 276,
   "rightImageWidthPx": 496,
   "rightImageHeightPx": 300,
   "leftImageX": 1,
@@ -87,5 +87,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-01T14:40:20.587Z"
+  "updatedAt": "2026-11-01T14:43:37.375Z"
 }
