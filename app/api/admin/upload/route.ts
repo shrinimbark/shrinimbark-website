@@ -12,6 +12,6 @@ export async function POST(request: Request) {
   const allowed = ['jpg','jpeg','png','webp','pdf']; if (!allowed.includes(ext)) return NextResponse.json({ error: 'केवल JPG, PNG, WEBP और PDF फ़ाइलें स्वीकार हैं।' }, { status: 400 });
   const safe = `${Date.now()}-${file.name.normalize('NFKD').replace(/[^a-zA-Z0-9.-]/g, '-').slice(-70)}`;
   const path = `public/uploads/${safe}`;
-  try { const bytes = Buffer.from(await file.arrayBuffer()); if (bytes.length !== file.size) throw new Error('चित्र पूरा प्राप्त नहीं हुआ। कृपया पुनः अपलोड करें।'); await saveRepoFile(path, bytes.toString('base64'), `Upload media: ${safe}`, true); return NextResponse.json({ ok: true, url: `/api/media?file=${encodeURIComponent(safe)}` }); }
+  try { const bytes = Buffer.from(await file.arrayBuffer()); if (bytes.length !== file.size) throw new Error('चित्र पूरा प्राप्त नहीं हुआ। कृपया पुनः अपलोड करें।'); await saveRepoFile(path, bytes.toString('base64'), `Upload media: ${safe}`, true); return NextResponse.json({ ok: true, url: `/uploads/${safe}` }); }
   catch (e) { return NextResponse.json({ error: e instanceof Error ? e.message : 'अपलोड असफल रहा।' }, { status: 500 }); }
 }
