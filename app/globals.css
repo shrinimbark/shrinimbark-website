@@ -506,3 +506,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .masthead-align-left .mast-ornament,.masthead-align-right .mast-ornament{width:100%}
 .masthead-align-left .brand-hi,.masthead-align-left .brand-en,.masthead-align-left .brand-tag,
 .masthead-align-right .brand-hi,.masthead-align-right .brand-en,.masthead-align-right .brand-tag{align-self:inherit}
+
+/* Collapsible per-card editor: edit only after tapping the card heading */
+.admin-card-editor{border:1px solid #d8c69f;border-radius:12px;background:#fffaf0;margin:12px 0;overflow:hidden}
+.admin-card-editor>summary{cursor:pointer;list-style:none;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#4b1728}
+.admin-card-editor>summary::-webkit-details-marker{display:none}
+.admin-card-editor>summary strong{font-size:16px}
+.admin-card-editor>summary span{font-size:12px;color:#8c744d;white-space:nowrap}
+.admin-card-editor[open]>summary{background:#f5ead5;border-bottom:1px solid #dfcfad}
+.admin-card-editor-body{padding:12px}
+@media(max-width:700px){.admin-card-editor>summary{padding:12px}.admin-card-editor>summary strong{font-size:14px}.admin-card-editor>summary span{font-size:10px}.admin-card-editor-body{padding:8px}}
