@@ -578,3 +578,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .masthead .brand-tag{font-size:12px}
 }
 @media(max-width:420px){.masthead-painting{height:130px}}
+
+
+/* Safety: the former homepage gallery must never appear below the navigation. */
+.opening-gallery{display:none!important}
