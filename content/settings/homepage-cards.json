@@ -18,7 +18,9 @@
       },
       "href": "/library",
       "image": "",
-      "visible": true
+      "visible": true,
+      "imageWidth": 35,
+      "imageHeight": 104
     },
     {
       "title": {
@@ -38,7 +40,9 @@
       },
       "href": "/peeth",
       "image": "",
-      "visible": true
+      "visible": true,
+      "imageWidth": 74,
+      "imageHeight": 103
     },
     {
       "title": {
@@ -48,8 +52,8 @@
       },
       "description": {
         "hi": "युगल उपासना, सेवा पद्धति एवं पारम्परिक साधना साहित्य।",
-        "sa": "उपासना, सेवापद्धतिः, पारम्परिकसाधनासाहित्यं च।",
-        "en": "Worship, service traditions and classical practice texts."
+        "sa": "युगलोपासना, सेवापद्धतिः, पारम्परिकसाधनासाहित्यं च।",
+        "en": "Divine Couple worship, service traditions and classical practice texts."
       },
       "linkLabel": {
         "hi": "साधना जानें",
@@ -81,5 +85,5 @@
       "visible": true
     }
   ],
-  "updatedAt": "2026-11-01T05:46:11.014Z"
+  "updatedAt": "2026-11-01T23:46:49.339Z"
 }
