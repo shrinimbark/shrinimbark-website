@@ -17,12 +17,25 @@ export async function GET() {
     });
     if (!response.ok) throw new Error(`GitHub सूची प्राप्त नहीं हुई (${response.status})`);
     const data = await response.json();
-    const files = (data.tree || []).filter((item: { path?: string; type?: string }) =>
-      item.type === 'blob' && /^content\/articles\/(hi|sa|en)\/([a-z0-9-]+)\/topic-[a-z0-9-]+\\.json$/.test(item.path || '')
-    ).map((item: { path: string }) => {
-      const match = /^content\/articles\/(hi|sa|en)\/([a-z0-9-]+)\/(topic-[a-z0-9-]+)\\.json$/.exec(item.path);
-      return match ? { lang: match[1], section: match[2], slug: match[3], path: item.path } : null;
-    }).filter(Boolean);
+    const candidates = (data.tree || []).filter((item: { path?: string; type?: string }) =>
+      item.type === 'blob' && /^content\/articles\/(hi|sa|en)\/([a-z0-9-]+)\/(topic-[a-z0-9-]+)\.json$/.test(item.path || '')
+    );
+    const files = await Promise.all(candidates.map(async (item: { path: string; url: string }) => {
+      const match = /^content\/articles\/(hi|sa|en)\/([a-z0-9-]+)\/(topic-[a-z0-9-]+)\.json$/.exec(item.path);
+      if (!match) return null;
+      try {
+        const blobResponse = await fetch(item.url, {
+          headers: { Authorization: \`Bearer \${token}\`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+          cache: 'no-store'
+        });
+        if (!blobResponse.ok) return { lang: match[1], section: match[2], slug: match[3], path: item.path, title: match[3], status: 'draft' };
+        const blob = await blobResponse.json();
+        const content = JSON.parse(Buffer.from(blob.content || '', 'base64').toString('utf8'));
+        return { lang: match[1], section: match[2], slug: match[3], path: item.path, title: String(content.title || match[3]), status: content.status === 'published' ? 'published' : 'draft' };
+      } catch {
+        return { lang: match[1], section: match[2], slug: match[3], path: item.path, title: match[3], status: 'draft' };
+      }
+    }));
     return NextResponse.json({ files, truncated: Boolean(data.truncated) });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : 'सूची प्राप्त नहीं हो सकी।' }, { status: 502 });
