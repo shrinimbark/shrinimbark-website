@@ -425,3 +425,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .topbar-invocation{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-weight:600;letter-spacing:.4px;color:#e8d4ad}
 @media(max-width:700px){.topbar{padding-left:10px;padding-right:10px;gap:4px}.admin-left-top{font-size:9px;padding:3px 5px}.topbar-invocation{font-size:10px}.toplinks{display:none}}
 @media(max-width:360px){.topbar-invocation{font-size:9px;letter-spacing:0}.admin-left-top{font-size:8px}}
+
+/* Restore Hindi / Sanskrit / English selector on phones in a second utility-bar row */
+@media (max-width:700px){
+  .topbar{height:56px;min-height:56px;align-items:flex-start;padding:5px 10px 0;position:relative}
+  .admin-left-top{margin-top:1px}
+  .topbar-invocation{top:7px;left:50%;font-size:10px}
+  .toplinks{display:flex;position:absolute;left:50%;right:auto;bottom:4px;transform:translateX(-50%);gap:0}
+  .toplinks>a{display:none}
+  .lang-switch{display:flex;border:0;padding:0;gap:18px;font-size:11px;white-space:nowrap}
+  .lang-switch a{opacity:.78;padding:1px 3px}
+  .lang-switch a.active{opacity:1;color:#fff;font-weight:700;border-bottom:1px solid #dfc58f}
+}
+@media(max-width:360px){
+  .topbar-invocation{font-size:9px;letter-spacing:0}
+  .lang-switch{gap:14px;font-size:10px}
+  .admin-left-top{font-size:8px;padding:3px 4px}
+}
