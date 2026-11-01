@@ -588,3 +588,88 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .masthead-painting img{max-width:100%;max-height:100%;flex:none;object-fit:contain!important}
 .acharya-image{height:var(--acharya-image-height,300px);min-height:0}
 .acharya-image img{object-fit:var(--acharya-fit,contain)!important}
+
+
+/* Administration panel: fit the available viewport without horizontal scrolling. */
+.admin-shell{
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+  padding:clamp(14px,2.4vw,34px) clamp(12px,2.5vw,36px) 56px;
+  overflow-x:clip;
+}
+.admin-head,.admin-toolbar,.admin-accordion,.admin-accordion-content,
+.admin-home-image,.site-builder,.builder-pane,.admin-layout,
+.admin-sidebar,.admin-editor,.admin-inventory,.admin-card-editor{
+  box-sizing:border-box;
+  min-width:0;
+  max-width:100%;
+}
+.admin-accordion-content{width:100%;overflow-x:clip}
+.admin-accordion-content .site-builder{
+  display:block!important;
+  width:100%;
+  margin:0;
+  padding:clamp(12px,2vw,22px);
+}
+.site-builder .builder-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  width:100%;
+}
+.site-builder .builder-tabs button{
+  min-width:0;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  line-height:1.45;
+}
+.site-builder .builder-pane{
+  width:100%;
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.site-builder .builder-pane .admin-field,
+.site-builder .builder-pane input,
+.site-builder .builder-pane select,
+.site-builder .builder-pane textarea{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+.site-builder .builder-block{flex-wrap:wrap;min-width:0}
+.site-builder .builder-block strong{min-width:130px;overflow-wrap:anywhere}
+.site-builder .builder-block-actions{margin-left:auto;flex-wrap:wrap}
+.site-builder .admin-upload{min-width:0;max-width:100%;overflow:hidden}
+.site-builder .admin-upload img{max-width:100%;height:auto}
+.site-builder .builder-footer{flex-wrap:wrap}
+.admin-accordion-content .admin-home-image{width:100%;min-width:0}
+.admin-layout{grid-template-columns:minmax(220px,280px) minmax(0,1fr)!important}
+.admin-two,.admin-upload-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.admin-sidebar,.admin-editor{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.admin-field input,.admin-field textarea,.admin-field select{box-sizing:border-box;min-width:0;max-width:100%}
+.admin-inventory-list,.admin-inventory-item{min-width:0;max-width:100%}
+.admin-inventory-item{width:100%;flex-wrap:wrap;overflow-wrap:anywhere}
+@media(max-width:1050px){
+ .admin-layout{grid-template-columns:minmax(0,1fr)!important}
+ .admin-sidebar,.admin-editor{width:100%}
+}
+@media(max-width:700px){
+ .admin-shell{padding:12px 10px 36px}
+ .admin-head{align-items:flex-start;flex-direction:column;gap:12px}
+ .admin-head h1{font-size:27px}
+ .admin-head>a{max-width:100%}
+ .admin-accordion-content{padding:7px}
+ .site-builder .builder-tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .site-builder .builder-tabs button{font-size:11px;padding:9px 6px}
+ .site-builder .builder-pane{padding:10px}
+ .admin-two,.admin-upload-grid{grid-template-columns:minmax(0,1fr)}
+ .admin-sidebar,.admin-editor{padding:13px}
+ .admin-actions,.builder-footer{flex-direction:column}
+ .admin-actions button,.builder-footer button{width:100%}
+ .builder-block{gap:7px;padding:9px}
+ .builder-block strong{flex:1 1 100%}
+ .builder-block-actions{margin-left:0}
+ .admin-card-editor-body{overflow-x:hidden}
+}
+@media(max-width:380px){
+ .site-builder .builder-tabs{grid-template-columns:minmax(0,1fr)}
+ .admin-accordion>summary{align-items:flex-start}
+ .admin-accordion .accordion-action{font-size:10px;padding:5px 6px}
+}
