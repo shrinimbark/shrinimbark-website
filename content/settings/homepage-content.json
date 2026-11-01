@@ -5,9 +5,9 @@
     "en": "Shri Nimbarka Sampradaya"
   },
   "heroSubtitle": {
-    "hi": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
-    "sa": "द्वैताद्वैतवेदान्तस्य दिव्या परम्परा",
-    "en": "The Living Tradition of Dvaitadvaita Vedanta"
+    "hi": "स्वाभाविक द्वैताद्वैत वेदान्त की दिव्य परम्परा",
+    "sa": " स्वाभाविकद्वैताद्वैतवेदान्तस्य दिव्यपरम्परा।",
+    "en": "The Divine Tradition of Svābhāvika Dvaitādvaita Vedānta."
   },
   "heroDescription": {
     "hi": "श्रीनिम्बार्क सम्प्रदाय की उपासना एवं भक्ति परम्परा, स्वाभाविक द्वैताद्वैत वेदान्त दर्शन, सिद्धान्तों, आचार्य परम्परा, शास्त्रीय ज्ञान एवं सांस्कृतिक वैभव का वैश्विक मंच।",
@@ -40,8 +40,8 @@
     "en": "Shri Nimbarka Sampradaya: Introduction & Doctrinal Exposition"
   },
   "departmentDescription": {
-    "hi": "दर्शन, आचार्य-परम्परा, उपासना, शास्त्र, इतिहास और सांस्कृतिक विरासत का परिचय",
-    "sa": "दर्शनाचार्यपरम्परोपासनाशास्त्रेतिहाससंस्कृतिविरासतां परिचयः",
+    "hi": "दर्शन, आचार्य परम्परा, उपासना, शास्त्र, इतिहास एवं सांस्कृतिक वैभव का अवगाहन कीजिए।",
+    "sa": "दर्शनम्, आचार्यपरम्पराम्, उपासनाम्, शास्त्राणि, इतिहासं सांस्कृतिकवैभवं च अन्विष्यताम्।",
     "en": "Explore philosophy, lineage, worship, scriptures, history and cultural heritage"
   },
   "acharyaEyebrow": {
@@ -70,24 +70,24 @@
     "en": "Read the Acharya biography"
   },
   "featureEyebrow": {
-    "hi": "ज्ञान एवं विरासत",
-    "sa": "ज्ञानं विरासत् च",
+    "hi": " ज्ञान एवं सांस्कृतिक वैभव।",
+    "sa": "ज्ञानं सांस्कृतिकवैभवं च।\n",
     "en": "KNOWLEDGE & HERITAGE"
   },
   "featureTitle": {
-    "hi": "ज्ञान एवं विरासत के विशेष संग्रह",
-    "sa": "ज्ञानविरासतयोः विशेषसंग्रहाः",
+    "hi": "ज्ञान एवं सांस्कृतिक परम्परा के विशिष्ट संकलन।",
+    "sa": "विशिष्टज्ञानसङ्ग्रहाः एवं परम्परागतवैभवम्।",
     "en": "Special Collections of Knowledge & Heritage"
   },
   "closingTitle": {
-    "hi": "॥ श्रीसर्वेश्वरो जयति ॥",
-    "sa": "॥ श्रीसर्वेश्वरो जयति ॥",
-    "en": "॥ Shri Sarveshwaro Jayati ॥"
+    "hi": "",
+    "sa": "",
+    "en": ""
   },
   "closingDescription": {
     "hi": "एक परम्परा • एक ज्ञानकोश • एक वैश्विक मंच",
     "sa": "एका परम्परा • एकः ज्ञानकोशः • एकं वैश्विकमञ्चम्",
     "en": "One tradition • One knowledge library • One global platform"
   },
-  "updatedAt": "2026-11-01T04:56:23.587Z"
+  "updatedAt": "2026-11-01T05:12:06.685Z"
 }
