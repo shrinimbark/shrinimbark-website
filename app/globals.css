@@ -582,3 +582,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* Safety: the former homepage gallery must never appear below the navigation. */
 .opening-gallery,.home-opening-gallery{display:none!important}
+
+/* Admin-controlled masthead image dimensions and independent acharya image height. */
+.masthead-painting{display:flex;align-items:center;justify-content:center}
+.masthead-painting img{max-width:100%;max-height:100%;flex:none;object-fit:contain!important}
+.acharya-image{height:var(--acharya-image-height,300px);min-height:0}
+.acharya-image img{object-fit:var(--acharya-fit,contain)!important}
