@@ -49,7 +49,7 @@
   "featureCols": 2,
   "featureHeight": 180,
   "sectionWidth": 1043,
-  "sectionOrder": "departments,acharya,features,lower",
+  "sectionOrder": "acharya,departments,features,lower",
   "hiddenSections": "",
   "footerTitle": "श्रीनिम्बार्क सम्प्रदाय",
   "footerEnglish": "SHRI NIMBARKA SAMPRADAYA",
@@ -87,5 +87,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-01T14:53:12.191Z"
+  "updatedAt": "2026-11-01T23:54:19.953Z"
 }
