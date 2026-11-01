@@ -467,3 +467,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .admin-accordion .accordion-action{font-size:11px;padding:6px 8px}
  .admin-accordion-content{padding:9px}
 }
+
+
+/* Prevent the article editor's two-column desktop grid from overflowing on phones */
+.admin-accordion-content{width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:hidden}
+.admin-accordion-content .admin-layout{width:100%;max-width:100%;min-width:0;grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+.admin-accordion-content .admin-sidebar,.admin-accordion-content .admin-editor{min-width:0;max-width:100%;box-sizing:border-box}
+@media(max-width:760px){
+ .admin-accordion-content .admin-layout{display:flex;flex-direction:column;grid-template-columns:minmax(0,1fr);gap:12px}
+ .admin-accordion-content .admin-sidebar,.admin-accordion-content .admin-editor{width:100%;max-width:100%;min-width:0;padding:15px}
+ .admin-accordion-content .admin-editor-title{flex-wrap:wrap}
+ .admin-accordion-content .admin-field,.admin-accordion-content .admin-two,.admin-accordion-content .admin-upload-grid{width:100%;min-width:0;max-width:100%}
+ .admin-accordion-content input,.admin-accordion-content select,.admin-accordion-content textarea{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ .admin-shell{overflow-x:hidden}
+}
