@@ -14,9 +14,8 @@ export async function GET(request:Request){
   const url=`https://api.github.com/repos/${owner}/${repo}/contents/public/uploads/${encodeURIComponent(file)}?ref=${encodeURIComponent(branch)}`;
   const response=await fetch(url,{headers:{Authorization:`Bearer ${token}`,Accept:'application/vnd.github.raw','X-GitHub-Api-Version':'2022-11-28'},cache:'no-store'});
   if(!response.ok)return new NextResponse('Media not found',{status:response.status===404?404:502});
-  const data=await response.json();
-  if(data.type!=='file'||typeof data.content!=='string')return new NextResponse('Invalid media file',{status:404});
-  const bytes=Buffer.from(data.content.replace(/\n/g,''),'base64');
+  const bytes=Buffer.from(await response.arrayBuffer());
+  if(!bytes.length)return new NextResponse('Empty media file',{status:404});
   const ext=file.split('.').pop()?.toLowerCase();
   const type=ext==='png'?'image/png':ext==='webp'?'image/webp':ext==='jpg'||ext==='jpeg'?'image/jpeg':ext==='pdf'?'application/pdf':'application/octet-stream';
   return new NextResponse(bytes,{headers:{'Content-Type':type,'Content-Length':String(bytes.length),'Cache-Control':'public, max-age=3600, stale-while-revalidate=86400','X-Content-Type-Options':'nosniff'}});
