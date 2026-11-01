@@ -418,3 +418,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .footer-columns > div:last-child { grid-column: 1 / -1; }
   .footer-columns > div:last-child a { display: inline-block; margin-right: 12px; }
 }
+
+/* Top utility bar: owner shortcut left, invocation precisely centered */
+.topbar{position:relative}
+.admin-left-top{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#f6e8cf;border:1px solid #b28a4e;padding:3px 9px;font-size:11px;line-height:1.4;z-index:1}
+.topbar-invocation{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-weight:600;letter-spacing:.4px;color:#e8d4ad}
+@media(max-width:700px){.topbar{padding-left:10px;padding-right:10px;gap:4px}.admin-left-top{font-size:9px;padding:3px 5px}.topbar-invocation{font-size:10px}.toplinks{display:none}}
+@media(max-width:360px){.topbar-invocation{font-size:9px;letter-spacing:0}.admin-left-top{font-size:8px}}
