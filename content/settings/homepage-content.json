@@ -1,0 +1,93 @@
+{
+  "heroTitle": {
+    "hi": "श्रीनिम्बार्क सम्प्रदाय",
+    "sa": "श्रीनिम्बार्कसम्प्रदायः",
+    "en": "Shri Nimbarka Sampradaya"
+  },
+  "heroSubtitle": {
+    "hi": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
+    "sa": "द्वैताद्वैतवेदान्तस्य दिव्या परम्परा",
+    "en": "The Living Tradition of Dvaitadvaita Vedanta"
+  },
+  "heroDescription": {
+    "hi": "श्रीनिम्बार्क सम्प्रदाय की उपासना एवं भक्ति परम्परा, स्वाभाविक द्वैताद्वैत वेदान्त दर्शन, सिद्धान्तों, आचार्य परम्परा, शास्त्रीय ज्ञान एवं सांस्कृतिक वैभव का वैश्विक मंच।",
+    "sa": "श्रीनिम्बार्कसम्प्रदायस्य उपासनाभक्तिपरम्परायाः, स्वाभाविकद्वैताद्वैतवेदान्तदर्शनस्य, सिद्धान्तानाम्, आचार्यपरम्परायाः, शास्त्रीयज्ञानस्य, सांस्कृतिकवैभवस्य च वैश्विकं मञ्चम्।",
+    "en": "A Global Platform for the Worship and Devotional Traditions, Svābhāvika Dvaitādvaita Vedānta Philosophy, Doctrines, Acharya Lineage, Classical Knowledge and Cultural Heritage of Shri Nimbarka Sampradaya."
+  },
+  "heroButton1": {
+    "hi": "सम्प्रदाय जानें",
+    "sa": "सम्प्रदायं जानीयात्",
+    "en": "Explore the Tradition"
+  },
+  "heroButton2": {
+    "hi": "ग्रन्थ पढ़ें",
+    "sa": "ग्रन्थान् पठतु",
+    "en": "Explore Scriptures"
+  },
+  "heroCaption": {
+    "hi": "शास्त्र • परम्परा • साधना • संरक्षण",
+    "sa": "शास्त्रम् • परम्परा • साधना • संरक्षणम्",
+    "en": "Scripture • Tradition • Worship • Preservation"
+  },
+  "departmentEyebrow": {
+    "hi": "परम्परा का परिचय",
+    "sa": "परम्परायाः परिचयः",
+    "en": "EXPLORE THE TRADITION"
+  },
+  "departmentTitle": {
+    "hi": "श्रीनिम्बार्क सम्प्रदाय : परिचय एवं तत्त्व-विवेचन",
+    "sa": "श्रीनिम्बार्कसम्प्रदायस्य परिचयः तत्त्वविवेचनं च",
+    "en": "Shri Nimbarka Sampradaya: Introduction & Doctrinal Exposition"
+  },
+  "departmentDescription": {
+    "hi": "दर्शन, आचार्य-परम्परा, उपासना, शास्त्र, इतिहास और सांस्कृतिक विरासत का परिचय",
+    "sa": "दर्शनाचार्यपरम्परोपासनाशास्त्रेतिहाससंस्कृतिविरासतां परिचयः",
+    "en": "Explore philosophy, lineage, worship, scriptures, history and cultural heritage"
+  },
+  "acharyaEyebrow": {
+    "hi": "प्रवर्तक आचार्य",
+    "sa": "प्रवर्तकाचार्यः",
+    "en": "THE FOUNDER ACHARYA"
+  },
+  "acharyaTitle": {
+    "hi": "जगद्गुरु श्रीनिम्बार्काचार्य",
+    "sa": "जगद्गुरुः श्रीनिम्बार्काचार्यः",
+    "en": "Jagadguru Shri Nimbarkacharya"
+  },
+  "acharyaSubtitle": {
+    "hi": "दर्शन एवं आचार्य परम्परा के प्रवर्तक",
+    "sa": "द्वैताद्वैतपरम्परायाः आचार्यः",
+    "en": "The revered teacher of the Dvaitadvaita tradition"
+  },
+  "acharyaDescription": {
+    "hi": "श्रीनिम्बार्काचार्य का जीवन, दर्शन, उपदेश, ग्रन्थ एवं गुरु-शिष्य परम्परा का प्रमाण-आधारित परिचय।",
+    "sa": "श्रीनिम्बार्काचार्यस्य जीवनं दर्शनम् उपदेशाः ग्रन्थाः गुरुपरम्परा च।",
+    "en": "Explore the life, philosophy, teachings, works and lineage associated with Shri Nimbarkacharya."
+  },
+  "acharyaLink": {
+    "hi": "आचार्य परिचय पढ़ें",
+    "sa": "आचार्यपरिचयं पठतु",
+    "en": "Read the Acharya biography"
+  },
+  "featureEyebrow": {
+    "hi": "ज्ञान एवं विरासत",
+    "sa": "ज्ञानं विरासत् च",
+    "en": "KNOWLEDGE & HERITAGE"
+  },
+  "featureTitle": {
+    "hi": "ज्ञान एवं विरासत के विशेष संग्रह",
+    "sa": "ज्ञानविरासतयोः विशेषसंग्रहाः",
+    "en": "Special Collections of Knowledge & Heritage"
+  },
+  "closingTitle": {
+    "hi": "॥ श्रीसर्वेश्वरो जयति ॥",
+    "sa": "॥ श्रीसर्वेश्वरो जयति ॥",
+    "en": "॥ Shri Sarveshwaro Jayati ॥"
+  },
+  "closingDescription": {
+    "hi": "एक परम्परा • एक ज्ञानकोश • एक वैश्विक मंच",
+    "sa": "एका परम्परा • एकः ज्ञानकोशः • एकं वैश्विकमञ्चम्",
+    "en": "One tradition • One knowledge library • One global platform"
+  },
+  "updatedAt": "2026-11-01T04:56:23.587Z"
+}
