@@ -25,7 +25,7 @@ export async function GET() {
       if (!match) return null;
       try {
         const blobResponse = await fetch(item.url, {
-          headers: { Authorization: \`Bearer \${token}\`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+          headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
           cache: 'no-store'
         });
         if (!blobResponse.ok) return { lang: match[1], section: match[2], slug: match[3], path: item.path, title: match[3], status: 'draft' };
