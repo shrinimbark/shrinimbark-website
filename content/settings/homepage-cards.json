@@ -18,9 +18,7 @@
       },
       "href": "/library",
       "image": "",
-      "visible": true,
-      "imageWidth": 35,
-      "imageHeight": 104
+      "visible": false
     },
     {
       "title": {
@@ -40,9 +38,7 @@
       },
       "href": "/peeth",
       "image": "",
-      "visible": true,
-      "imageWidth": 39,
-      "imageHeight": 103
+      "visible": false
     },
     {
       "title": {
@@ -62,7 +58,7 @@
       },
       "href": "/upasana",
       "image": "",
-      "visible": true
+      "visible": false
     },
     {
       "title": {
@@ -82,8 +78,8 @@
       },
       "href": "/parampara",
       "image": "",
-      "visible": true
+      "visible": false
     }
   ],
-  "updatedAt": "2026-11-01T23:46:54.488Z"
+  "updatedAt": "2026-11-01T23:50:00.438Z"
 }
