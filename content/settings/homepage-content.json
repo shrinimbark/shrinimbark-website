@@ -5,7 +5,7 @@
     "en": "Shri Nimbarka Sampradaya"
   },
   "heroSubtitle": {
-    "hi": "स्वाभाविक द्वैताद्वैत वेदान्त की दिव्य परम्परा",
+    "hi": "स्वाभाविक द्वैताद्वैत वेदान्त की दिव्य परम्परा।",
     "sa": "स्वाभाविकद्वैताद्वैतवेदान्तस्य दिव्यपरम्परा।",
     "en": "The Divine Tradition of Svābhāvika Dvaitādvaita Vedānta."
   },
@@ -89,5 +89,50 @@
     "sa": "एका परम्परा • एकः ज्ञानकोशः • एकं वैश्विकमञ्चम्",
     "en": "One tradition • One knowledge library • One global platform"
   },
-  "updatedAt": "2026-11-01T12:00:00.000Z"
+  "lower1Title": {
+    "hi": "समाचार एवं आयोजन",
+    "sa": "समाचाराः आयोजनानि च",
+    "en": "News & Events"
+  },
+  "lower1Description": {
+    "hi": "आचार्य जयन्तियाँ, उत्सव, धर्मसभाएँ एवं नवीनतम गतिविधियाँ।",
+    "sa": "आचार्यजयन्त्यः उत्सवाः धर्मसभाः नवीनतमगतिविधयश्च।",
+    "en": "Acharya anniversaries, festivals, religious gatherings and latest activities."
+  },
+  "lower1Link": {
+    "hi": "समाचार एवं कैलेंडर देखें",
+    "sa": "समाचारं पञ्चाङ्गं च पश्यतु",
+    "en": "View News & Calendar"
+  },
+  "lower2Title": {
+    "hi": "शोध एवं प्रकाशन",
+    "sa": "शोधः प्रकाशनं च",
+    "en": "Research & Publications"
+  },
+  "lower2Description": {
+    "hi": "शोधपत्र, ऐतिहासिक अभिलेख, दुर्लभ ग्रन्थ एवं नवीन प्रकाशन।",
+    "sa": "शोधपत्राणि ऐतिहासिकाभिलेखाः दुर्लभग्रन्थाः नवीनप्रकाशनानि च।",
+    "en": "Research papers, historical records, rare texts and new publications."
+  },
+  "lower2Link": {
+    "hi": "शोध संग्रह देखें",
+    "sa": "शोधसंग्रहं पश्यतु",
+    "en": "Explore Research"
+  },
+  "lower3Title": {
+    "hi": "प्रवचन एवं मीडिया",
+    "sa": "प्रवचनानि माध्यमानि च",
+    "en": "Lectures & Media"
+  },
+  "lower3Description": {
+    "hi": "शास्त्रीय व्याख्यान, संस्कृत पाठ, भजन एवं कीर्तन।",
+    "sa": "शास्त्रीयव्याख्यानानि संस्कृतपाठाः भजनानि कीर्तनानि च।",
+    "en": "Scriptural lectures, Sanskrit recitation, bhajans and kirtans."
+  },
+  "lower3Link": {
+    "hi": "मीडिया संग्रह देखें",
+    "sa": "माध्यमसंग्रहं पश्यतु",
+    "en": "Explore Media"
+  },
+  "updatedAt": "2026-11-01T14:41:06.972Z"
 }
