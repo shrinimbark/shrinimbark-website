@@ -1,8 +1,8 @@
 {
   "siteName": "श्रीनिम्बार्क सम्प्रदाय",
   "englishName": "SHRI NIMBARKA SAMPRADAYA",
-  "logoWidth": 210,
-  "logoHeight": 88,
+  "logoWidth": 194,
+  "logoHeight": 84,
   "mastheadPadding": 34,
   "brandAlignment": "center",
   "tagline": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
@@ -11,11 +11,11 @@
   "gold": "#b08a4e",
   "background": "#f6eddd",
   "text": "#39252a",
-  "logo": "/images/sampradaya-emblem.jpg",
+  "logo": "/uploads/1793543538774-395835.jpg",
   "logoVisible": true,
   "leftImageVisible": true,
   "rightImageVisible": true,
-  "acharyaImage": "/images/acharya-study.jpg",
+  "acharyaImage": "/uploads/1793543282287-305644.png",
   "acharyaImageVisible": true,
   "acharyaImageWidth": 100,
   "leftImage": "/uploads/1793461552628-418203.png",
@@ -26,7 +26,7 @@
   "rightImageHeight": 100,
   "leftImageWidthPx": 260,
   "leftImageHeightPx": 300,
-  "rightImageWidthPx": 260,
+  "rightImageWidthPx": 496,
   "rightImageHeightPx": 300,
   "leftImageX": 1,
   "leftImageY": 1,
@@ -87,5 +87,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-01T14:25:09.371Z"
+  "updatedAt": "2026-11-01T14:32:38.718Z"
 }
