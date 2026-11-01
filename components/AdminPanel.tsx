@@ -30,7 +30,6 @@ export default function AdminPanel(){
  const [logged,setLogged]=useState(false),[authChecked,setAuthChecked]=useState(false),[password,setPassword]=useState(''),[busy,setBusy]=useState(false),[notice,setNotice]=useState('');
  const [articleEditorOpen,setArticleEditorOpen]=useState(false);
  const [lang,setLang]=useState<Lang>('hi'),[section,setSection]=useState('sampradaya'),[topic,setTopic]=useState(0),[selectedSlug,setSelectedSlug]=useState<string|null>(null),[record,setRecord]=useState<RecordData>(empty);
- const [heroImage,setHeroImage]=useState('/images/radha-krishna-hero.jpg'),[heroBusy,setHeroBusy]=useState(false);
  const [inventory,setInventory]=useState<Array<{lang:Lang;section:string;slug:string;path:string;title:string;status:'draft'|'published'}>>([]),[inventoryBusy,setInventoryBusy]=useState(false),[inventoryQuery,setInventoryQuery]=useState('');
  useEffect(()=>{let active=true;fetch('/api/admin/session',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(active)setLogged(Boolean(d.authenticated));}).catch(()=>{}).finally(()=>{if(active)setAuthChecked(true);});return()=>{active=false;}},[]);
  const current=sections.find(s=>s[0]===section)!; const slug=selectedSlug||`topic-${String(topic+1).padStart(2,'0')}`;
