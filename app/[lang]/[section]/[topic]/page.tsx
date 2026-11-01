@@ -20,15 +20,16 @@ function renderInline(text: string) {
 }
 
 function ArticleBody({ body }: { body: string }) {
-  const lines = body.split(/\r?\n/);
-  return <div className="article-prose">{lines.map((line, index) => {
-    const value = line.trim();
-    if (!value) return <div className="article-space" key={index} />;
-    if (value.startsWith('### ')) return <h3 key={index}>{renderInline(value.slice(4))}</h3>;
-    if (value.startsWith('## ')) return <h2 key={index}>{renderInline(value.slice(3))}</h2>;
-    if (value.startsWith('# ')) return <h2 className="article-heading" key={index}>{renderInline(value.slice(2))}</h2>;
-    if (value.startsWith('- ')) return <p className="article-list-item" key={index}>• {renderInline(value.slice(2))}</p>;
-    return <p key={index}>{renderInline(value)}</p>;
+  const blocks = body.split(/\r?\n\s*\r?\n/).map(block => block.trim()).filter(Boolean);
+  return <div className="article-prose">{blocks.map((block, index) => {
+    const lines = block.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+    const first = lines[0] || '';
+    if (first.startsWith('### ')) return <h3 key={index}>{renderInline(first.slice(4))}</h3>;
+    if (first.startsWith('## ')) return <h2 key={index}>{renderInline(first.slice(3))}</h2>;
+    if (first.startsWith('# ')) return <h2 className="article-heading" key={index}>{renderInline(first.slice(2))}</h2>;
+    if (first.startsWith('- ')) return <p className="article-list-item" key={index}>• {renderInline(first.slice(2))}</p>;
+    const isVerse = lines.some(line => /[॥।]$/.test(line)) && lines.length > 1;
+    return <p className={isVerse ? "article-verse" : undefined} key={index}>{lines.map((line, lineIndex) => <span key={lineIndex}>{renderInline(line)}{lineIndex < lines.length - 1 && (isVerse ? <br/> : ' ')}</span>)}</p>;
   })}</div>;
 }
 
