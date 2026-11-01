@@ -497,3 +497,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .admin-shell{width:100%;max-width:100%;overflow-x:clip}
  .admin-accordion-content .admin-layout{grid-template-columns:minmax(0,1fr)!important}
 }
+
+/* Editable masthead alignment */
+.masthead-align-left{text-align:left!important;align-items:flex-start}
+.masthead-align-right{text-align:right!important;align-items:flex-end}
+.masthead-align-center{text-align:center!important;align-items:center}
+.masthead-align-left .mast-rule,.masthead-align-right .mast-rule{width:100%}
+.masthead-align-left .mast-ornament,.masthead-align-right .mast-ornament{width:100%}
+.masthead-align-left .brand-hi,.masthead-align-left .brand-en,.masthead-align-left .brand-tag,
+.masthead-align-right .brand-hi,.masthead-align-right .brand-en,.masthead-align-right .brand-tag{align-self:inherit}
