@@ -41,7 +41,7 @@
       "href": "/peeth",
       "image": "",
       "visible": true,
-      "imageWidth": 74,
+      "imageWidth": 39,
       "imageHeight": 103
     },
     {
@@ -85,5 +85,5 @@
       "visible": true
     }
   ],
-  "updatedAt": "2026-11-01T23:46:49.339Z"
+  "updatedAt": "2026-11-01T23:46:54.488Z"
 }
