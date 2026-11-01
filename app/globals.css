@@ -687,3 +687,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .masthead-painting-right{grid-column:2}
  .masthead-painting img{max-width:100%;max-height:210px}
 }
+
+/* Admin image visibility and feature-card media sizing */
+.acharya-image{width:var(--acharya-image-width,100%);max-width:100%}
+.feature-visual{max-width:100%;background-repeat:no-repeat}
+.feature-card .feature-visual{flex:none}
