@@ -70,14 +70,14 @@
     "en": "Read the Acharya biography"
   },
   "featureEyebrow": {
-    "hi": " ज्ञान एवं सांस्कृतिक वैभव।",
-    "sa": "ज्ञानं सांस्कृतिकवैभवं च।\n",
-    "en": "KNOWLEDGE & HERITAGE"
+    "hi": "ज्ञान एवं सांस्कृतिक वैभव",
+    "sa": "ज्ञानं सांस्कृतिकवैभवं च",
+    "en": "KNOWLEDGE & CULTURAL EXCELLENCE"
   },
   "featureTitle": {
-    "hi": "ज्ञान एवं सांस्कृतिक परम्परा के विशिष्ट संकलन।",
-    "sa": "विशिष्टज्ञानसङ्ग्रहाः एवं परम्परागतवैभवम्।",
-    "en": "Special Collections of Knowledge & Heritage"
+    "hi": "ज्ञान एवं सांस्कृतिक वैभव के विशिष्ट संग्रह",
+    "sa": "ज्ञानसांस्कृतिकवैभवयोः विशिष्टसङ्ग्रहाः",
+    "en": "Special Collections of Knowledge & Cultural Excellence"
   },
   "closingTitle": {
     "hi": "",
@@ -89,5 +89,5 @@
     "sa": "एका परम्परा • एकः ज्ञानकोशः • एकं वैश्विकमञ्चम्",
     "en": "One tradition • One knowledge library • One global platform"
   },
-  "updatedAt": "2026-11-01T06:39:05.015Z"
+  "updatedAt": "2026-11-01T12:00:00.000Z"
 }
