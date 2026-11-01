@@ -26,8 +26,8 @@
   "heroHeight": 900,
   "heroMobileHeight": 700,
   "acharyaFit": "cover",
-  "departmentCols": 2,
-  "featureCols": 2,
+  "departmentCols": 1,
+  "featureCols": 1,
   "featureHeight": 420,
   "sectionWidth": 1600,
   "sectionOrder": "acharya,features,departments,lower",
@@ -68,5 +68,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-01T13:25:57.875Z"
+  "updatedAt": "2026-11-01T13:34:42.023Z"
 }
