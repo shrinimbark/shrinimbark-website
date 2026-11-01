@@ -442,3 +442,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .lang-switch{gap:14px;font-size:10px}
   .admin-left-top{font-size:8px;padding:3px 4px}
 }
+
+
+/* Compact, click-to-open administration sections */
+.admin-accordion{border:1px solid #d8c69f;border-radius:14px;background:#fffaf0;margin:14px 0;overflow:hidden}
+.admin-accordion>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;color:#4b1728}
+.admin-accordion>summary::-webkit-details-marker{display:none}
+.admin-accordion>summary>span:first-child{display:flex;flex-direction:column;gap:5px;min-width:0}
+.admin-accordion>summary strong{font-size:17px;line-height:1.45}
+.admin-accordion>summary small{font-size:12px;color:#89765b;line-height:1.5}
+.admin-accordion .accordion-action{flex:none;border:1px solid #b08a4e;color:#795c30;padding:7px 10px;border-radius:6px;font-size:12px;white-space:nowrap}
+.admin-accordion[open]>summary{border-bottom:1px solid #e4d7bc;background:#f8efdf}
+.admin-accordion[open] .accordion-action{background:#4b1728;color:#fff4df}
+.admin-accordion-content{padding:12px;min-width:0}
+.admin-accordion-content>.admin-home-image,.admin-accordion-content>.admin-inventory,.admin-accordion-content>.admin-layout{margin:0}
+.admin-accordion-content .admin-home-image{box-shadow:none}
+.admin-accordion-content .admin-home-copy-field{margin:12px 0}
+.admin-accordion-content .admin-layout{display:grid}
+@media(max-width:700px){
+ .admin-accordion{margin:10px 0;border-radius:12px}
+ .admin-accordion>summary{padding:14px 13px;gap:8px}
+ .admin-accordion>summary strong{font-size:15px}
+ .admin-accordion>summary small{font-size:11px}
+ .admin-accordion .accordion-action{font-size:11px;padding:6px 8px}
+ .admin-accordion-content{padding:9px}
+}
