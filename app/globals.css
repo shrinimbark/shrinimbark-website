@@ -673,3 +673,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .admin-accordion>summary{align-items:flex-start}
  .admin-accordion .accordion-action{font-size:10px;padding:5px 6px}
 }
+
+/* Masthead controls: responsive limits while preserving the 3-column approved composition. */
+.masthead{box-sizing:border-box;overflow:hidden}
+.masthead-painting{min-width:0;overflow:hidden}
+.masthead-painting img{max-width:100%;max-height:100%;flex:none;object-fit:contain}
+.masthead-center{min-width:0}
+@media(max-width:760px){
+ .masthead{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto auto!important;min-height:0!important;column-gap:10px!important}
+ .masthead-center{grid-column:1 / -1;grid-row:1}
+ .masthead-painting{grid-row:2;max-width:100%;height:auto;min-height:130px}
+ .masthead-painting-left{grid-column:1}
+ .masthead-painting-right{grid-column:2}
+ .masthead-painting img{max-width:100%;max-height:210px}
+}
