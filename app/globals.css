@@ -556,3 +556,81 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .opening-title .hero-caption{position:static;margin-top:12px;color:#997747;font-size:10px;letter-spacing:.04em}
 @media(max-width:900px){.opening-gallery{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"center center" "left right";min-height:0}.opening-side{min-height:390px;height:58vw;max-height:580px}.opening-center{max-width:700px;justify-self:center;width:100%}.opening-emblem{height:190px}}
 @media(max-width:600px){.opening-gallery{grid-template-columns:1fr;grid-template-areas:"center" "left" "right";gap:14px;padding:18px 12px 24px}.opening-side{height:370px;min-height:0;max-height:none}.opening-emblem{height:165px;max-width:380px}.opening-title h1{font-size:clamp(28px,8vw,38px)}.opening-title h2{font-size:17px}.opening-title p{font-size:12px}.opening-title .hero-actions{gap:7px}}
+
+
+/* Homepage layout correction: keep the sacred opening composition self-contained
+   and prevent the following sections/navigation from intruding into its image columns. */
+.opening-gallery{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(320px,.9fr) minmax(0,1fr)!important;
+  grid-template-areas:"left center right"!important;
+  align-items:stretch!important;
+  min-height:0!important;
+  height:auto!important;
+  padding:24px clamp(12px,2vw,30px)!important;
+  gap:clamp(12px,1.5vw,24px)!important;
+  overflow:visible!important;
+  isolation:isolate;
+}
+.opening-side{
+  grid-area:left;
+  min-width:0!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:640px!important;
+  align-self:stretch!important;
+  box-sizing:border-box;
+}
+.opening-side-right{grid-area:right}
+.opening-side img{
+  object-fit:contain!important;
+  object-position:center!important;
+}
+.opening-center{
+  grid-area:center;
+  min-width:0;
+  width:100%;
+  align-self:stretch;
+  justify-content:center;
+  gap:clamp(12px,2vh,22px);
+}
+.opening-emblem{
+  width:min(100%,390px)!important;
+  height:clamp(130px,19vh,205px)!important;
+  max-width:100%!important;
+  flex:0 0 auto;
+}
+.opening-title{width:100%;padding:0 4px}
+.opening-title h1{font-size:clamp(26px,3vw,44px)}
+.opening-title p{font-size:clamp(12px,1vw,14px)}
+@media(max-width:900px){
+ .opening-gallery{
+   grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+   grid-template-areas:"center center" "left right"!important;
+   gap:16px!important;
+ }
+ .opening-side{height:58vw!important;min-height:360px!important;max-height:560px}
+ .opening-center{max-width:720px;justify-self:center}
+}
+@media(max-width:600px){
+ .opening-gallery{
+   grid-template-columns:minmax(0,1fr)!important;
+   grid-template-areas:"center" "left" "right"!important;
+   gap:13px!important;
+   padding:16px 12px 22px!important;
+ }
+ .opening-center{padding:6px 4px!important;gap:12px!important}
+ .opening-emblem{height:150px!important;width:min(100%,350px)!important}
+ .opening-side{
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   aspect-ratio: 4 / 5;
+   padding:4px!important;
+ }
+ .opening-side img{object-fit:contain!important}
+ .opening-title h1{font-size:clamp(27px,8vw,36px)!important}
+ .opening-title h2{font-size:16px!important}
+ .opening-title p{font-size:12px!important;line-height:1.8}
+ .opening-title .hero-actions{flex-wrap:wrap}
+}
