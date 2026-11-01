@@ -12,7 +12,7 @@ export async function GET(request:Request){
   const token=process.env.GITHUB_CONTENT_TOKEN;
   if(!token)return new NextResponse('Media storage is not configured',{status:503});
   const url=`https://api.github.com/repos/${owner}/${repo}/contents/public/uploads/${encodeURIComponent(file)}?ref=${encodeURIComponent(branch)}`;
-  const response=await fetch(url,{headers:{Authorization:`Bearer ${token}`,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},cache:'no-store'});
+  const response=await fetch(url,{headers:{Authorization:`Bearer ${token}`,Accept:'application/vnd.github.raw','X-GitHub-Api-Version':'2022-11-28'},cache:'no-store'});
   if(!response.ok)return new NextResponse('Media not found',{status:response.status===404?404:502});
   const data=await response.json();
   if(data.type!=='file'||typeof data.content!=='string')return new NextResponse('Invalid media file',{status:404});
