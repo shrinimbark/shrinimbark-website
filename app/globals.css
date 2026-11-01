@@ -481,3 +481,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .admin-accordion-content input,.admin-accordion-content select,.admin-accordion-content textarea{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
  .admin-shell{overflow-x:hidden}
 }
+
+/* Prevent admin editor panels from creating sideways page overflow */
+.admin-shell,.admin-accordion,.admin-accordion-content,.admin-layout,.admin-sidebar,.admin-editor{min-width:0;max-width:100%}
+.admin-layout{grid-template-columns:minmax(0,260px) minmax(0,1fr)}
+.admin-sidebar,.admin-editor{overflow-wrap:anywhere}
+.admin-field input,.admin-field textarea,.admin-field select{min-width:0;max-width:100%}
+@media(max-width:1000px){
+ .admin-layout{grid-template-columns:minmax(0,1fr)!important;width:100%;max-width:100%}
+ .admin-sidebar,.admin-editor{width:100%;min-width:0}
+ .admin-accordion-content{overflow-x:clip}
+}
+@media(max-width:760px){
+ html,body{max-width:100%;overflow-x:hidden}
+ .admin-shell{width:100%;max-width:100%;overflow-x:clip}
+ .admin-accordion-content .admin-layout{grid-template-columns:minmax(0,1fr)!important}
+}
