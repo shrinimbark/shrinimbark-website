@@ -556,3 +556,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .opening-title .hero-caption{position:static;margin-top:12px;color:#997747;font-size:10px;letter-spacing:.04em}
 @media(max-width:900px){.opening-gallery{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"center center" "left right";min-height:0}.opening-side{min-height:390px;height:58vw;max-height:580px}.opening-center{max-width:700px;justify-self:center;width:100%}.opening-emblem{height:190px}}
 @media(max-width:600px){.opening-gallery{grid-template-columns:1fr;grid-template-areas:"center" "left" "right";gap:14px;padding:18px 12px 24px}.opening-side{height:370px;min-height:0;max-height:none}.opening-emblem{height:165px;max-width:380px}.opening-title h1{font-size:clamp(28px,8vw,38px)}.opening-title h2{font-size:17px}.opening-title p{font-size:12px}.opening-title .hero-actions{gap:7px}}
+
+/* Approved side paintings belong in the upper masthead, never below navigation. */
+.masthead{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(320px,1.05fr) minmax(0,1fr)!important;align-items:center!important;gap:clamp(10px,2vw,28px)!important;width:100%;max-width:1600px;min-height:300px;height:auto!important;padding-left:clamp(12px,2vw,28px)!important;padding-right:clamp(12px,2vw,28px)!important;box-sizing:border-box}
+.masthead-center{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;width:100%;text-align:center}
+.masthead-painting{position:relative;grid-row:1;display:flex;align-items:center;justify-content:center;min-width:0;height:clamp(210px,24vw,340px);overflow:hidden}
+.masthead-painting-left{grid-column:1}
+.masthead-painting-right{grid-column:3}
+.masthead-painting img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.masthead .seal img{max-width:100%;max-height:180px}
+.masthead .mast-ornament,.masthead .mast-rule{width:100%}
+@media(max-width:760px){
+ .masthead{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto auto!important;gap:10px!important;min-height:0;padding:14px 12px!important}
+ .masthead-center{grid-column:1 / -1;grid-row:1}
+ .masthead-painting{grid-row:2;height:clamp(130px,42vw,220px);width:100%}
+ .masthead-painting-left{grid-column:1}
+ .masthead-painting-right{grid-column:2}
+ .masthead .seal img{max-height:105px!important;width:min(190px,55vw)!important}
+ .masthead .brand-hi{font-size:clamp(22px,6vw,32px)}
+ .masthead .brand-en{font-size:11px;letter-spacing:1px}
+ .masthead .brand-tag{font-size:12px}
+}
+@media(max-width:420px){.masthead-painting{height:130px}}
