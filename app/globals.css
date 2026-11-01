@@ -581,4 +581,4 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 
 /* Safety: the former homepage gallery must never appear below the navigation. */
-.opening-gallery{display:none!important}
+.opening-gallery,.home-opening-gallery{display:none!important}
