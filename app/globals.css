@@ -1020,3 +1020,12 @@ img,video,iframe{max-width:100%}
 .admin-accordion>summary{user-select:none}
 .admin-card-editor[open],.admin-accordion[open]{scroll-margin-top:14px}
 .admin-card-editor-body .admin-field input[type="range"]{height:34px!important}
+
+
+/* Admin editor accordion consistency and responsive visual designer layout. */
+.site-builder{display:block!important;width:100%;min-width:0;box-sizing:border-box}
+.site-builder>.builder-tabs,.site-builder>.builder-pane,.site-builder>.builder-footer,.site-builder>.admin-notice{width:100%;min-width:0;box-sizing:border-box}
+.builder-pane{display:block!important;min-width:0;overflow:visible}
+.admin-home-image .admin-home-copy-field{display:block}
+.admin-home-image .admin-card-editor-body .admin-two{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:850px){.admin-home-image .admin-card-editor-body .admin-two{grid-template-columns:1fr}}
