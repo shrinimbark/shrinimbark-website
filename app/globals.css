@@ -946,3 +946,11 @@ img,video,iframe{max-width:100%}
  .home-calendar-card a{font-size:10px}
 }
 @media(max-width:360px){.department-explorer .department-grid{grid-template-columns:1fr}.home-calendar-grid{grid-template-columns:1fr}}
+
+.lower-panels{grid-template-columns:repeat(var(--lower-cols,3),minmax(0,1fr));gap:12px;margin-bottom:24px}
+.lower-panel{min-width:0;padding:15px 16px;min-height:0}
+.lower-panel p{min-height:0;margin:7px 0 10px}
+.home-social-links{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.home-social-links a{display:inline-flex;padding:5px 10px;border:1px solid var(--line);border-radius:3px;color:#805a2c;font-size:11px}
+@media(max-width:700px){.lower-panels{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-left:12px;margin-right:12px;padding:0}.lower-panel{padding:12px}.lower-panel h2{font-size:13px}.lower-panel p{font-size:10px}.lower-panel a{font-size:10px}}
+@media(max-width:390px){.lower-panels{grid-template-columns:1fr}}
