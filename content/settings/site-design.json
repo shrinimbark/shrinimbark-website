@@ -43,8 +43,8 @@
   "logoSize": 105,
   "heroFit": "contain",
   "heroPosition": "center center",
-  "heroHeight": 583,
-  "heroMobileHeight": 365,
+  "heroHeight": 450,
+  "heroMobileHeight": 305,
   "acharyaFit": "contain",
   "departmentCols": 4,
   "departmentCardScale": 77,
@@ -101,5 +101,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T11:46:31.155Z"
+  "updatedAt": "2026-11-02T12:22:26.723Z"
 }
