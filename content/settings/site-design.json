@@ -47,7 +47,7 @@
   "logoHeight": 123,
   "mastheadPadding": 34,
   "brandAlignment": "center",
-  "tagline": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
+  "tagline": " नान्या गतिः कृष्णपदारविन्दात् संदृश्यते ब्रह्मशिवादिवन्दितात्।  भक्तेच्छयोपात्तसुचिन्त्यविग्रहादचिन्त्यशक्तेरविचिन्त्यसाशयात् ।।",
   "invocation": "सर्वं हि विज्ञानमतो यथार्थकं",
   "invocationVisible": true,
   "primary": "#4b1728",
@@ -78,9 +78,9 @@
   "mastheadHeight": 360,
   "mastheadCenterWidth": 460,
   "mastheadGap": 24,
-  "brandTitleSize": 34,
-  "brandEnglishSize": 15,
-  "brandTaglineSize": 13,
+  "brandTitleSize": 41,
+  "brandEnglishSize": 16,
+  "brandTaglineSize": 15,
   "acharyaImageHeight": 300,
   "logoSize": 88,
   "heroFit": "contain",
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T13:01:23.764Z"
+  "updatedAt": "2026-11-02T13:03:29.972Z"
 }
