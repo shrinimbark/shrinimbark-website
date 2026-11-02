@@ -87,5 +87,17 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-01T23:58:59.547Z"
+  "updatedAt": "2026-11-01T23:58:59.547Z",
+  "lowerPanelsVisible": true,
+  "closingQuoteVisible": true,
+  "footerIntroVisible": true,
+  "socialVisible": true,
+  "socialHeading": "हमसे जुड़े रहें",
+  "socialDescription": "सम्प्रदाय के आधिकारिक सामाजिक माध्यम",
+  "socialYoutube": "",
+  "socialInstagram": "",
+  "socialFacebook": "",
+  "socialX": "",
+  "socialWhatsapp": "",
+  "lowerPanelCols": 3
 }
