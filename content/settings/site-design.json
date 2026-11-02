@@ -6,7 +6,7 @@
   "mastheadPadding": 34,
   "brandAlignment": "center",
   "tagline": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
-  "invocation": "॥ श्रीसर्वेश्वरो जयति ॥",
+  "invocation": "",
   "primary": "#4b1728",
   "gold": "#b08a4e",
   "background": "#f6eddd",
@@ -99,5 +99,5 @@
   "socialX": "",
   "socialWhatsapp": "",
   "lowerPanelCols": 3,
-  "invocationVisible": true
+  "invocationVisible": false
 }
