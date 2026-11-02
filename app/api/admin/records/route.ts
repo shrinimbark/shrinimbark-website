@@ -35,7 +35,8 @@ export async function GET(request:Request) {
 export async function PUT(request:Request) {
   if(!await isAdmin()) return NextResponse.json({error:'लॉगिन आवश्यक है।'},{status:401});
   const d=await request.json().catch(()=>null);
-  if(!d||!validType(d.type)||!validSlug(String(d.slug||''))||!d.title||typeof d.title!=='string') return NextResponse.json({error:'प्रकार, संकेताक्षर और शीर्षक आवश्यक हैं।'},{status:400});
+  if(!d||!validType(d.type)||!validSlug(String(d.slug||''))||!d.title||typeof d.title!=='object') return NextResponse.json({error:'प्रकार, संकेताक्षर और बहुभाषी शीर्षक आवश्यक हैं।'},{status:400});
+  if(!String((d.title as Record<string,unknown>).hi||'').trim()) return NextResponse.json({error:'हिन्दी शीर्षक आवश्यक है।'},{status:400});
   const translations=(v:unknown)=>{const x=v&&typeof v==='object'?v as Record<string,unknown>:{};return {hi:String(x.hi||''),sa:String(x.sa||''),en:String(x.en||'')};};
   const record={slug:d.slug,type:d.type,status:d.status==='published'?'published':'draft',title:translations(d.title),summary:translations(d.summary),body:translations(d.body),category:String(d.category||''),image:String(d.image||''),location:String(d.location||''),related:Array.isArray(d.related)?d.related.map(String).slice(0,30):[],source:String(d.source||''),updatedAt:new Date().toISOString()};
   try {await saveRepoFile(`${base(d.type)}/${d.slug}.json`,JSON.stringify(record,null,2),`Save ${record.status} record: ${record.title.hi||record.title.en}`);return NextResponse.json({ok:true,message:'अभिलेख सुरक्षित कर दिया गया है।'});}
