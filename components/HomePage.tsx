@@ -1,8 +1,7 @@
-import Image from 'next/image'; import Link from 'next/link'; import DepartmentExplorer from '@/components/DepartmentExplorer'; import { ArrowUpRight, BookOpen, Landmark, Flower2, ScrollText, Users, Globe2, LibraryBig, Search, CalendarDays, PlayCircle, ChevronRight } from 'lucide-react';
-import { departments, type Lang, departmentTitle } from '@/lib/site';
+import Image from 'next/image'; import Link from 'next/link'; import DepartmentExplorer from '@/components/DepartmentExplorer'; import { ArrowUpRight, ScrollText, CalendarDays, PlayCircle, ChevronRight } from 'lucide-react';
+import { departments, type Lang } from '@/lib/site';
 import { readRepoFile } from '@/lib/github-content';
 import { mediaUrl } from '@/lib/media-url';
-const icons=[Landmark,BookOpen,Users,LibraryBig,Flower2,Landmark,ScrollText,Globe2];
 const defaultFeatures=[
 {title:{hi:'शास्त्रीय ज्ञान निधि',sa:'शास्त्रज्ञाननिधिः',en:'Treasury of Scriptural Knowledge'},description:{hi:'वेदान्त, उपनिषद्, ब्रह्मसूत्र भाष्य एवं आचार्य प्रणीत ग्रन्थों का संग्रह।',sa:'वेदान्तोपनिषद्ब्रह्मसूत्रभाष्याचार्यप्रणीतग्रन्थानां संग्रहः।',en:'A collection of Vedanta, Upanishads, Brahma Sutra commentaries and acharya works.'},linkLabel:{hi:'डिजिटल पुस्तकालय',sa:'डिजिटल पुस्तकालयः',en:'Digital Library'},href:'/library',image:'',visible:true,visual:'manuscript'},
 {title:{hi:'पीठ एवं पावन तीर्थ',sa:'पीठानि पावनतीर्थानि च',en:'Peethas & Sacred Pilgrimage Sites'},description:{hi:'निम्बार्क परम्परा से सम्बन्धित मठ, मन्दिर एवं तीर्थस्थल।',sa:'निम्बार्कपरम्परासम्बद्धानि मठमन्दिरतीर्थस्थानानि।',en:'Monasteries, temples and sacred places associated with the Nimbarka tradition.'},linkLabel:{hi:'तीर्थ दर्शन',sa:'तीर्थदर्शनम्',en:'Explore Sacred Places'},href:'/peeth',image:'',visible:true,visual:'temple'},
@@ -10,7 +9,6 @@ const defaultFeatures=[
 {title:{hi:'गुरु-शिष्य परम्परा',sa:'गुरुशिष्यपरम्परा',en:'Teacher-Disciple Lineage'},description:{hi:'प्रमुख आचार्यों, सन्तों एवं आध्यात्मिक परम्परा का परिचय।',sa:'प्रमुखाचार्याणां सन्तानां आध्यात्मिकपरम्परायाश्च परिचयः।',en:'An introduction to leading acharyas, saints and the spiritual lineage.'},linkLabel:{hi:'परम्परा देखें',sa:'परम्परां पश्यतु',en:'Explore the Lineage'},href:'/parampara',image:'',visible:true,visual:'lineage'}
 ];
 export default async function HomePage({lang}:{lang:Lang}) {
- const cards=departments.slice(0,8);
  let heroImage='/images/radha-krishna-hero.jpg'; let acharyaImage='/images/acharya-study.jpg'; let design:any={}; let copy:any={}; let featureCards:any[]=defaultFeatures;
  try {
   const rawDesign=await readRepoFile('content/settings/site-design.json'); if(rawDesign){design=JSON.parse(rawDesign);if(typeof design.acharyaImage==='string'&&design.acharyaImage.startsWith('/'))acharyaImage=design.acharyaImage;}
