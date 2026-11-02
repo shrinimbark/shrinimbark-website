@@ -14,25 +14,44 @@ const defaults = {
   footerPath1:'/sampradaya', footerPath2:'/nimbarkacharya', footerPath3:'/parampara', footerPath4:'/darshan', footerPath5:'/granth', footerPath6:'/library', footerPath7:'/upasana', footerPath8:'/research', footerPath9:'/peeth', footerPath10:'/global', footerPath11:'/support', footerPath12:'/contact', footerPath13:'/admin',
   footerCopyright: 'सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु', footerEditorial: 'सम्पादकीय नीति', footerPrivacy: 'गोपनीयता नीति', footerIntroVisible: true
 };
-const destinations = [
-  ['/sampradaya','/nimbarkacharya','/parampara','/darshan'],
-  ['/granth','/library','/upasana','/research'],
-  ['/peeth','/global','/support','/contact','/admin']
+const translations = {
+ en: {
+  footerTitle:'Shri Nimbarka Sampradaya', footerDescription:'Authentic digital preservation of scriptures, acharya lineage, worship and documented history.',
+  footerGroup1:'The Sampradaya',footerGroup2:'Knowledge & Practice',footerGroup3:'Connect',
+  footerLink1:'Introduction',footerLink2:'Shri Nimbarkacharya',footerLink3:'Guru Parampara',footerLink4:'Philosophy & Siddhanta',
+  footerLink5:'Scriptures & Texts',footerLink6:'Digital Library',footerLink7:'Worship & Sadhana',footerLink8:'Research & Archives',
+  footerLink9:'Peethas & Temples',footerLink10:'Global Community',footerLink11:'Support',footerLink12:'Contact Us',footerLink13:'Administrator Login',
+  footerCopyright:'For public knowledge and cultural preservation',footerEditorial:'Editorial Policy',footerPrivacy:'Privacy Policy'
+ },
+ sa: {
+  footerTitle:'श्रीनिम्बार्कसम्प्रदायः',footerDescription:'शास्त्राणाम्, आचार्यपरम्परायाः, उपासनायाः, प्रमाणितेतिहासस्य च प्रामाणिकं अङ्कीयसंरक्षणम्।',
+  footerGroup1:'सम्प्रदायः',footerGroup2:'ज्ञानं साधना च',footerGroup3:'सम्पर्कः',
+  footerLink1:'परिचयः',footerLink2:'श्रीनिम्बार्काचार्यः',footerLink3:'गुरुपरम्परा',footerLink4:'दर्शनं सिद्धान्ताश्च',
+  footerLink5:'ग्रन्थाः शास्त्राणि च',footerLink6:'अङ्कीयपुस्तकालयः',footerLink7:'उपासना साधना च',footerLink8:'अनुसन्धानम् अभिलेखाश्च',
+  footerLink9:'पीठानि मन्दिराणि च',footerLink10:'वैश्विकपरिवारः',footerLink11:'सहयोगः',footerLink12:'सम्पर्कः',footerLink13:'प्रशासकप्रवेशः',
+  footerCopyright:'सार्वजनिकज्ञानस्य सांस्कृतिकसंरक्षणस्य च कृते',footerEditorial:'सम्पादकीयनीतिः',footerPrivacy:'गोपनीयतानीतिः'
+ }
+} as const;
+const groups = [
+  {links:[1,2,3,4],paths:[1,2,3,4]},
+  {links:[5,6,7,8],paths:[5,6,7,8]},
+  {links:[9,10,11,12,13],paths:[9,10,11,12,13]}
 ];
-type FooterSettings = typeof defaults;
+type Settings = typeof defaults & Record<string, any>;
 export default async function SiteFooter({lang}:{lang:Lang}) {
-  let settings: FooterSettings = defaults;
-  try { const raw = await readRepoFile('content/settings/site-design.json'); if (raw) settings = {...defaults, ...JSON.parse(raw)}; } catch {}
-  const path = (key: string, fallback: string) => String((settings as any)[key] || fallback).trim() || fallback;
-  const href = (value: string) => value.startsWith('http://') || value.startsWith('https://') ? value : value === '/admin' ? value : `/${lang}${value.startsWith('/') ? value : `/${value}`}`;
-  const groups = [
-    {title:settings.footerGroup1, labels:[settings.footerLink1,settings.footerLink2,settings.footerLink3,settings.footerLink4], paths:[path('footerPath1','/sampradaya'),path('footerPath2','/nimbarkacharya'),path('footerPath3','/parampara'),path('footerPath4','/darshan')]},
-    {title:settings.footerGroup2, labels:[settings.footerLink5,settings.footerLink6,settings.footerLink7,settings.footerLink8], paths:[path('footerPath5','/granth'),path('footerPath6','/library'),path('footerPath7','/upasana'),path('footerPath8','/research')]},
-    {title:settings.footerGroup3, labels:[settings.footerLink9,settings.footerLink10,settings.footerLink11,settings.footerLink12,settings.footerLink13], paths:[path('footerPath9','/peeth'),path('footerPath10','/global'),path('footerPath11','/support'),path('footerPath12','/contact'),path('footerPath13','/admin')]}
-  ];
-  return <footer className="footer">
-    {(settings as any).footerIntroVisible!==false&&<div className="footer-top"><div className="footer-emblem">श्री</div><h2>{settings.footerTitle}</h2><p>{settings.footerEnglish}</p><div className="footer-mantra">{settings.footerMantra}</div><p className="footer-desc">{settings.footerDescription}</p></div>}
-    <div className="footer-columns">{groups.map((group,i)=><div key={i}><h3>{group.title}</h3>{group.labels.map((label,j)=><Link key={j} href={href(group.paths[j])}>{label}</Link>)}</div>)}</div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} {settings.footerTitle}</span><span>{settings.footerCopyright}</span><Link href={`/${lang}/editorial-policy`}>{settings.footerEditorial}</Link><Link href="/privacy">{settings.footerPrivacy}</Link></div>
-  </footer>;
+ let settings: Settings = defaults;
+ try { const raw=await readRepoFile('content/settings/site-design.json'); if(raw) settings={...defaults,...JSON.parse(raw)}; } catch {}
+ const localized = (key:keyof typeof defaults) => {
+  const translated = lang==='hi' ? undefined : (translations[lang] as any)[key];
+  const explicit = lang==='en' ? settings[`${key}En`] : lang==='sa' ? settings[`${key}Sa`] : undefined;
+  return String(explicit || translated || settings[key] || defaults[key]);
+ };
+ const path = (key:string,fallback:string) => String(settings[key] || fallback).trim() || fallback;
+ const href = (value:string) => value.startsWith('http://') || value.startsWith('https://') ? value : value==='/admin' ? value : `/${lang}${value.startsWith('/')?value:`/${value}`}`;
+ const headings=[localized('footerGroup1'),localized('footerGroup2'),localized('footerGroup3')];
+ return <footer className="footer">
+  {settings.footerIntroVisible!==false&&<div className="footer-top"><div className="footer-emblem">श्री</div><h2>{localized('footerTitle')}</h2><p>{settings.footerEnglish}</p><div className="footer-mantra">{settings.footerMantra}</div><p className="footer-desc">{localized('footerDescription')}</p></div>}
+  <div className="footer-columns">{groups.map((group,i)=><div key={i}><h3>{headings[i]}</h3>{group.links.map((n,j)=>{const label=localized((`footerLink${n}`) as keyof typeof defaults);const dest=path(`footerPath${n}`,defaults[(`footerPath${n}`) as keyof typeof defaults] as string);return <Link key={n} href={href(dest)}>{label}</Link>})}</div>)}</div>
+  <div className="footer-bottom"><span>© {new Date().getFullYear()} {localized('footerTitle')}</span><span>{localized('footerCopyright')}</span><Link href={`/${lang}/editorial-policy`}>{localized('footerEditorial')}</Link><Link href="/privacy">{localized('footerPrivacy')}</Link></div>
+ </footer>;
 }
