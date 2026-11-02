@@ -44,7 +44,7 @@
   "siteName": "श्रीनिम्बार्क सम्प्रदाय",
   "englishName": "SHRI NIMBARKA SAMPRADAYA",
   "logoWidth": 420,
-  "logoHeight": 123,
+  "logoHeight": 40,
   "mastheadPadding": 34,
   "brandAlignment": "center",
   "tagline": " नान्या गतिः कृष्णपदारविन्दात् संदृश्यते ब्रह्मशिवादिवन्दितात्।  भक्तेच्छयोपात्तसुचिन्त्यविग्रहादचिन्त्यशक्तेरविचिन्त्यसाशयात् ।।",
@@ -62,7 +62,7 @@
   "acharyaImageVisible": true,
   "acharyaImageWidth": 100,
   "leftImage": "/uploads/1793631371766-587546.png",
-  "rightImage": "/uploads/1793461552628-418203.png",
+  "rightImage": "/uploads/1793631946299-587554.png",
   "leftImageWidth": 100,
   "leftImageHeight": 100,
   "rightImageWidth": 100,
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T14:56:23.393Z"
+  "updatedAt": "2026-11-02T15:05:57.287Z"
 }
