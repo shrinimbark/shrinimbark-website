@@ -12,11 +12,17 @@ export function generateStaticParams() {
 }
 
 function renderInline(text: string) {
-  return text.split(/(\*\*.*?\*\*)/g).map((part, index) =>
-    part.startsWith('**') && part.endsWith('**')
-      ? <strong key={index}>{part.slice(2, -2)}</strong>
-      : <span key={index}>{part}</span>
-  );
+  const tokenPattern = /(\*\*.*?\*\*|\[[^\]]+\]\([^)]+\))/g;
+  return text.split(tokenPattern).filter(Boolean).map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) return <strong key={index}>{part.slice(2, -2)}</strong>;
+    const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(part);
+    if (link) {
+      const [, label, href] = link;
+      if (/^(https?:\/\/|mailto:)/i.test(href)) return <a key={index} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}>{label}</a>;
+      if (href.startsWith('/') && !href.startsWith('//')) return <Link key={index} href={href}>{label}</Link>;
+    }
+    return <span key={index}>{part}</span>;
+  });
 }
 
 function ArticleBody({ body }: { body: string }) {
