@@ -58,7 +58,7 @@
   "logoVisible": true,
   "leftImageVisible": true,
   "rightImageVisible": true,
-  "acharyaImage": "/images/acharya-study.jpg",
+  "acharyaImage": "/uploads/1793624725792-ChatGPT-Image-May-14--2026--10-51-21-AM.png",
   "acharyaImageVisible": true,
   "acharyaImageWidth": 100,
   "leftImage": "/uploads/1793450612912-552266.jpg",
@@ -81,13 +81,13 @@
   "brandTitleSize": 41,
   "brandEnglishSize": 16,
   "brandTaglineSize": 15,
-  "acharyaImageHeight": 300,
+  "acharyaImageHeight": 321,
   "logoSize": 88,
   "heroFit": "contain",
   "heroPosition": "center center",
   "heroHeight": 480,
   "heroMobileHeight": 300,
-  "acharyaFit": "contain",
+  "acharyaFit": "cover",
   "departmentCols": 4,
   "departmentCardScale": 100,
   "featureCols": 2,
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T13:04:22.729Z"
+  "updatedAt": "2026-11-02T13:05:46.606Z"
 }
