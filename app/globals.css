@@ -954,3 +954,15 @@ img,video,iframe{max-width:100%}
 .home-social-links a{display:inline-flex;padding:5px 10px;border:1px solid var(--line);border-radius:3px;color:#805a2c;font-size:11px}
 @media(max-width:700px){.lower-panels{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-left:12px;margin-right:12px;padding:0}.lower-panel{padding:12px}.lower-panel h2{font-size:13px}.lower-panel p{font-size:10px}.lower-panel a{font-size:10px}}
 @media(max-width:390px){.lower-panels{grid-template-columns:1fr}}
+
+/* Final phone overrides: enforce compact two-column directory and horizontal info trio */
+@media(max-width:700px){
+ .department-explorer .department-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .lower-panels{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin:0 8px 18px!important;padding:0!important}
+ .lower-panel{padding:9px 7px!important;min-width:0!important}
+ .lower-panel h2{font-size:10px!important;line-height:1.35!important;gap:4px!important;display:block!important}
+ .lower-panel h2 svg{width:14px;height:14px;display:block;margin:0 auto 4px}
+ .lower-panel p{font-size:9px!important;line-height:1.45!important;min-height:0!important;margin:5px 0!important}
+ .lower-panel a{font-size:9px!important;line-height:1.4!important;white-space:normal}
+ .lower-panel:last-child{grid-column:auto!important}
+}
