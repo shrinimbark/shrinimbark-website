@@ -62,7 +62,7 @@
   "acharyaImageVisible": true,
   "acharyaImageWidth": 100,
   "leftImage": "/uploads/1793631371766-587546.png",
-  "rightImage": "/uploads/1793631946299-587554.png",
+  "rightImage": "/uploads/1793635206796-587577.png",
   "leftImageWidth": 100,
   "leftImageHeight": 100,
   "rightImageWidth": 100,
@@ -79,7 +79,7 @@
   "mastheadCenterWidth": 629,
   "mastheadGap": 24,
   "brandTitleSize": 52,
-  "brandEnglishSize": 16,
+  "brandEnglishSize": 28,
   "brandTaglineSize": 15,
   "acharyaImageHeight": 160,
   "logoSize": 88,
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T15:05:57.287Z"
+  "updatedAt": "2026-11-02T16:00:15.185Z"
 }
