@@ -4,6 +4,7 @@ import { LockKeyhole, LogOut, Save, Upload, FileText, Image as ImageIcon, Extern
 import SiteDesignEditor from '@/components/SiteDesignEditor';
 import HomePageEditor from '@/components/HomePageEditor';
 import FeatureCardsEditor from '@/components/FeatureCardsEditor';
+import RecordManager from '@/components/RecordManager';
 const sections = [
 ['sampradaya','सम्प्रदाय परिचय',['परिचय एवं स्वरूप','नामकरण एवं इतिहास','सम्प्रदाय की विशेषताएँ','शाखाएँ एवं उपशाखाएँ','वैष्णव परम्पराओं में स्थान']],
 ['nimbarkacharya','श्रीनिम्बार्काचार्य',['प्राकट्य एवं जीवनचरित्र','गुरु एवं शिक्षा','दर्शन एवं उपदेश','ग्रन्थ एवं रचनाएँ','प्राकट्य स्थल एवं परम्पराएँ','ऐतिहासिक प्रमाण']],
