@@ -1029,3 +1029,14 @@ img,video,iframe{max-width:100%}
 .admin-home-image .admin-home-copy-field{display:block}
 .admin-home-image .admin-card-editor-body .admin-two{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:850px){.admin-home-image .admin-card-editor-body .admin-two{grid-template-columns:1fr}}
+
+/* Admin-configurable department card artwork */
+.department-custom-image{width:100px;height:82px;object-fit:contain;display:block;margin:0 auto 10px}
+.department-card{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.department-card .card-number{align-self:flex-start}
+.department-card .department-icon{flex:0 0 auto}
+.department-card h3{margin-top:0}
+.department-visual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.department-visual-grid .admin-card-editor{min-width:0}
+.department-visual-grid .builder-accordion-trigger{width:100%;display:flex;justify-content:space-between;gap:10px;padding:13px;border:0;background:transparent;text-align:left;cursor:pointer;color:var(--admin-text,#39252a)}
+@media(max-width:640px){.department-visual-grid{grid-template-columns:1fr}.department-custom-image{width:88px;height:72px}}
