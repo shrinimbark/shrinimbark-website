@@ -19,7 +19,7 @@ const destinations = [
   ['/granth','/library','/upasana','/research'],
   ['/peeth','/global','/support','/contact','/admin']
 ];
-type FooterSettings = { [K in keyof typeof defaults]: typeof defaults[K] };
+type FooterSettings = typeof defaults;
 export default async function SiteFooter({lang}:{lang:Lang}) {
   let settings: FooterSettings = defaults;
   try { const raw = await readRepoFile('content/settings/site-design.json'); if (raw) settings = {...defaults, ...JSON.parse(raw)}; } catch {}
