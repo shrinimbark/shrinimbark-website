@@ -49,7 +49,7 @@
   "brandAlignment": "center",
   "tagline": "द्वैताद्वैत वेदान्त की दिव्य परम्परा",
   "invocation": "सर्वं हि विज्ञानमतो यथार्थकं",
-  "invocationVisible": false,
+  "invocationVisible": true,
   "primary": "#4b1728",
   "gold": "#b08a4e",
   "background": "#f6eddd",
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T13:01:02.214Z"
+  "updatedAt": "2026-11-02T13:01:23.764Z"
 }
