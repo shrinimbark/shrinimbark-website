@@ -47,7 +47,7 @@
   "heroMobileHeight": 365,
   "acharyaFit": "contain",
   "departmentCols": 4,
-  "departmentCardScale": 150,
+  "departmentCardScale": 77,
   "featureCols": 4,
   "lowerPanelsVisible": true,
   "closingQuoteVisible": true,
@@ -101,5 +101,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T11:46:08.595Z"
+  "updatedAt": "2026-11-02T11:46:31.155Z"
 }
