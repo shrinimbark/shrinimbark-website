@@ -58,7 +58,7 @@
   "logoVisible": true,
   "leftImageVisible": true,
   "rightImageVisible": true,
-  "acharyaImage": "/uploads/1793624725792-ChatGPT-Image-May-14--2026--10-51-21-AM.png",
+  "acharyaImage": "/uploads/1793627523549-587462.png",
   "acharyaImageVisible": true,
   "acharyaImageWidth": 100,
   "leftImage": "/uploads/1793450612912-552266.jpg",
@@ -75,10 +75,10 @@
   "leftImageY": 1,
   "rightImageX": 1,
   "rightImageY": 1,
-  "mastheadHeight": 360,
-  "mastheadCenterWidth": 460,
+  "mastheadHeight": 585,
+  "mastheadCenterWidth": 629,
   "mastheadGap": 24,
-  "brandTitleSize": 41,
+  "brandTitleSize": 52,
   "brandEnglishSize": 16,
   "brandTaglineSize": 15,
   "acharyaImageHeight": 321,
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "सम्पादकीय नीति",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T13:05:46.606Z"
+  "updatedAt": "2026-11-02T13:52:13.917Z"
 }
