@@ -443,3 +443,58 @@
   .masthead-painting {display:flex!important;align-items:center!important;justify-content:center!important;min-width:0!important}
   .masthead-painting img {max-width:100%!important;object-fit:contain!important}
 }
+
+
+/* Desktop department directory: show all sixteen sections together in a compact,
+   readable four-column grid. Mobile/tablet retain their existing expand control. */
+@media (min-width: 1051px) {
+  .department-section {
+    width:min(100% - 48px,1320px)!important;
+    max-width:1320px!important;
+    padding:16px 0 14px!important;
+    margin-left:auto!important;margin-right:auto!important;
+  }
+  .department-section .section-heading {margin:0 auto 12px!important}
+  .department-section .section-heading .eyebrow {font-size:12px!important;margin:0 0 3px!important}
+  .department-section .section-heading h2 {font-size:25px!important;line-height:1.3!important;margin:3px 0!important}
+  .department-section .section-heading p {font-size:13px!important;line-height:1.45!important;margin:4px auto!important}
+  .department-explorer .department-grid {
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-auto-rows:minmax(104px,auto)!important;
+    gap:9px!important;
+  }
+  .department-explorer .department-card {
+    min-height:104px!important;height:104px!important;
+    display:grid!important;
+    grid-template-columns:26px minmax(0,1fr)!important;
+    grid-template-rows:auto 1fr auto!important;
+    align-items:start!important;column-gap:9px!important;row-gap:2px!important;
+    padding:10px 12px!important;box-sizing:border-box!important;
+    border-radius:7px!important;overflow:hidden!important;
+  }
+  .department-explorer .department-card .card-number {display:none!important}
+  .department-explorer .department-card .department-icon,
+  .department-explorer .department-card .department-custom-image {
+    grid-column:1!important;grid-row:1 / span 2!important;
+    width:24px!important;height:24px!important;max-width:24px!important;max-height:24px!important;
+    object-fit:contain!important;margin:1px 0 0!important;
+  }
+  .department-explorer .department-card h3 {
+    grid-column:2!important;grid-row:1!important;
+    font-size:14px!important;line-height:1.35!important;
+    margin:0!important;padding:0!important;text-align:left!important;
+  }
+  .department-explorer .department-card p {
+    grid-column:2!important;grid-row:2!important;
+    display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;
+    overflow:hidden!important;font-size:11px!important;line-height:1.4!important;
+    margin:2px 0 0!important;min-height:0!important;text-align:left!important;
+  }
+  .department-explorer .department-card .card-arrow {
+    grid-column:2!important;grid-row:3!important;
+    justify-self:start!important;font-size:11px!important;line-height:1.2!important;
+    margin:2px 0 0!important;padding:0!important;
+  }
+  .department-explorer .all-departments {display:none!important}
+}
