@@ -1144,3 +1144,67 @@ img,video,iframe{max-width:100%}
 .footer-bottom{flex-direction:row!important;justify-content:center!important;flex-wrap:wrap!important;gap:6px 22px!important}
 .footer-bottom>*{width:auto!important}
 @media(max-width:700px){.acharya-side{gap:5px!important}.acharya-side a{font-size:11px!important;padding:6px 8px!important}.footer-bottom{flex-direction:row!important}.footer-bottom>*{width:auto!important}}
+
+
+/* Final ornament cleanup and independent responsive artwork fitting. */
+.masthead::before,.masthead::after,
+.masthead:before,.masthead:after,
+.mast-ornament,.mast-rule,.mast-rule span,.heading-rule,
+.hero-flourish,.opening-title .hero-flourish {
+  display:none!important;content:none!important;background-image:none!important;
+}
+.acharya-image {
+  position:relative!important;min-width:0!important;overflow:hidden!important;
+  background:#efe0c4!important;
+}
+.acharya-image img {
+  object-fit:contain!important;object-position:center center!important;
+  width:100%!important;height:100%!important;
+}
+@media (min-width:1051px) {
+  .acharya-band {
+    grid-template-columns:minmax(0,0.95fr) minmax(0,1.15fr) minmax(190px,0.7fr)!important;
+    min-height:0!important;align-items:stretch!important;
+  }
+  .acharya-image {
+    height:clamp(220px,21vw,290px)!important;min-height:220px!important;
+  }
+  .acharya-image img {object-fit:contain!important;object-position:center!important}
+  .acharya-copy {padding:30px 26px!important;align-self:center!important}
+}
+@media (max-width:1050px) {
+  .acharya-band {grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+  .acharya-image {height:clamp(220px,32vw,300px)!important;min-height:220px!important}
+  .acharya-image img {object-fit:contain!important;object-position:center!important}
+}
+@media (max-width:760px) {
+  .masthead {
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;gap:8px!important;
+    height:auto!important;min-height:0!important;padding:12px 10px!important;
+  }
+  .masthead-center {grid-column:1/-1!important;grid-row:1!important}
+  .masthead-painting {
+    grid-row:2!important;height:clamp(155px,48vw,230px)!important;
+    min-height:155px!important;max-height:230px!important;width:100%!important;
+    overflow:hidden!important;
+  }
+  .masthead-painting-left {grid-column:1!important}
+  .masthead-painting-right {grid-column:2!important}
+  .masthead-painting img {
+    width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;
+    object-fit:contain!important;object-position:center!important;transform:none!important;
+  }
+  .acharya-band {grid-template-columns:minmax(0,1fr)!important}
+  .acharya-image {
+    grid-column:1!important;grid-row:1!important;width:100%!important;
+    height:clamp(245px,72vw,340px)!important;min-height:245px!important;
+    max-height:340px!important;overflow:hidden!important;
+  }
+  .acharya-image img {
+    width:100%!important;height:100%!important;object-fit:contain!important;
+    object-position:center!important;
+  }
+  .acharya-copy {padding:22px 18px 14px!important}
+  .acharya-side {grid-column:1!important;margin:0 14px 18px!important}
+}
