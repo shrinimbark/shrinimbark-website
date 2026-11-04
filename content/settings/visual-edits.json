@@ -28,7 +28,7 @@
       "path": "body > div:nth-of-type(2) > main > section.acharya-band:nth-of-type(2) > div.acharya-image:nth-of-type(1) > img",
       "lang": "hi",
       "style": {
-        "maxWidth": "100px",
+        "maxWidth": "600px",
         "fontSize": "16px",
         "textAlign": "center",
         "padding": "0px",
@@ -54,5 +54,5 @@
       "hidden": false
     }
   ],
-  "updatedAt": "2026-11-04T11:06:23.302Z"
+  "updatedAt": "2026-11-04T11:06:58.109Z"
 }
