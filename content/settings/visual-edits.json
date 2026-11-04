@@ -32,9 +32,9 @@
         "fontSize": "16px",
         "textAlign": "center",
         "padding": "0px",
-        "border": "0",
-        "borderRadius": "0",
-        "width": "981px",
+        "border": "1px solid #c9b58d",
+        "borderRadius": "10px",
+        "width": "600px",
         "height": "230px"
       },
       "hidden": false
@@ -54,5 +54,5 @@
       "hidden": false
     }
   ],
-  "updatedAt": "2026-11-04T11:06:58.109Z"
+  "updatedAt": "2026-11-04T11:07:57.346Z"
 }
