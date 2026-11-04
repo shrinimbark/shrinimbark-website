@@ -1134,3 +1134,13 @@ img,video,iframe{max-width:100%}
  .home-news-strip strong,.home-news-strip>span{font-size:14px;line-height:1.65}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* November 2026: visual editor text, image sizing and compact home layout fixes */
+.department-card .card-number{display:none!important}
+.acharya-side{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important;gap:7px 16px!important}
+.acharya-side h3{flex:0 0 100%;margin-bottom:4px}
+.acharya-side a{display:inline-flex!important;justify-content:center!important;gap:5px;padding:7px 10px!important;border:1px solid #d8c49d!important;border-radius:18px;background:#fff9ed;white-space:nowrap}
+.footer-bottom{flex-direction:row!important;justify-content:center!important;flex-wrap:wrap!important;gap:6px 22px!important}
+.footer-bottom>*{width:auto!important}
+@media(max-width:700px){.acharya-side{gap:5px!important}.acharya-side a{font-size:11px!important;padding:6px 8px!important}.footer-bottom{flex-direction:row!important}.footer-bottom>*{width:auto!important}}
