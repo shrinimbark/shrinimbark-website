@@ -105,7 +105,7 @@
   "lowerPanelCols": 3,
   "featureHeight": 120,
   "sectionWidth": 1200,
-  "sectionOrder": "departments,acharya,features,lower",
+  "sectionOrder": "acharya,departments,features,news,calendar,social,lower,closing",
   "hiddenSections": "",
   "footerTitle": "श्रीनिम्बार्क सम्प्रदाय",
   "footerEnglish": "SHRI NIMBARKA SAMPRADAYA",
