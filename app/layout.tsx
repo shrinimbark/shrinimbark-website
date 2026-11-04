@@ -16,13 +16,13 @@ export const metadata: Metadata = {
     siteName: 'श्रीनिम्बार्क सम्प्रदाय',
     locale: 'hi_IN',
     type: 'website',
-    images: [{ url: '/og-default.svg', width: 1200, height: 630, alt: 'श्रीनिम्बार्क सम्प्रदाय — द्वैताद्वैत वेदान्त की दिव्य परम्परा' }],
+    images: [{ url: '/images/royal-homepage-reference.png', width: 1200, height: 630, alt: 'श्रीनिम्बार्क सम्प्रदाय — द्वैताद्वैत वेदान्त की दिव्य परम्परा' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/og-default.svg'],
+    images: ['/images/royal-homepage-reference.png'],
   },
   alternates: { canonical: '/' },
 };
