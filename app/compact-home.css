@@ -532,3 +532,26 @@
  .footer-columns{grid-template-columns:minmax(0,1fr)!important;padding:10px 12px!important}
  .footer-columns>div{gap:6px 14px!important}
 }
+
+
+/* Refined desktop masthead: smaller side paintings, balanced center and no ornaments. */
+@media (min-width: 1051px) {
+  .masthead {
+    min-height:260px!important;height:260px!important;
+    padding-top:8px!important;padding-bottom:8px!important;
+    grid-template-columns:minmax(0,1fr) minmax(400px,480px) minmax(0,1fr)!important;
+    column-gap:12px!important;align-items:center!important;
+  }
+  .masthead-painting {height:244px!important;max-height:244px!important;overflow:hidden!important}
+  .masthead-painting img {
+    width:220px!important;height:230px!important;max-width:100%!important;max-height:230px!important;
+    object-fit:contain!important;transform:none!important;
+  }
+  .masthead-center {gap:2px!important;padding:0 6px!important}
+  .masthead-center .seal img {width:190px!important;height:96px!important;max-height:96px!important}
+  .masthead-center .invocation {margin:1px 0 2px!important;font-size:16px!important;line-height:1.35!important}
+  .masthead-center .brand-hi {font-size:34px!important;line-height:1.2!important;margin:0!important}
+  .masthead-center .brand-en {font-size:18px!important;line-height:1.25!important;letter-spacing:2px!important}
+  .masthead-center .brand-tag {font-size:14px!important;line-height:1.45!important;margin:3px auto 0!important}
+}
+.mast-ornament,.mast-rule,.heading-rule {display:none!important}
