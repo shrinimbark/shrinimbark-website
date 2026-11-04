@@ -28,7 +28,7 @@ function describe(el:Element):Target{
 }
 export default function VisualSiteEditor(){
  const frame=useRef<HTMLIFrameElement>(null);
- const [lang,setLang]=useState('hi'),[selected,setSelected]=useState<Target|null>(null),[textValue,setTextValue]=useState(''),[href,setHref]=useState(''),[imageUrl,setImageUrl]=useState(''),[width,setWidth]=useState(''),[height,setHeight]=useState(''),[fontSize,setFontSize]=useState(''),[hidden,setHidden]=useState(false),[align,setAlign]=useState('left'),[maxWidth,setMaxWidth]=useState(''),[padding,setPadding]=useState(''),[boxStyle,setBoxStyle]=useState('inherit'),[hiddenItems,setHiddenItems]=useState<string[]>([]),[notice,setNotice]=useState('बाईं ओर वेबसाइट के जिस वास्तविक भाग को बदलना है, उसी पर क्लिक करें।'),[dirty,setDirty]=useState(false);
+ const [lang,setLang]=useState('hi'),[selected,setSelected]=useState<Target|null>(null),[textValue,setTextValue]=useState(''),[href,setHref]=useState(''),[imageUrl,setImageUrl]=useState(''),[width,setWidth]=useState(''),[height,setHeight]=useState(''),[fontSize,setFontSize]=useState(''),[hidden,setHidden]=useState(false),[align,setAlign]=useState('left'),[maxWidth,setMaxWidth]=useState(''),[padding,setPadding]=useState(''),[boxStyle,setBoxStyle]=useState('inherit'),[hiddenItems,setHiddenItems]=useState<string[]>([]),[notice,setNotice]=useState('बाईं ओर वेबसाइट के जिस वास्तविक भाग को बदलना है, उसी पर क्लिक करें।'),[dirty,setDirty]=useState(false),[busy,setBusy]=useState(false);
  const picked=()=>frame.current?.contentDocument?.querySelector('[data-visual-selected="yes"]') as HTMLElement|null;
  const bind=useCallback(()=>{
   const doc=frame.current?.contentDocument;if(!doc)return;
