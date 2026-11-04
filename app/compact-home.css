@@ -555,3 +555,37 @@
   .masthead-center .brand-tag {font-size:14px!important;line-height:1.45!important;margin:3px auto 0!important}
 }
 .mast-ornament,.mast-rule,.heading-rule {display:none!important}
+
+
+/* Authoritative acharya artwork sizing: override all earlier compact rules. */
+.acharya-band > .acharya-image {
+  position:relative!important;width:100%!important;max-width:100%!important;min-width:0!important;
+  height:clamp(300px,30vw,430px)!important;min-height:300px!important;max-height:430px!important;
+  overflow:hidden!important;background:#efe0c4!important;align-self:stretch!important;
+}
+.acharya-band > .acharya-image > img,
+.acharya-band > .acharya-image > span > img {
+  display:block!important;width:100%!important;height:100%!important;
+  max-width:100%!important;max-height:100%!important;
+  object-fit:contain!important;object-position:center center!important;transform:none!important;
+}
+@media (min-width:1051px) {
+  .acharya-band {grid-template-columns:minmax(0,1.05fr) minmax(0,1.2fr) minmax(190px,.7fr)!important;align-items:stretch!important}
+  .acharya-band > .acharya-image {height:clamp(320px,28vw,440px)!important;min-height:320px!important;max-height:440px!important}
+}
+@media (min-width:761px) and (max-width:1050px) {
+  .acharya-band {grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+  .acharya-band > .acharya-image {height:clamp(300px,38vw,390px)!important;min-height:300px!important;max-height:390px!important}
+}
+@media (max-width:760px) {
+  .acharya-band {grid-template-columns:minmax(0,1fr)!important}
+  .acharya-band > .acharya-image {
+    grid-column:1!important;grid-row:1!important;width:100%!important;
+    height:clamp(300px,95vw,440px)!important;min-height:300px!important;max-height:440px!important;
+    margin:0!important;padding:8px!important;
+  }
+  .acharya-band > .acharya-image > img,
+  .acharya-band > .acharya-image > span > img {
+    width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;
+  }
+}
