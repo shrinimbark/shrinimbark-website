@@ -19,12 +19,13 @@ function describe(el:Element):Target{
  if(c.includes('lower-panels'))return {label:'समाचार, आयोजन, शोध एवं प्रकाशन',kind:'section',selector:'.lower-panels',tag:'खण्ड'};
  if(c.includes('closing-quote'))return {label:'समापन मंगल-वाक्य',kind:'section',selector:'.closing-quote',tag:'खण्ड'};
  if(c.includes('topbar-invocation'))return {label:'शीर्ष पट्टी का संस्कृत वाक्य',kind:'text',selector:'.topbar-invocation',tag:'शीर्ष पट्टी'};
+ if(el.tagName==='A')return {label:'लिंक / मेनू विकल्प',kind:'link',selector:'a',tag:'लिंक'};
+ if(['H1','H2','H3','H4','P','SPAN','STRONG','EM','SMALL','LABEL'].includes(el.tagName))return {label:'शीर्षक / पाठ सामग्री',kind:'text',selector:el.tagName.toLowerCase(),tag:'पाठ'};
  if(c.includes('topbar')||el.closest('.topbar'))return {label:'सबसे ऊपर की पट्टी',kind:'section',selector:'.topbar',tag:'शीर्ष पट्टी'};
  if(c.includes('masthead')||el.closest('.masthead'))return {label:'मुख्य परिचय / चित्र और नाम',kind:'section',selector:'.masthead',tag:'मुख्य शीर्ष'};
  if(c.includes('mainnav')||el.closest('.mainnav'))return {label:'मुख्य विभाग नेविगेशन',kind:'section',selector:'.mainnav',tag:'मुख्य नेविगेशन'};
  if(c.includes('footer')||el.closest('footer'))return {label:'पादलेख',kind:'section',selector:'footer',tag:'पादलेख'};
- if(el.tagName==='A')return {label:'लिंक / मेनू विकल्प',kind:'link',selector:'a',tag:'लिंक'};
- return {label:el.tagName.toLowerCase()==='h1'||el.tagName.toLowerCase()==='h2'||el.tagName.toLowerCase()==='h3'?'शीर्षक / उपशीर्षक':'पाठ सामग्री',kind:'text',selector:el.tagName.toLowerCase(),tag:el.tagName.toLowerCase()};
+ return {label:'पाठ सामग्री',kind:'text',selector:el.tagName.toLowerCase(),tag:el.tagName.toLowerCase()};
 }
 export default function VisualSiteEditor(){
  const frame=useRef<HTMLIFrameElement>(null);
