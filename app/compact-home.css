@@ -589,3 +589,49 @@
     width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;
   }
 }
+
+
+/* Final responsive correction for the founder-acharya section.
+   Ignore the old admin width percentage here: it was shrinking the image
+   to a narrow strip on phones and leaving a large empty panel. */
+.acharya-band{box-sizing:border-box!important;min-width:0!important;width:100%!important;overflow:hidden!important}
+.acharya-band .acharya-image{
+  width:100%!important;max-width:none!important;min-width:0!important;
+  box-sizing:border-box!important;overflow:hidden!important;
+}
+.acharya-band .acharya-image img{
+  position:absolute!important;inset:0!important;display:block!important;
+  width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;
+  object-fit:contain!important;object-position:center center!important;
+}
+@media(min-width:1051px){
+ .acharya-band{
+   display:grid!important;
+   grid-template-columns:minmax(0,1.05fr) minmax(0,1.15fr) minmax(190px,.7fr)!important;
+   min-height:0!important;align-items:stretch!important;
+ }
+ .acharya-band .acharya-image{height:clamp(300px,27vw,390px)!important;min-height:300px!important;max-height:390px!important}
+ .acharya-band .acharya-copy{min-width:0!important;padding:30px 26px!important}
+ .acharya-band .acharya-side{min-width:0!important;margin:24px 18px 24px 0!important}
+}
+@media(max-width:1050px){
+ .acharya-band{display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-height:0!important}
+ .acharya-band .acharya-image{
+   grid-column:1!important;grid-row:1!important;
+   width:100%!important;height:clamp(260px,72vw,420px)!important;
+   min-height:260px!important;max-height:420px!important;margin:0!important;padding:0!important;
+ }
+ .acharya-band .acharya-copy{grid-column:1!important;grid-row:2!important;min-width:0!important;padding:24px 20px!important}
+ .acharya-band .acharya-side{grid-column:1!important;grid-row:3!important;width:auto!important;min-width:0!important;margin:0 16px 18px!important;box-sizing:border-box!important}
+ .acharya-band .acharya-side a{display:inline-flex!important;max-width:100%!important;white-space:normal!important}
+}
+@media(max-width:760px){
+ .acharya-band .acharya-image{height:clamp(250px,78vw,380px)!important;min-height:250px!important;max-height:380px!important}
+ .acharya-band .acharya-copy{padding:20px 18px!important}
+ .acharya-band .acharya-copy h2{font-size:clamp(22px,6vw,28px)!important;line-height:1.35!important}
+ .acharya-band .acharya-copy h3{font-size:15px!important;line-height:1.5!important}
+ .acharya-band .acharya-copy p{font-size:14px!important;line-height:1.8!important;overflow-wrap:anywhere!important}
+ .acharya-band .acharya-side{padding:14px!important}
+ .acharya-band .acharya-side h3{font-size:18px!important}
+ .acharya-band .acharya-side a{padding:8px 12px!important}
+}
