@@ -1047,3 +1047,9 @@ img,video,iframe{max-width:100%}
 .home-calendar-grid{display:var(--hide-calendar,grid)}
 .home-social-strip{display:var(--hide-social,flex)}
 .closing-quote{display:var(--hide-closing,block)}
+
+/* Every homepage section participates in the same editable vertical layout. */
+.home-news-strip{order:var(--order-news,4)}
+.home-calendar-grid{order:var(--order-calendar,5)}
+.home-social-strip{order:var(--order-social,6)}
+.closing-quote{order:var(--order-closing,8)}
