@@ -93,7 +93,7 @@
   "featureCols": 2,
   "lowerPanelsVisible": true,
   "closingQuoteVisible": true,
-  "footerIntroVisible": true,
+  "footerIntroVisible": false,
   "socialVisible": true,
   "socialHeading": "हमसे जुड़े रहें",
   "socialDescription": "सम्प्रदाय के आधिकारिक सामाजिक माध्यम",
@@ -141,7 +141,7 @@
   "footerPath12": "/contact",
   "footerPath13": "/admin",
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
-  "footerEditorial": "सम्पादकीय नीति",
+  "footerEditorial": "",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-02T16:00:18.260Z"
+  "updatedAt": "2026-11-04T06:54:34.214Z"
 }
