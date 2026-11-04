@@ -1,79 +1,73 @@
 'use client';
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {ArrowDown,ArrowUp,Eye,EyeOff,ExternalLink,Image as ImageIcon,MousePointer2,RefreshCw,Save} from 'lucide-react';
-import SiteDesignEditor from '@/components/SiteDesignEditor';
-import HomePageEditor from '@/components/HomePageEditor';
-import FeatureCardsEditor from '@/components/FeatureCardsEditor';
-import DepartmentVisualEditor from '@/components/DepartmentVisualEditor';
-import RecordManager from '@/components/RecordManager';
+import {ArrowDown,ArrowUp,Eye,EyeOff,ExternalLink,GripVertical,Image as ImageIcon,MousePointer2,RefreshCw,Save,Upload} from 'lucide-react';
 
-type Pick={label:string;selector:string;kind:'design'|'home'|'cards'|'departments'|'records';tag:string;href?:string};
-const classify=(raw:Element):Pick=>{
- const el=raw.tagName==='IMG'&&raw.parentElement?raw.parentElement:raw;
- const link=raw.closest('a') as HTMLAnchorElement|null;
- const href=link?.getAttribute('href')||undefined;
- const card=el.closest('.department-card,.feature-card');
- const section=el.closest('.department-section,.acharya-band,.feature-section,.home-news-strip,.home-calendar-grid,.home-social-strip,.lower-panels,.closing-quote,footer,.masthead,article')||el;
- const c=String((section as HTMLElement).className||'');
- if(card?.classList.contains('department-card')||c.includes('department-section'))return {label:card?'विभाग कार्ड':'मुख्य विभाग',selector:card?'.department-card':'.department-section',kind:'departments',tag:'विभाग',href};
- if(c.includes('acharya-band'))return {label:'आचार्य परिचय',selector:'.acharya-band',kind:'home',tag:'आचार्य खण्ड',href};
- if(card?.classList.contains('feature-card')||c.includes('feature-section'))return {label:card?'विशेष संग्रह कार्ड':'विशेष संग्रह',selector:card?'.feature-card':'.feature-section',kind:'cards',tag:'विशेष संग्रह',href};
- if(c.includes('home-news-strip'))return {label:'समाचार सूचना पट्टी',selector:'.home-news-strip',kind:'design',tag:'समाचार',href};
- if(c.includes('home-calendar-grid'))return {label:'पञ्चाङ्ग खण्ड',selector:'.home-calendar-grid',kind:'design',tag:'पञ्चाङ्ग',href};
- if(c.includes('home-social-strip'))return {label:'सामाजिक माध्यम',selector:'.home-social-strip',kind:'design',tag:'सामाजिक माध्यम',href};
- if(c.includes('lower-panels'))return {label:'निचले सूचना खण्ड',selector:'.lower-panels',kind:'design',tag:'निचले खण्ड',href};
- if(c.includes('closing-quote'))return {label:'समापन मंगल-वाक्य',selector:'.closing-quote',kind:'home',tag:'समापन',href};
- if(c.includes('masthead')||c.includes('topbar')||c.includes('mainnav'))return {label:'शीर्ष भाग / मुख्य परिचय',selector:'.masthead',kind:'design',tag:'शीर्ष भाग',href};
- if(c.includes('footer')||el.tagName==='FOOTER')return {label:'पादलेख',selector:'footer',kind:'design',tag:'पादलेख',href};
- if(el.closest('article')||el.closest('.article-body'))return {label:'लेख / विषय सामग्री',selector:'article',kind:'records',tag:'लेख',href};
- return {label:'चयनित वेबसाइट तत्व',selector:el.tagName.toLowerCase(),kind:'home',tag:el.tagName.toLowerCase(),href};
-};
+type Target={label:string;kind:'text'|'image'|'link'|'section'|'card';selector:string;tag:string};
+const targets='a,button,img,h1,h2,h3,h4,p,span,.department-card,.feature-card,.acharya-band,.department-section,.feature-section,.home-news-strip,.home-calendar-grid,.home-social-strip,.lower-panels,.closing-quote,.topbar,.masthead,.mainnav,footer,.footer-columns>div,.footer-bottom>*';
+function describe(el:Element):Target{
+ const c=String((el as HTMLElement).className||'');
+ if(el.tagName==='IMG')return {label:el.closest('.masthead-painting-left')?'बायाँ चित्र':el.closest('.masthead-painting-right')?'दायाँ चित्र':el.closest('.seal')?'मुख्य प्रतीक चित्र':'चयनित चित्र',kind:'image',selector:'img',tag:'चित्र'};
+ if(c.includes('department-card'))return {label:'विभाग कार्ड',kind:'card',selector:'.department-card',tag:'कार्ड'};
+ if(c.includes('feature-card'))return {label:'विशेष संग्रह कार्ड',kind:'card',selector:'.feature-card',tag:'कार्ड'};
+ if(c.includes('acharya-band'))return {label:'आचार्य परिचय खण्ड',kind:'section',selector:'.acharya-band',tag:'खण्ड'};
+ if(c.includes('department-section'))return {label:'परम्परा का परिचय — विभाग खण्ड',kind:'section',selector:'.department-section',tag:'खण्ड'};
+ if(c.includes('feature-section'))return {label:'ज्ञान एवं संस्कृति वैभव — विशेष संग्रह',kind:'section',selector:'.feature-section',tag:'खण्ड'};
+ if(c.includes('home-news-strip'))return {label:'समाचार पट्टी',kind:'section',selector:'.home-news-strip',tag:'खण्ड'};
+ if(c.includes('home-calendar'))return {label:'आज का दिन / पञ्चाङ्ग',kind:'section',selector:'.home-calendar-grid',tag:'खण्ड'};
+ if(c.includes('home-social-strip'))return {label:'हमसे जुड़े रहें',kind:'section',selector:'.home-social-strip',tag:'खण्ड'};
+ if(c.includes('lower-panels'))return {label:'समाचार, आयोजन, शोध एवं प्रकाशन',kind:'section',selector:'.lower-panels',tag:'खण्ड'};
+ if(c.includes('closing-quote'))return {label:'समापन मंगल-वाक्य',kind:'section',selector:'.closing-quote',tag:'खण्ड'};
+ if(c.includes('topbar-invocation'))return {label:'शीर्ष पट्टी का संस्कृत वाक्य',kind:'text',selector:'.topbar-invocation',tag:'शीर्ष पट्टी'};
+ if(c.includes('topbar')||el.closest('.topbar'))return {label:'सबसे ऊपर की पट्टी',kind:'section',selector:'.topbar',tag:'शीर्ष पट्टी'};
+ if(c.includes('masthead')||el.closest('.masthead'))return {label:'मुख्य परिचय / चित्र और नाम',kind:'section',selector:'.masthead',tag:'मुख्य शीर्ष'};
+ if(c.includes('mainnav')||el.closest('.mainnav'))return {label:'मुख्य विभाग नेविगेशन',kind:'section',selector:'.mainnav',tag:'मुख्य नेविगेशन'};
+ if(c.includes('footer')||el.closest('footer'))return {label:'पादलेख',kind:'section',selector:'footer',tag:'पादलेख'};
+ if(el.tagName==='A')return {label:'लिंक / मेनू विकल्प',kind:'link',selector:'a',tag:'लिंक'};
+ return {label:el.tagName.toLowerCase()==='h1'||el.tagName.toLowerCase()==='h2'||el.tagName.toLowerCase()==='h3'?'शीर्षक / उपशीर्षक':'पाठ सामग्री',kind:'text',selector:el.tagName.toLowerCase(),tag:el.tagName.toLowerCase()};
+}
 export default function VisualSiteEditor(){
  const frame=useRef<HTMLIFrameElement>(null);
- const [selected,setSelected]=useState<Pick|null>(null),[hidden,setHidden]=useState(false),[notice,setNotice]=useState('वेबसाइट के वास्तविक दृश्य में किसी खण्ड या सामग्री पर क्लिक करें।'),[lang,setLang]=useState('hi');
- const attach=useCallback(()=>{
+ const [lang,setLang]=useState('hi'),[selected,setSelected]=useState<Target|null>(null),[textValue,setTextValue]=useState(''),[href,setHref]=useState(''),[imageUrl,setImageUrl]=useState(''),[width,setWidth]=useState(''),[height,setHeight]=useState(''),[fontSize,setFontSize]=useState(''),[hidden,setHidden]=useState(false),[notice,setNotice]=useState('बाईं ओर वेबसाइट के जिस वास्तविक भाग को बदलना है, उसी पर क्लिक करें।'),[dirty,setDirty]=useState(false);
+ const picked=()=>frame.current?.contentDocument?.querySelector('[data-visual-selected="yes"]') as HTMLElement|null;
+ const bind=useCallback(()=>{
   const doc=frame.current?.contentDocument;if(!doc)return;
-  doc.querySelectorAll('[data-admin-picked]').forEach(e=>{e.removeAttribute('data-admin-picked');(e as HTMLElement).style.outline='';});
-  const style=doc.getElementById('visual-admin-style')||doc.createElement('style');style.id='visual-admin-style';style.textContent='[data-admin-hover="1"]{outline:2px dashed #c49a52!important;outline-offset:2px;cursor:crosshair!important}[data-admin-picked="1"]{outline:3px solid #a46b22!important;outline-offset:3px;position:relative;z-index:9999}';doc.head.appendChild(style);
-  const over=(e:Event)=>{const t=e.target as Element|null;const el=t?.closest('section,header,footer,nav,article,.department-card,.feature-card,.lower-panel,.home-calendar-card,h1,h2,h3,p,img,a');if(el&&el!==doc.body)el.setAttribute('data-admin-hover','1');};
-  const out=(e:Event)=>{const t=e.target as Element|null;t?.closest('[data-admin-hover="1"]')?.removeAttribute('data-admin-hover');};
-  const click=(e:Event)=>{const t=e.target as Element|null;const el=t?.closest('section,header,footer,nav,article,.department-card,.feature-card,.lower-panel,.home-calendar-card,h1,h2,h3,p,img,a');if(!el||el===doc.body)return;e.preventDefault();e.stopPropagation();doc.querySelectorAll('[data-admin-picked="1"]').forEach(x=>x.removeAttribute('data-admin-picked'));el.setAttribute('data-admin-picked','1');const p=classify(el);setSelected(p);setHidden(getComputedStyle(el).display==='none');setNotice('चयनित स्थान: '+p.label);};
-  doc.addEventListener('mouseover',over,true);doc.addEventListener('mouseout',out,true);doc.addEventListener('click',click,true);
-  return()=>{doc.removeEventListener('mouseover',over,true);doc.removeEventListener('mouseout',out,true);doc.removeEventListener('click',click,true);};
+  const style=doc.getElementById('visual-editor-style')||doc.createElement('style');style.id='visual-editor-style';style.textContent='[data-visual-hover="yes"]{outline:2px dashed #bd914a!important;outline-offset:3px;cursor:crosshair!important}[data-visual-selected="yes"]{outline:3px solid #9d6c22!important;outline-offset:3px;cursor:move!important}';doc.head.appendChild(style);
+  const hover=(e:Event)=>{const el=(e.target as Element|null)?.closest(targets);if(el)el.setAttribute('data-visual-hover','yes')};
+  const out=(e:Event)=>{(e.target as Element|null)?.closest('[data-visual-hover="yes"]')?.removeAttribute('data-visual-hover')};
+  const click=(e:Event)=>{const el=(e.target as Element|null)?.closest(targets) as HTMLElement|null;if(!el)return;e.preventDefault();e.stopPropagation();doc.querySelectorAll('[data-visual-selected="yes"]').forEach(x=>x.removeAttribute('data-visual-selected'));el.setAttribute('data-visual-selected','yes');const d=describe(el);setSelected(d);setTextValue(el.innerText||el.getAttribute('alt')||'');setHref(el.closest('a')?.getAttribute('href')||'');setImageUrl(el.tagName==='IMG'?(el as HTMLImageElement).getAttribute('src')||'':'');setWidth(String(Math.round(el.getBoundingClientRect().width)));setHeight(String(Math.round(el.getBoundingClientRect().height)));setFontSize(String(parseFloat(getComputedStyle(el).fontSize)||16));setHidden(getComputedStyle(el).display==='none');setNotice('चयनित: '+d.label);};
+  const drag=(e:DragEvent)=>{const el=(e.target as Element|null)?.closest(targets) as HTMLElement|null;if(!el)return;el.setAttribute('data-visual-dragging','yes');e.dataTransfer?.setData('text/plain','visual-move');if(e.dataTransfer)e.dataTransfer.effectAllowed='move';};
+  const over=(e:DragEvent)=>{if(doc.querySelector('[data-visual-dragging="yes"]'))e.preventDefault()};
+  const drop=(e:DragEvent)=>{const from=doc.querySelector('[data-visual-dragging="yes"]') as HTMLElement|null;const to=(e.target as Element|null)?.closest(targets) as HTMLElement|null;if(!from||!to||from===to||from.parentElement!==to.parentElement)return;e.preventDefault();const r=to.getBoundingClientRect();const after=e.clientY>r.top+r.height/2;to.parentElement?.insertBefore(from,after?to.nextSibling:to);from.removeAttribute('data-visual-dragging');from.setAttribute('data-visual-selected','yes');setNotice('क्रम पूर्वावलोकन में बदला गया। सुरक्षित करने के लिए नीचे “क्रम सुरक्षित करें” दबाएँ।');setDirty(true)};
+  const end=()=>doc.querySelectorAll('[data-visual-dragging]').forEach(x=>x.removeAttribute('data-visual-dragging'));
+  doc.addEventListener('mouseover',hover,true);doc.addEventListener('mouseout',out,true);doc.addEventListener('click',click,true);doc.addEventListener('dragstart',drag,true);doc.addEventListener('dragover',over,true);doc.addEventListener('drop',drop,true);doc.addEventListener('dragend',end,true);
+  doc.querySelectorAll(targets).forEach(el=>{(el as HTMLElement).draggable=true});
+  return()=>{doc.removeEventListener('mouseover',hover,true);doc.removeEventListener('mouseout',out,true);doc.removeEventListener('click',click,true);doc.removeEventListener('dragstart',drag,true);doc.removeEventListener('dragover',over,true);doc.removeEventListener('drop',drop,true);doc.removeEventListener('dragend',end,true)};
  },[]);
- useEffect(()=>{let clean:(()=>void)|undefined;const t=setTimeout(()=>{clean=attach();},500);return()=>{clearTimeout(t);clean?.();};},[attach,lang]);
- const refresh=()=>{if(frame.current)frame.current.src='/'+lang+'?visualEditor='+Date.now();setSelected(null);setNotice('वेबसाइट का नवीनतम दृश्य लोड किया जा रहा है…');};
- const goToLink=()=>{if(!selected?.href||!frame.current)return;const path=selected.href.startsWith('http')?selected.href:'/'+lang+(selected.href.startsWith('/')?selected.href:'/'+selected.href);frame.current.src=path;setSelected(null);setNotice('चयनित लिंक का पृष्ठ खोला जा रहा है।');};
- const move=(direction:-1|1)=>{
-  const doc=frame.current?.contentDocument;if(!doc||!selected)return;
-  const el=doc.querySelector('[data-admin-picked="1"]') as HTMLElement|null;if(!el)return;
-  const parent=el.parentElement;if(!parent)return;
-  const siblings=Array.from(parent.children).filter(x=>x!==el&&getComputedStyle(x).display!=='none');
-  const index=siblings.indexOf(direction<0?el.previousElementSibling as Element:el.nextElementSibling as Element);
-  if(direction<0&&el.previousElementSibling)parent.insertBefore(el,el.previousElementSibling);
-  if(direction>0&&el.nextElementSibling)parent.insertBefore(el.nextElementSibling,el);
-  setNotice('पूर्वावलोकन में क्रम बदला गया है। स्थायी क्रम सुरक्षित करने के लिए सज्जा एवं विन्यास में खण्ड-क्रम भी सुरक्षित करें।');
- };
- const togglePreview=()=>{const doc=frame.current?.contentDocument;const el=doc?.querySelector('[data-admin-picked="1"]') as HTMLElement|null;if(!el)return;el.style.display=hidden?'':'none';setHidden(!hidden);setNotice('यह दृश्य परिवर्तन अभी केवल पूर्वावलोकन में है।');};
+ useEffect(()=>{let cleanup:(()=>void)|undefined;const timer=setTimeout(()=>cleanup=bind(),400);return()=>{clearTimeout(timer);cleanup?.()}},[bind,lang]);
+ const refresh=()=>{if(frame.current)frame.current.src='/'+lang+'?visualEditor='+Date.now();setSelected(null);setDirty(false);setNotice('वेबसाइट फिर से लोड हो रही है।')};
+ const applyText=()=>{const el=picked();if(!el)return; if(el.tagName==='IMG')(el as HTMLImageElement).alt=textValue;else el.innerText=textValue;setDirty(true);setNotice('चयनित पाठ का पूर्वावलोकन बदल गया है।')};
+ const applyLink=()=>{const el=picked();if(!el)return;const a=el.closest('a')|| (el.tagName==='A'?el:null);if(a)a.setAttribute('href',href);else setNotice('इस चयनित वस्तु पर लिंक लागू करने के लिए पहले कार्ड या लिंक चुनें।');setDirty(true)};
+ const applyImage=()=>{const el=picked();if(!el)return;const img=el.tagName==='IMG'?el:el.querySelector('img');if(img)(img as HTMLImageElement).src=imageUrl;else el.style.backgroundImage='url("'+imageUrl+'")';setDirty(true);setNotice('चित्र का पूर्वावलोकन बदल गया है।')};
+ const applySize=()=>{const el=picked();if(!el)return;if(width)el.style.width=width+'px';if(height)el.style.height=height+'px';if(fontSize)el.style.fontSize=fontSize+'px';setDirty(true)};
+ const toggle=()=>{const el=picked();if(!el)return;el.style.display=hidden?'':'none';setHidden(!hidden);setDirty(true)};
+ const move=(dir:-1|1)=>{const el=picked();if(!el?.parentElement)return;if(dir<0&&el.previousElementSibling)el.parentElement.insertBefore(el,el.previousElementSibling);if(dir>0&&el.nextElementSibling)el.parentElement.insertBefore(el.nextElementSibling,el);setDirty(true);setNotice('क्रम बदला गया।')};
+ const saveOrder=async()=>{try{const res=await fetch('/api/admin/site-design');const d=await res.json();if(!res.ok)throw new Error(d.error||'विन्यास नहीं पढ़ा गया');const doc=frame.current?.contentDocument;const main=doc?.querySelector('main');if(!main)throw new Error('मुखपृष्ठ खण्ड नहीं मिले');const order=Array.from(main.children).map(el=>{const c=String((el as HTMLElement).className||'');return c.includes('department-section')?'departments':c.includes('acharya-band')?'acharya':c.includes('feature-section')?'features':c.includes('home-news-strip')?'news':c.includes('home-calendar')?'calendar':c.includes('home-social-strip')?'social':c.includes('lower-panels')?'lower':c.includes('closing-quote')?'closing':''}).filter(Boolean);const settings={...d.settings,sectionOrder:order.join(',')};const put=await fetch('/api/admin/site-design',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(settings)});const out=await put.json();if(!put.ok)throw new Error(out.error||'क्रम सुरक्षित नहीं हुआ');setDirty(false);setNotice('मुखपृष्ठ के खण्डों का क्रम सुरक्षित हो गया। वेबसाइट पुनः लोड करें।')}catch(e){setNotice(e instanceof Error?e.message:'क्रम सुरक्षित नहीं हुआ।')}};
+ const upload=async(file?:File)=>{if(!file)return;const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();if(r.ok){setImageUrl(d.url);setNotice('चित्र अपलोड हो गया। अब चित्र पूर्वावलोकन लागू करें।')}else setNotice(d.error||'चित्र अपलोड नहीं हुआ।')};
  return <section className="visual-admin">
-  <div className="visual-admin-head"><div><strong>दृश्य वेबसाइट सम्पादक</strong><p>वेबसाइट को उसी रूप में देखें और जिस स्थान को बदलना हो, उसी पर क्लिक करें।</p></div><div className="visual-admin-tools"><select value={lang} onChange={e=>{setLang(e.target.value);setSelected(null);}} aria-label="भाषा"><option value="hi">हिन्दी</option><option value="sa">संस्कृत</option><option value="en">English</option></select><button type="button" onClick={refresh}><RefreshCw size={15}/> पुनः लोड</button><a href={'/'+lang} target="_blank" rel="noreferrer"><ExternalLink size={15}/> अलग खोलें</a></div></div>
-  <div className="visual-admin-grid">
-   <div className="visual-admin-screen"><div className="visual-admin-screenbar"><span><i/> वास्तविक वेबसाइट दृश्य · {lang.toUpperCase()}</span><small>किसी भी खण्ड, चित्र या पाठ पर क्लिक करें</small></div><iframe ref={frame} key={lang} src={'/'+lang+'?visualEditor=1'} title="वास्तविक वेबसाइट पूर्वावलोकन" onLoad={()=>{setTimeout(attach,250);}} /></div>
+  <div className="visual-admin-head"><div><strong>वास्तविक वेबसाइट — दृश्य सम्पादन</strong><p>यही वेबसाइट यहाँ दिखाई देती है। जिस वस्तु को बदलना हो, उसी पर क्लिक करें; कार्ड और खण्ड को पकड़कर खींचें।</p></div><div className="visual-admin-tools"><select value={lang} onChange={e=>{setLang(e.target.value);setSelected(null)}}><option value="hi">हिन्दी</option><option value="sa">संस्कृत</option><option value="en">English</option></select><button type="button" onClick={refresh}><RefreshCw size={14}/> पुनः लोड</button><a href={'/'+lang} target="_blank" rel="noreferrer"><ExternalLink size={14}/> अलग खोलें</a></div></div>
+  <div className="visual-admin-grid"><div className="visual-admin-screen"><div className="visual-admin-screenbar"><span>● लाइव वेबसाइट दृश्य · {lang.toUpperCase()}</span><small>क्लिक करके चुनें · पकड़कर खींचकर स्थान बदलें</small></div><iframe ref={frame} key={lang} src={'/'+lang+'?visualEditor=1'} title="वास्तविक वेबसाइट" onLoad={()=>setTimeout(bind,250)}/></div>
    <aside className="visual-admin-side"><div className="visual-admin-sidehead"><MousePointer2 size={17}/><strong>चयनित स्थान का संपादन</strong></div>
-    {!selected?<div className="visual-admin-empty"><MousePointer2 size={30}/><strong>पहले वेबसाइट में कोई स्थान चुनें</strong><p>बाईं ओर वेबसाइट के किसी खण्ड, कार्ड, चित्र या शीर्षक पर क्लिक करें। उसी के अनुसार संपादन के विकल्प यहाँ खुलेंगे।</p></div>:<>
-     <div className="visual-admin-selection"><small>आपने यह चुना है</small><strong>{selected.label}</strong><span>{selected.tag}</span></div>
-     <div className="visual-admin-actions">{selected.href&&<button type="button" onClick={goToLink}><ExternalLink size={15}/> इस लिंक पर जाएँ</button>}<button type="button" onClick={()=>move(-1)}><ArrowUp size={15}/> ऊपर</button><button type="button" onClick={()=>move(1)}><ArrowDown size={15}/> नीचे</button><button type="button" onClick={togglePreview}>{hidden?<Eye size={15}/>:<EyeOff size={15}/>} {hidden?'दिखाएँ':'छिपाएँ'}</button></div>
-     <div className="visual-admin-note">{notice}</div>
-     <div className="visual-admin-editor">
-      {selected.kind==='design'&&<SiteDesignEditor/>}
-      {selected.kind==='home'&&<HomePageEditor/>}
-      {selected.kind==='cards'&&<FeatureCardsEditor/>}
-      {selected.kind==='departments'&&<DepartmentVisualEditor/>}
-      {selected.kind==='records'&&<RecordManager/>}
-     </div>
-    </>}
+   {!selected?<div className="visual-admin-empty"><MousePointer2 size={30}/><strong>अभी कोई स्थान नहीं चुना गया</strong><p>उदाहरण: ऊपर की पट्टी का मंगल-वाक्य, हिन्दी/संस्कृत/English, बायाँ-दायाँ चित्र, मुख्य प्रतीक, परिचय शीर्षक, 16 विभाग कार्ड, आचार्य खण्ड, विशेष संग्रह कार्ड, समाचार, पञ्चाङ्ग या पादलेख—जिसे बदलना है उसी पर क्लिक करें।</p></div>:<>
+    <div className="visual-admin-selection"><small>{selected.tag}</small><strong>{selected.label}</strong><span>{selected.kind==='image'?'चित्र':selected.kind==='card'?'कार्ड':selected.kind==='section'?'वेबसाइट खण्ड':selected.kind==='link'?'लिंक':'पाठ'}</span></div>
+    <div className="visual-admin-actions"><button onClick={()=>move(-1)}><ArrowUp size={14}/> ऊपर</button><button onClick={()=>move(1)}><ArrowDown size={14}/> नीचे</button><button onClick={toggle}>{hidden?<Eye size={14}/>:<EyeOff size={14}/>} {hidden?'दिखाएँ':'छिपाएँ'}</button></div>
+    {(selected.kind==='text'||selected.kind==='link')&&<div className="visual-admin-control"><label>चयनित पाठ / नाम</label><textarea rows={3} value={textValue} onChange={e=>setTextValue(e.target.value)}/><button onClick={applyText}>पूर्वावलोकन में पाठ बदलें</button></div>}
+    {(selected.kind==='image'||selected.kind==='card'||selected.kind==='section')&&<div className="visual-admin-control"><label>चित्र का पता</label><input value={imageUrl} onChange={e=>setImageUrl(e.target.value)} placeholder="/uploads/चित्र..."/><input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>upload(e.target.files?.[0])}/><button onClick={applyImage}><ImageIcon size={14}/> चित्र पूर्वावलोकन में बदलें</button></div>}
+    {(selected.kind==='link'||selected.kind==='card')&&<div className="visual-admin-control"><label>लिंक का पता</label><input value={href} onChange={e=>setHref(e.target.value)} placeholder="/hi/sampradaya"/><button onClick={applyLink}>लिंक पूर्वावलोकन में बदलें</button>{href&&<button onClick={()=>{if(frame.current)frame.current.src=href.startsWith('http')?href:'/'+lang+href;}}>इस लिंक का पृष्ठ खोलें</button>}</div>}
+    <div className="visual-admin-control"><label>आकार — चौड़ाई / ऊँचाई / अक्षर</label><div className="visual-admin-size"><input type="number" value={width} onChange={e=>setWidth(e.target.value)} placeholder="चौड़ाई px"/><input type="number" value={height} onChange={e=>setHeight(e.target.value)} placeholder="ऊँचाई px"/><input type="number" value={fontSize} onChange={e=>setFontSize(e.target.value)} placeholder="अक्षर px"/></div><button onClick={applySize}>आकार पूर्वावलोकन में लागू करें</button></div>
+    <div className="visual-admin-note">{notice}</div>
+   </>}
    </aside>
   </div>
-  <div className="visual-admin-foot"><ImageIcon size={15}/><span>नोट: वेबसाइट का दृश्य वास्तविक पृष्ठ से आता है। ऊपर/नीचे और छिपाएँ/दिखाएँ अभी तत्काल दृश्य पूर्वावलोकन पर लागू होते हैं; स्थायी रूप से सुरक्षित करने का नियंत्रण संबंधित संपादन में उपलब्ध होगा।</span></div>
+  <div className="visual-admin-foot"><GripVertical size={15}/><span>खींचकर क्रम बदलना अभी उसी सूची/पंक्ति के भीतर लागू होता है। “क्रम सुरक्षित करें” मुखपृष्ठ के मुख्य खण्डों का क्रम स्थायी करता है। पाठ, चित्र, लिंक और आकार के स्थायी संपादन के लिए अगला चरण इन सभी चयनित तत्वों को उनके मूल सामग्री-भण्डार से जोड़ना है।</span>{selected?.kind==='section'&&<button onClick={saveOrder}><Save size={14}/> क्रम सुरक्षित करें</button>}</div>
  </section>;
 }
