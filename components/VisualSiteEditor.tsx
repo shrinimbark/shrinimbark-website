@@ -43,7 +43,8 @@ export default function VisualSiteEditor(){
   doc.querySelectorAll(targets).forEach(el=>{(el as HTMLElement).draggable=true});
   return()=>{doc.removeEventListener('mouseover',hover,true);doc.removeEventListener('mouseout',out,true);doc.removeEventListener('click',click,true);doc.removeEventListener('dragstart',drag,true);doc.removeEventListener('dragover',over,true);doc.removeEventListener('drop',drop,true);doc.removeEventListener('dragend',end,true)};
  },[]);
- useEffect(()=>{let cleanup:(()=>void)|undefined;const timer=setTimeout(()=>cleanup=bind(),400);return()=>{clearTimeout(timer);cleanup?.()}},[bind,lang]);\n useEffect(()=>{fetch('/api/admin/site-design',{cache:'no-store'}).then(r=>r.json()).then(d=>setHiddenItems(String(d.settings?.hiddenSections||'').split(',').filter(Boolean))).catch(()=>{});},[]);
+ useEffect(()=>{let cleanup:(()=>void)|undefined;const timer=setTimeout(()=>cleanup=bind(),400);return()=>{clearTimeout(timer);cleanup?.()}},[bind,lang]);
+ useEffect(()=>{fetch('/api/admin/site-design',{cache:'no-store'}).then(r=>r.json()).then(d=>setHiddenItems(String(d.settings?.hiddenSections||'').split(',').filter(Boolean))).catch(()=>{});},[]);
  const refresh=()=>{if(frame.current)frame.current.src='/'+lang+'?visualEditor='+Date.now();setSelected(null);setDirty(false);setNotice('वेबसाइट फिर से लोड हो रही है।')};
  const applyText=()=>{const el=picked();if(!el)return; if(el.tagName==='IMG')(el as HTMLImageElement).alt=textValue;else el.innerText=textValue;setDirty(true);setNotice('चयनित पाठ का पूर्वावलोकन बदल गया है।')};
  const applyLink=()=>{const el=picked();if(!el)return;const a=el.closest('a')|| (el.tagName==='A'?el:null);if(a)a.setAttribute('href',href);else setNotice('इस चयनित वस्तु पर लिंक लागू करने के लिए पहले कार्ड या लिंक चुनें।');setDirty(true)};
