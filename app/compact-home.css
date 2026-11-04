@@ -388,3 +388,58 @@
  .closing-quote h2{font-size:18px!important}
  .closing-quote p{font-size:11px!important}
 }
+
+
+/* Desktop masthead refinement: enlarge the central emblem and typography,
+   use the available middle width, and place the Sanskrit verse on two lines. */
+@media (min-width: 1051px) {
+  .masthead {
+    grid-template-columns:minmax(0,1fr) minmax(460px,520px) minmax(0,1fr) !important;
+    column-gap:14px !important;
+    min-height:320px !important;
+    padding-top:14px !important;
+    padding-bottom:12px !important;
+    align-items:center !important;
+  }
+  .masthead-center {
+    width:100% !important;
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:3px !important;
+    padding:0 8px !important;
+    text-align:center !important;
+  }
+  .masthead-center .mast-ornament {font-size:17px!important;line-height:1.1!important;margin:0 0 2px!important}
+  .masthead-center .seal {
+    width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;
+    margin:2px auto 5px!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  }
+  .masthead-center .seal img {
+    display:block!important;width:220px!important;height:112px!important;max-width:100%!important;
+    max-height:112px!important;object-fit:contain!important;
+  }
+  .masthead-center .invocation {
+    order:2!important;display:block!important;font-size:18px!important;font-weight:600!important;
+    line-height:1.5!important;margin:2px 0 4px!important;text-align:center!important;
+  }
+  .masthead-center .brand-hi {
+    order:3!important;display:block!important;font-size:38px!important;line-height:1.25!important;
+    margin:1px 0!important;text-align:center!important;white-space:normal!important;
+  }
+  .masthead-center .brand-en {
+    order:4!important;display:block!important;font-size:21px!important;line-height:1.35!important;
+    letter-spacing:3px!important;margin:0!important;text-align:center!important;
+  }
+  .masthead-center .brand-tag {
+    order:5!important;display:block!important;width:100%!important;max-width:520px!important;
+    margin:7px auto 0!important;padding:0 5px!important;font-size:16px!important;
+    line-height:1.7!important;text-align:center!important;white-space:normal!important;
+    text-wrap:balance!important;overflow-wrap:normal!important;
+  }
+  .masthead-center .mast-rule {display:none!important}
+  .masthead-painting {display:flex!important;align-items:center!important;justify-content:center!important;min-width:0!important}
+  .masthead-painting img {max-width:100%!important;object-fit:contain!important}
+}
