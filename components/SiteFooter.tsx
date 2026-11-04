@@ -33,7 +33,7 @@ const translations = {
  }
 } as const;
 const groups = [
-  {links:[11,12],paths:[11,12]}
+  {heading:2,links:[11,12]}
 ];
 type Settings = typeof defaults & Record<string, any>;
 export default async function SiteFooter({lang}:{lang:Lang}) {
@@ -49,7 +49,7 @@ export default async function SiteFooter({lang}:{lang:Lang}) {
  const headings=[localized('footerGroup1'),localized('footerGroup2'),localized('footerGroup3')];
  return <footer className="footer">
   {settings.footerIntroVisible!==false&&<div className="footer-top"><div className="footer-emblem">श्री</div><h2>{localized('footerTitle')}</h2><p>{settings.footerEnglish}</p><div className="footer-mantra">{settings.footerMantra}</div><p className="footer-desc">{localized('footerDescription')}</p></div>}
-  <div className="footer-columns">{groups.map((group,i)=><div key={i}><h3>{headings[i]}</h3>{group.links.map((n,j)=>{const label=localized((`footerLink${n}`) as keyof typeof defaults);const dest=path(`footerPath${n}`,defaults[(`footerPath${n}`) as keyof typeof defaults] as string);return <Link key={n} href={href(dest)}>{label}</Link>})}</div>)}</div>
+  <div className="footer-columns">{groups.map((group,i)=><div key={i}><h3>{headings[group.heading]}</h3>{group.links.map((n,j)=>{const label=localized((`footerLink${n}`) as keyof typeof defaults);const dest=path(`footerPath${n}`,defaults[(`footerPath${n}`) as keyof typeof defaults] as string);return <Link key={n} href={href(dest)}>{label}</Link>})}</div>)}</div>
   <div className="footer-bottom"><span>© {new Date().getFullYear()} {localized('footerTitle')}</span><span>{localized('footerCopyright')}</span><Link href={`/${lang}/editorial-policy`}>{localized('footerEditorial')}</Link><Link href="/privacy">{localized('footerPrivacy')}</Link></div>
  </footer>;
 }
