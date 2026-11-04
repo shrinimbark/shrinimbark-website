@@ -7,21 +7,26 @@ import FeatureCardsEditor from '@/components/FeatureCardsEditor';
 import DepartmentVisualEditor from '@/components/DepartmentVisualEditor';
 import RecordManager from '@/components/RecordManager';
 
-type Pick={label:string;selector:string;kind:'design'|'home'|'cards'|'departments'|'records';tag:string};
-const classify=(el:Element):Pick=>{
- const c=String((el as HTMLElement).className||'');
- if(c.includes('department-card')||c.includes('department-section'))return {label:'मुख्य विभाग / विभाग कार्ड',selector:c.includes('department-card')?'.department-card':' .department-section',kind:'departments',tag:'विभाग'};
- if(c.includes('acharya-band')||c.includes('acharya-image')||c.includes('acharya-copy'))return {label:'आचार्य परिचय',selector:'.acharya-band',kind:'home',tag:'आचार्य खण्ड'};
- if(c.includes('feature-card')||c.includes('feature-section'))return {label:'विशेष संग्रह',selector:c.includes('feature-card')?'.feature-card':'.feature-section',kind:'cards',tag:'विशेष संग्रह'};
- if(c.includes('home-news-strip'))return {label:'समाचार सूचना पट्टी',selector:'.home-news-strip',kind:'design',tag:'समाचार'};
- if(c.includes('home-calendar'))return {label:'पञ्चाङ्ग खण्ड',selector:'.home-calendar-grid',kind:'design',tag:'पञ्चाङ्ग'};
- if(c.includes('home-social-strip'))return {label:'सामाजिक माध्यम',selector:'.home-social-strip',kind:'design',tag:'सामाजिक माध्यम'};
- if(c.includes('lower-panel')||c.includes('lower-panels'))return {label:'निचले सूचना खण्ड',selector:'.lower-panels',kind:'design',tag:'निचले खण्ड'};
- if(c.includes('closing-quote'))return {label:'समापन मंगल-वाक्य',selector:'.closing-quote',kind:'home',tag:'समापन'};
- if(c.includes('masthead')||c.includes('brand-hi')||c.includes('mainnav')||c.includes('topbar'))return {label:'शीर्ष भाग / मुख्य परिचय',selector:'.masthead',kind:'design',tag:'शीर्ष भाग'};
- if(c.includes('site-footer')||el.tagName==='FOOTER')return {label:'पादलेख',selector:'footer',kind:'design',tag:'पादलेख'};
- if(el.closest('article')||el.closest('.article-body'))return {label:'लेख / विषय सामग्री',selector:'article',kind:'records',tag:'लेख'};
- return {label:el.tagName.toLowerCase()==='h1'||el.tagName.toLowerCase()==='h2'||el.tagName.toLowerCase()==='h3'?'शीर्षक':'चयनित वेबसाइट तत्व',selector:el.tagName.toLowerCase(),kind:'home',tag:el.tagName.toLowerCase()};
+type Pick={label:string;selector:string;kind:'design'|'home'|'cards'|'departments'|'records';tag:string;href?:string};
+const classify=(raw:Element):Pick=>{
+ const el=raw.tagName==='IMG'&&raw.parentElement?raw.parentElement:raw;
+ const link=raw.closest('a') as HTMLAnchorElement|null;
+ const href=link?.getAttribute('href')||undefined;
+ const card=el.closest('.department-card,.feature-card');
+ const section=el.closest('.department-section,.acharya-band,.feature-section,.home-news-strip,.home-calendar-grid,.home-social-strip,.lower-panels,.closing-quote,footer,.masthead,article')||el;
+ const c=String((section as HTMLElement).className||'');
+ if(card?.classList.contains('department-card')||c.includes('department-section'))return {label:card?'विभाग कार्ड':'मुख्य विभाग',selector:card?'.department-card':'.department-section',kind:'departments',tag:'विभाग',href};
+ if(c.includes('acharya-band'))return {label:'आचार्य परिचय',selector:'.acharya-band',kind:'home',tag:'आचार्य खण्ड',href};
+ if(card?.classList.contains('feature-card')||c.includes('feature-section'))return {label:card?'विशेष संग्रह कार्ड':'विशेष संग्रह',selector:card?'.feature-card':'.feature-section',kind:'cards',tag:'विशेष संग्रह',href};
+ if(c.includes('home-news-strip'))return {label:'समाचार सूचना पट्टी',selector:'.home-news-strip',kind:'design',tag:'समाचार',href};
+ if(c.includes('home-calendar-grid'))return {label:'पञ्चाङ्ग खण्ड',selector:'.home-calendar-grid',kind:'design',tag:'पञ्चाङ्ग',href};
+ if(c.includes('home-social-strip'))return {label:'सामाजिक माध्यम',selector:'.home-social-strip',kind:'design',tag:'सामाजिक माध्यम',href};
+ if(c.includes('lower-panels'))return {label:'निचले सूचना खण्ड',selector:'.lower-panels',kind:'design',tag:'निचले खण्ड',href};
+ if(c.includes('closing-quote'))return {label:'समापन मंगल-वाक्य',selector:'.closing-quote',kind:'home',tag:'समापन',href};
+ if(c.includes('masthead')||c.includes('topbar')||c.includes('mainnav'))return {label:'शीर्ष भाग / मुख्य परिचय',selector:'.masthead',kind:'design',tag:'शीर्ष भाग',href};
+ if(c.includes('footer')||el.tagName==='FOOTER')return {label:'पादलेख',selector:'footer',kind:'design',tag:'पादलेख',href};
+ if(el.closest('article')||el.closest('.article-body'))return {label:'लेख / विषय सामग्री',selector:'article',kind:'records',tag:'लेख',href};
+ return {label:'चयनित वेबसाइट तत्व',selector:el.tagName.toLowerCase(),kind:'home',tag:el.tagName.toLowerCase(),href};
 };
 export default function VisualSiteEditor(){
  const frame=useRef<HTMLIFrameElement>(null);
@@ -38,6 +43,7 @@ export default function VisualSiteEditor(){
  },[]);
  useEffect(()=>{let clean:(()=>void)|undefined;const t=setTimeout(()=>{clean=attach();},500);return()=>{clearTimeout(t);clean?.();};},[attach,lang]);
  const refresh=()=>{if(frame.current)frame.current.src='/'+lang+'?visualEditor='+Date.now();setSelected(null);setNotice('वेबसाइट का नवीनतम दृश्य लोड किया जा रहा है…');};
+ const goToLink=()=>{if(!selected?.href||!frame.current)return;const path=selected.href.startsWith('http')?selected.href:'/'+lang+(selected.href.startsWith('/')?selected.href:'/'+selected.href);frame.current.src=path;setSelected(null);setNotice('चयनित लिंक का पृष्ठ खोला जा रहा है।');};
  const move=(direction:-1|1)=>{
   const doc=frame.current?.contentDocument;if(!doc||!selected)return;
   const el=doc.querySelector('[data-admin-picked="1"]') as HTMLElement|null;if(!el)return;
@@ -56,7 +62,7 @@ export default function VisualSiteEditor(){
    <aside className="visual-admin-side"><div className="visual-admin-sidehead"><MousePointer2 size={17}/><strong>चयनित स्थान का संपादन</strong></div>
     {!selected?<div className="visual-admin-empty"><MousePointer2 size={30}/><strong>पहले वेबसाइट में कोई स्थान चुनें</strong><p>बाईं ओर वेबसाइट के किसी खण्ड, कार्ड, चित्र या शीर्षक पर क्लिक करें। उसी के अनुसार संपादन के विकल्प यहाँ खुलेंगे।</p></div>:<>
      <div className="visual-admin-selection"><small>आपने यह चुना है</small><strong>{selected.label}</strong><span>{selected.tag}</span></div>
-     <div className="visual-admin-actions"><button type="button" onClick={()=>move(-1)}><ArrowUp size={15}/> ऊपर</button><button type="button" onClick={()=>move(1)}><ArrowDown size={15}/> नीचे</button><button type="button" onClick={togglePreview}>{hidden?<Eye size={15}/>:<EyeOff size={15}/>} {hidden?'दिखाएँ':'छिपाएँ'}</button></div>
+     <div className="visual-admin-actions">{selected.href&&<button type="button" onClick={goToLink}><ExternalLink size={15}/> इस लिंक पर जाएँ</button>}<button type="button" onClick={()=>move(-1)}><ArrowUp size={15}/> ऊपर</button><button type="button" onClick={()=>move(1)}><ArrowDown size={15}/> नीचे</button><button type="button" onClick={togglePreview}>{hidden?<Eye size={15}/>:<EyeOff size={15}/>} {hidden?'दिखाएँ':'छिपाएँ'}</button></div>
      <div className="visual-admin-note">{notice}</div>
      <div className="visual-admin-editor">
       {selected.kind==='design'&&<SiteDesignEditor/>}
