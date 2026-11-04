@@ -151,3 +151,78 @@
  .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
  .acharya-side{flex-wrap:wrap!important}
 }
+
+
+/* Final desktop acharya composition: larger fitted portrait, centered identity,
+   and five broad navigation tabs occupying the complete lower strip. */
+@media (min-width: 1051px) {
+  .acharya-band {
+    display:grid!important;
+    grid-template-columns:minmax(300px,.92fr) minmax(0,1.08fr)!important;
+    grid-template-rows:270px 62px!important;
+    align-items:stretch!important;
+    align-content:start!important;
+    height:auto!important;
+    min-height:0!important;
+    row-gap:0!important;
+    margin:0 auto!important;
+    padding:0!important;
+  }
+  .acharya-image {
+    grid-column:1!important;grid-row:1!important;
+    width:100%!important;height:270px!important;min-height:270px!important;max-height:270px!important;
+    overflow:hidden!important;align-self:stretch!important;
+  }
+  .acharya-image img {
+    object-fit:cover!important;
+    object-position:center 38%!important;
+    width:100%!important;height:100%!important;
+  }
+  .acharya-copy {
+    grid-column:2!important;grid-row:1!important;
+    display:flex!important;flex-direction:column!important;
+    justify-content:center!important;align-items:center!important;
+    text-align:center!important;
+    height:270px!important;min-height:0!important;max-height:270px!important;
+    overflow:hidden!important;
+    padding:18px 34px!important;margin:0!important;
+  }
+  .acharya-copy .eyebrow{margin:0 0 5px!important;text-align:center!important}
+  .acharya-copy h2{font-size:26px!important;line-height:1.35!important;margin:5px 0!important;text-align:center!important}
+  .acharya-copy h3{font-size:15px!important;line-height:1.5!important;margin:4px 0!important;text-align:center!important}
+  .acharya-copy p{font-size:12px!important;line-height:1.7!important;margin:7px auto 0!important;max-width:620px!important;text-align:center!important}
+  .acharya-side {
+    grid-column:1/-1!important;grid-row:2!important;
+    display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    grid-template-rows:1fr!important;align-items:stretch!important;justify-items:stretch!important;
+    gap:0!important;width:100%!important;height:62px!important;min-height:62px!important;max-height:62px!important;
+    box-sizing:border-box!important;overflow:hidden!important;
+    margin:0!important;padding:0 10px!important;
+    border-top:1px solid var(--line)!important;
+    background:#fff9ed!important;
+  }
+  .acharya-side h3{display:none!important}
+  .acharya-side a{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    min-width:0!important;height:100%!important;min-height:0!important;
+    margin:0!important;padding:8px 12px!important;
+    border:0!important;border-right:1px solid #e7d8bd!important;border-radius:0!important;
+    background:transparent!important;
+    color:var(--maroon)!important;font-size:13px!important;font-weight:600!important;
+    line-height:1.35!important;text-align:center!important;white-space:normal!important;
+  }
+  .acharya-side a:last-child{border-right:0!important}
+  .acharya-side a svg{width:14px!important;height:14px!important;flex:0 0 auto!important}
+  .feature-section{margin-top:0!important;padding-top:20px!important}
+}
+@media (min-width:761px) and (max-width:1050px) {
+  .acharya-band{grid-template-columns:minmax(240px,.85fr) minmax(0,1.15fr)!important;grid-template-rows:245px 56px!important;min-height:0!important}
+  .acharya-image{grid-column:1!important;grid-row:1!important;height:245px!important;min-height:245px!important}
+  .acharya-image img{object-fit:cover!important;object-position:center 38%!important}
+  .acharya-copy{grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;text-align:center!important;padding:12px 18px!important}
+  .acharya-copy h2,.acharya-copy h3,.acharya-copy p{text-align:center!important}
+  .acharya-copy .text-link{display:none!important}
+  .acharya-side{grid-column:1/-1!important;grid-row:2!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:0!important;margin:0!important;padding:0 6px!important;height:56px!important;min-height:56px!important}
+  .acharya-side h3{display:none!important}
+  .acharya-side a{display:flex!important;justify-content:center!important;align-items:center!important;text-align:center!important;white-space:normal!important;padding:5px 6px!important;font-size:11px!important;border:0!important;border-right:1px solid #e7d8bd!important}
+}
