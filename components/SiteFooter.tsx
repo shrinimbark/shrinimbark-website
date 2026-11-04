@@ -10,7 +10,7 @@ const defaults = {
   footerGroup1: 'सम्प्रदाय', footerGroup2: 'ज्ञान एवं साधना', footerGroup3: 'सम्पर्क',
   footerLink1: 'परिचय', footerLink2: 'श्रीनिम्बार्काचार्य', footerLink3: 'गुरु-परम्परा', footerLink4: 'दर्शन एवं सिद्धान्त',
   footerLink5: 'ग्रन्थ एवं शास्त्र', footerLink6: 'डिजिटल पुस्तकालय', footerLink7: 'उपासना एवं साधना', footerLink8: 'शोध एवं अभिलेखागार',
-  footerLink9: 'पीठ एवं मन्दिर', footerLink10: 'वैश्विक परिवार', footerLink11: 'सहयोग', footerLink12: 'सम्पर्क करें', footerLink13: 'प्रशासक लॉगिन',
+  footerLink9: 'पीठ एवं मन्दिर', footerLink10: 'वैश्विक परिवार', footerLink11: 'सहयोग', footerLink12: 'सम्पर्क करें',
   footerPath1:'/sampradaya', footerPath2:'/nimbarkacharya', footerPath3:'/parampara', footerPath4:'/darshan', footerPath5:'/granth', footerPath6:'/library', footerPath7:'/upasana', footerPath8:'/research', footerPath9:'/peeth', footerPath10:'/global', footerPath11:'/support', footerPath12:'/contact', footerPath13:'/admin',
   footerCopyright: 'सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु', footerEditorial: 'सम्पादकीय नीति', footerPrivacy: 'गोपनीयता नीति', footerIntroVisible: true
 };
@@ -20,7 +20,7 @@ const translations = {
   footerGroup1:'The Sampradaya',footerGroup2:'Knowledge & Practice',footerGroup3:'Connect',
   footerLink1:'Introduction',footerLink2:'Shri Nimbarkacharya',footerLink3:'Guru Parampara',footerLink4:'Philosophy & Siddhanta',
   footerLink5:'Scriptures & Texts',footerLink6:'Digital Library',footerLink7:'Worship & Sadhana',footerLink8:'Research & Archives',
-  footerLink9:'Peethas & Temples',footerLink10:'Global Community',footerLink11:'Support',footerLink12:'Contact Us',footerLink13:'Administrator Login',
+  footerLink9:'Peethas & Temples',footerLink10:'Global Community',footerLink11:'Support',footerLink12:'Contact Us',
   footerCopyright:'For public knowledge and cultural preservation',footerEditorial:'Editorial Policy',footerPrivacy:'Privacy Policy'
  },
  sa: {
@@ -28,14 +28,14 @@ const translations = {
   footerGroup1:'सम्प्रदायः',footerGroup2:'ज्ञानं साधना च',footerGroup3:'सम्पर्कः',
   footerLink1:'परिचयः',footerLink2:'श्रीनिम्बार्काचार्यः',footerLink3:'गुरुपरम्परा',footerLink4:'दर्शनं सिद्धान्ताश्च',
   footerLink5:'ग्रन्थाः शास्त्राणि च',footerLink6:'अङ्कीयपुस्तकालयः',footerLink7:'उपासना साधना च',footerLink8:'अनुसन्धानम् अभिलेखाश्च',
-  footerLink9:'पीठानि मन्दिराणि च',footerLink10:'वैश्विकपरिवारः',footerLink11:'सहयोगः',footerLink12:'सम्पर्कः',footerLink13:'प्रशासकप्रवेशः',
+  footerLink9:'पीठानि मन्दिराणि च',footerLink10:'वैश्विकपरिवारः',footerLink11:'सहयोगः',footerLink12:'सम्पर्कः',
   footerCopyright:'सार्वजनिकज्ञानस्य सांस्कृतिकसंरक्षणस्य च कृते',footerEditorial:'सम्पादकीयनीतिः',footerPrivacy:'गोपनीयतानीतिः'
  }
 } as const;
 const groups = [
   {links:[1,2,3,4],paths:[1,2,3,4]},
   {links:[5,6,7,8],paths:[5,6,7,8]},
-  {links:[9,10,11,12,13],paths:[9,10,11,12,13]}
+  {links:[9,10,11,12],paths:[9,10,11,12]}
 ];
 type Settings = typeof defaults & Record<string, any>;
 export default async function SiteFooter({lang}:{lang:Lang}) {
