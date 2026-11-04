@@ -18,5 +18,5 @@ export async function GET(request:Request){
   if(!bytes.length)return new NextResponse('Empty media file',{status:404});
   const ext=file.split('.').pop()?.toLowerCase();
   const type=ext==='png'?'image/png':ext==='webp'?'image/webp':ext==='jpg'||ext==='jpeg'?'image/jpeg':ext==='pdf'?'application/pdf':'application/octet-stream';
-  return new NextResponse(bytes,{headers:{'Content-Type':type,'Content-Length':String(bytes.length),'Cache-Control':'public, max-age=3600, stale-while-revalidate=86400','X-Content-Type-Options':'nosniff'}});
+  return new NextResponse(bytes,{headers:{'Content-Type':type,'Content-Length':String(bytes.length),'Cache-Control':'public, max-age=31536000, s-maxage=31536000, immutable','X-Content-Type-Options':'nosniff'}});
 }
