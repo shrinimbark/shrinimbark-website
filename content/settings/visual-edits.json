@@ -3,7 +3,7 @@
     {
       "path": "body > div:nth-of-type(2) > main > section.acharya-band:nth-of-type(2) > div.acharya-image:nth-of-type(1) > img",
       "lang": "hi",
-      "image": "/uploads/1793797453788-305644.png",
+      "image": "/uploads/1793797676798-305644.png",
       "style": {
         "maxWidth": "137px",
         "fontSize": "16px",
@@ -17,5 +17,5 @@
       "hidden": false
     }
   ],
-  "updatedAt": "2026-11-04T13:05:40.001Z"
+  "updatedAt": "2026-11-04T13:08:39.012Z"
 }
