@@ -14,7 +14,7 @@
       "path": "body > div:nth-of-type(2) > header.masthead.masthead-align-center",
       "lang": "hi",
       "style": {
-        "maxWidth": "900px",
+        "maxWidth": "1600px",
         "minHeight": "200px",
         "fontSize": "10px",
         "textAlign": "center",
@@ -25,5 +25,5 @@
       "hidden": false
     }
   ],
-  "updatedAt": "2026-11-04T11:01:47.501Z"
+  "updatedAt": "2026-11-04T11:02:15.893Z"
 }
