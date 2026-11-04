@@ -366,3 +366,25 @@
   .feature-body p,.lower-panel p { font-size: 12px !important; }
   .lower-panel h2 { font-size: 14px !important; }
 }
+
+
+/* Short devotional closing band: retain the mantra and purpose, remove excess height. */
+.closing-quote{
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:5px!important;width:100%!important;min-height:0!important;height:auto!important;
+  padding:18px 16px!important;margin:0!important;box-sizing:border-box!important;
+  text-align:center!important;
+}
+.closing-quote h2{
+  margin:0!important;padding:0!important;font-size:clamp(19px,2vw,25px)!important;
+  line-height:1.35!important;font-weight:700!important;
+}
+.closing-quote p{
+  margin:0!important;padding:0!important;font-size:clamp(12px,1.15vw,15px)!important;
+  line-height:1.45!important;
+}
+@media(max-width:760px){
+ .closing-quote{gap:4px!important;padding:12px 10px!important}
+ .closing-quote h2{font-size:18px!important}
+ .closing-quote p{font-size:11px!important}
+}
