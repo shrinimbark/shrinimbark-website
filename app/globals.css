@@ -1297,3 +1297,14 @@ img,video,iframe{max-width:100%}
   .acharya-side{gap:7px!important}
   .acharya-side a{flex:1 1 calc(50% - 7px)!important;padding:7px 8px!important}
 }
+
+
+/* Owner-adjustable global design tokens: every value is controlled from Admin > Site Design > Fine Layout. */
+.site-design-root{font-size:calc(16px * var(--site-font-scale,1));}
+.site-design-root :where(h1,h2,h3,h4){font-size-adjust:none;}
+.site-design-root :where(.section-heading h2,.acharya-copy h2,.inner-hero h1,.page-title,.topic-title){font-size:calc(1em * var(--site-heading-scale,1));}
+.site-design-root :where(.section,.department-section,.feature-section,.home-calendar-grid,.lower-panels,.home-news-strip,.home-social-strip){scroll-margin-top:90px;}
+.site-design-root :where(.department-card,.feature-card,.lower-panel,.home-calendar-card,.topic-card,.aside-box,.content-card){border-radius:var(--site-card-radius,12px)!important;}
+.site-design-root :where(.department-card,.feature-card,.lower-panel,.home-calendar-card,.topic-card,.aside-box,.content-card){padding:var(--site-card-padding,20px);box-shadow:0 5px 20px rgba(65,39,22,var(--site-card-shadow,.18));}
+.site-design-root :where(.section,.section-heading){margin-bottom:var(--site-section-gap,30px);}
+@media(max-width:760px){.site-design-root{font-size:calc(15px * var(--site-font-scale,1))}.site-design-root :where(.department-card,.feature-card,.lower-panel,.home-calendar-card,.topic-card,.aside-box,.content-card){padding:clamp(12px,var(--site-card-padding,20px),22px)}}
