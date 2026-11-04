@@ -1,6 +1,7 @@
 import Image from 'next/image'; import Link from 'next/link'; import DepartmentExplorer from '@/components/DepartmentExplorer'; import { ArrowUpRight, ScrollText, CalendarDays, PlayCircle, ChevronRight } from 'lucide-react';
 import { departments, type Lang } from '@/lib/site';
 import { readRepoFile } from '@/lib/github-content';
+import { mediaUrl } from '@/lib/media-url';
 
 export default async function HomePage({lang}:{lang:Lang}) {
  let heroImage='/images/radha-krishna-hero.jpg'; let acharyaImage='/images/acharya-study.jpg'; let design:any={}; let copy:any={};
