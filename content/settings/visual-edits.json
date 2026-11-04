@@ -1,0 +1,13 @@
+{
+  "edits": [
+    {
+      "path": "body > div:nth-of-type(2) > header.masthead.masthead-align-center > div.masthead-painting.masthead-painting-left:nth-of-type(1) > img",
+      "lang": "hi"
+    },
+    {
+      "path": "body > div:nth-of-type(2) > header.masthead.masthead-align-center > div.masthead-painting.masthead-painting-right:nth-of-type(3) > img",
+      "lang": "hi"
+    }
+  ],
+  "updatedAt": "2026-11-04T10:57:47.635Z"
+}
