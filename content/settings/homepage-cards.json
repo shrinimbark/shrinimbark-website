@@ -18,7 +18,7 @@
       },
       "href": "/library",
       "image": "",
-      "visible": false
+      "visible": true
     },
     {
       "title": {
@@ -38,7 +38,7 @@
       },
       "href": "/peeth",
       "image": "",
-      "visible": false
+      "visible": true
     },
     {
       "title": {
@@ -58,7 +58,7 @@
       },
       "href": "/upasana",
       "image": "",
-      "visible": false
+      "visible": true
     },
     {
       "title": {
@@ -78,8 +78,8 @@
       },
       "href": "/parampara",
       "image": "",
-      "visible": false
+      "visible": true
     }
   ],
-  "updatedAt": "2026-11-01T23:50:00.438Z"
+  "updatedAt": "2026-11-04T11:25:28.422Z"
 }
