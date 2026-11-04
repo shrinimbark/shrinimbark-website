@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './compact-home.css';
 
 const siteTitle = 'श्रीनिम्बार्क सम्प्रदाय | Shri Nimbarka Sampradaya';
 const siteDescription = 'निम्बार्क सम्प्रदाय का ज्ञान केन्द्र। द्वैताद्वैत वेदान्त, श्रीराधाकृष्ण युगलोपासना, आचार्य परम्परा, ग्रन्थ, उपासना एवं प्रमाणित इतिहास।';
