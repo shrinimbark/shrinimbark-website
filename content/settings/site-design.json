@@ -58,7 +58,7 @@
   "logoVisible": true,
   "leftImageVisible": true,
   "rightImageVisible": true,
-  "acharyaImage": "/uploads/1793629464258-587507.png",
+  "acharyaImage": "/uploads/1793798226866-305644.png",
   "acharyaImageVisible": true,
   "acharyaImageWidth": 100,
   "leftImage": "/uploads/1793631371766-587546.png",
@@ -71,10 +71,10 @@
   "leftImageHeightPx": 200,
   "rightImageWidthPx": 180,
   "rightImageHeightPx": 200,
-  "leftImageX": 0,
-  "leftImageY": 0,
-  "rightImageX": 0,
-  "rightImageY": 0,
+  "leftImageX": 1,
+  "leftImageY": 1,
+  "rightImageX": 1,
+  "rightImageY": 1,
   "mastheadHeight": 280,
   "mastheadCenterWidth": 360,
   "mastheadGap": 10,
@@ -143,5 +143,5 @@
   "footerCopyright": "सार्वजनिक ज्ञान एवं सांस्कृतिक संरक्षण हेतु",
   "footerEditorial": "",
   "footerPrivacy": "गोपनीयता नीति",
-  "updatedAt": "2026-11-04T11:21:03.563Z"
+  "updatedAt": "2026-11-04T13:17:53.190Z"
 }
