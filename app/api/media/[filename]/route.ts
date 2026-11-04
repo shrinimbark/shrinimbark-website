@@ -18,7 +18,7 @@ export async function GET(_request: Request, context: { params: Promise<{ filena
     if (!upstream.ok) return NextResponse.json({ error: upstream.status === 404 ? 'चित्र उपलब्ध नहीं है।' : 'चित्र प्राप्त नहीं हो सका।' }, { status: upstream.status === 404 ? 404 : 502 });
     const contentType = upstream.headers.get('content-type') || 'application/octet-stream';
     if (!/^image\/(jpeg|png|webp|gif|avif)$/.test(contentType)) return NextResponse.json({ error: 'यह मान्य चित्र फ़ाइल नहीं है।' }, { status: 415 });
-    return new Response(upstream.body, { headers: { 'Content-Type': contentType, 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400', 'X-Content-Type-Options': 'nosniff' } });
+    return new Response(upstream.body, { headers: { 'Content-Type': contentType, 'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, immutable', 'X-Content-Type-Options': 'nosniff' } });
   } catch {
     return NextResponse.json({ error: 'चित्र सर्वर से प्राप्त नहीं हो सका।' }, { status: 502 });
   }
