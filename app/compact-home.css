@@ -498,3 +498,37 @@
   }
   .department-explorer .all-departments {display:none!important}
 }
+
+
+/* Footer navigation now contains only destinations not already represented
+   in the main navigation and homepage department cards. */
+.footer-columns {
+  display:grid!important;
+  grid-template-columns:minmax(0,360px)!important;
+  justify-content:center!important;
+  text-align:center!important;
+  gap:0!important;
+  padding:12px 16px!important;
+}
+.footer-columns>div {
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px 22px!important;
+}
+.footer-columns h3 {
+  flex:0 0 100%!important;
+  margin:0 0 3px!important;
+  text-align:center!important;
+}
+.footer-columns a {
+  display:inline-flex!important;
+  min-height:0!important;
+  padding:3px 5px!important;
+}
+@media(max-width:760px){
+ .footer-columns{grid-template-columns:minmax(0,1fr)!important;padding:10px 12px!important}
+ .footer-columns>div{gap:6px 14px!important}
+}
