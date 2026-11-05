@@ -1962,3 +1962,17 @@ body{font-size:16px;line-height:1.7}
   .homepage-root .acharya-copy p{font-size:17px!important;line-height:1.85!important}
   .homepage-root .acharya-side a{font-size:15px!important}
 }
+
+
+/* Correct image sizing: preserve the image's own dimensions instead of stretching it to its frame. */
+.masthead-painting img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;flex:0 1 auto}
+.masthead-painting{min-width:0}
+/* The image itself is resized by the visual editor; its surrounding column remains independent. */
+.visual-image-resized{position:relative!important;inset:auto!important;display:block!important;margin:auto!important;max-width:100%!important;object-fit:contain!important}
+.visual-image-frame{display:flex!important;align-items:center!important;justify-content:center!important;min-width:0!important}
+/* Keep the admin workspace readable on desktop and compact on phones. */
+.visual-admin-grid{grid-template-columns:minmax(0,1.35fr) minmax(340px,.85fr);min-height:0}
+.visual-admin-screen iframe{height: min(72vh, 900px);min-height:560px}
+.visual-admin-side{max-height:min(82vh,1000px)}
+@media(max-width:900px){.visual-admin-grid{grid-template-columns:minmax(0,1fr)}.visual-admin-screen iframe{height:62vh;min-height:460px}.visual-admin-side{max-height:none}}
+@media(max-width:600px){.visual-admin-screen iframe{height:58vh;min-height:380px}.visual-admin-control{padding:10px}.visual-admin-size{grid-template-columns:repeat(2,minmax(0,1fr))}}
