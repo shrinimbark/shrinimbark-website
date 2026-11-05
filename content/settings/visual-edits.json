@@ -29,7 +29,17 @@
         "borderRadius": "0"
       },
       "hidden": false
+    },
+    {
+      "path": "body > div.site-design-root:nth-of-type(2) > main.homepage-root > section.acharya-band:nth-of-type(2) > div.acharya-copy:nth-of-type(2) > span.eyebrow",
+      "lang": "hi",
+      "text": "प्रवर्तक आचार्य",
+      "style": {
+        "fontSize": "14px",
+        "textAlign": "left"
+      },
+      "hidden": true
     }
   ],
-  "updatedAt": "2026-11-05T10:30:16.371Z"
+  "updatedAt": "2026-11-05T10:54:46.984Z"
 }
