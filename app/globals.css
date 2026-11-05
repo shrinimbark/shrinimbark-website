@@ -1787,3 +1787,70 @@ body{font-size:16px;line-height:1.7}
   .article-prose h2{font-size:25px!important}
   .article-prose h3{font-size:21px!important}
 }
+
+
+/* MOBILE REPAIR — target the actual masthead painting classes used by SiteHeader. */
+@media(max-width:700px){
+  .masthead{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) minmax(0,1fr)!important;
+    grid-template-rows:auto!important;
+    align-items:center!important;
+    justify-items:center!important;
+    gap:7px!important;
+    height:auto!important;min-height:0!important;
+    padding:10px 9px 12px!important;
+    overflow:hidden!important;
+  }
+  .masthead-painting-left,.masthead-painting-right{
+    position:static!important;display:flex!important;
+    width:100%!important;max-width:100%!important;
+    min-width:0!important;height:auto!important;
+    align-items:center!important;justify-content:center!important;
+    overflow:hidden!important;
+  }
+  .masthead-painting-left{grid-column:1!important;grid-row:1!important}
+  .masthead-center{grid-column:2!important;grid-row:1!important;min-width:0!important;width:100%!important}
+  .masthead-painting-right{grid-column:3!important;grid-row:1!important}
+  .masthead-painting-left img,.masthead-painting-right img{
+    display:block!important;position:static!important;
+    width:100%!important;height:clamp(66px,21vw,100px)!important;
+    max-width:100%!important;max-height:100px!important;
+    object-fit:contain!important;transform:none!important;
+  }
+  .masthead .seal{width:28px!important;height:28px!important;margin:0 auto 3px!important}
+  .masthead .seal img{max-width:100%!important;max-height:100%!important;object-fit:contain!important}
+  .masthead .invocation{font-size:9px!important;line-height:1.35!important;margin:2px 0!important}
+  .masthead .brand-hi{font-size:clamp(15px,4.2vw,19px)!important;line-height:1.35!important;display:block!important}
+  .masthead .brand-en{font-size:9px!important;letter-spacing:.3px!important;line-height:1.25!important}
+  .masthead .brand-tag{font-size:9px!important;line-height:1.35!important;margin-top:2px!important}
+  .mainnav .nav-inner{min-height:40px!important}
+  .homepage-root>.acharya-band{
+    grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)!important;
+    gap:9px!important;padding:10px!important;
+  }
+  .homepage-root>.acharya-band>.acharya-image{width:100%!important;aspect-ratio:.78!important}
+  .homepage-root>.acharya-band>.acharya-copy{padding:3px!important}
+  .homepage-root>.acharya-band .acharya-copy .eyebrow{font-size:12px!important}
+  .homepage-root>.acharya-band .acharya-copy h2{font-size:clamp(16px,4.4vw,20px)!important}
+  .homepage-root>.acharya-band .acharya-copy h3{font-size:13px!important}
+  .homepage-root>.acharya-band .acharya-copy p{font-size:12px!important;line-height:1.55!important}
+  .homepage-root>.acharya-band .acharya-side{padding:5px!important;gap:4px!important}
+  .homepage-root>.acharya-band .acharya-side h3{font-size:12px!important}
+  .homepage-root>.acharya-band .acharya-side a{font-size:11px!important;min-height:29px!important;padding:4px!important}
+  .homepage-root .department-card h3{font-size:13px!important}
+  .homepage-root .department-card p{font-size:11.5px!important;line-height:1.55!important}
+  .homepage-root .department-card .card-arrow{font-size:11.5px!important}
+  .homepage-root .home-calendar-card h2{font-size:13px!important}
+  .homepage-root .home-calendar-card p,.homepage-root .home-calendar-card a{font-size:11.5px!important}
+  .homepage-root .lower-panel h2{font-size:12px!important}
+  .homepage-root .lower-panel p,.homepage-root .lower-panel a{font-size:11px!important}
+  .footer-top h2{font-size:20px!important}
+  .footer-top p,.footer-desc,.footer-columns a,.footer-bottom{font-size:11px!important;line-height:1.6!important}
+  .footer-bottom{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:center!important;gap:8px 14px!important;padding:12px!important}
+}
+/* Long-form reading stays larger even when the homepage overview is compact. */
+@media(max-width:700px){
+  .article-prose,.content-main,.page-content,.topic-content,
+  .article-body,.prose-content{font-size:18px!important;line-height:1.95!important}
+}
