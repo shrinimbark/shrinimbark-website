@@ -39,7 +39,22 @@
         "textAlign": "left"
       },
       "hidden": true
+    },
+    {
+      "path": "body > div.site-design-root:nth-of-type(2) > header.masthead.masthead-align-center > div.masthead-painting.masthead-painting-right:nth-of-type(3) > img",
+      "lang": "hi",
+      "style": {
+        "maxWidth": "100px",
+        "fontSize": "15px",
+        "textAlign": "center",
+        "padding": "0px",
+        "border": "0",
+        "borderRadius": "0",
+        "width": "274px",
+        "height": "155px"
+      },
+      "hidden": true
     }
   ],
-  "updatedAt": "2026-11-05T10:54:46.984Z"
+  "updatedAt": "2026-11-05T17:06:37.120Z"
 }
