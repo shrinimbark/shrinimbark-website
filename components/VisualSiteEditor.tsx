@@ -112,14 +112,17 @@ export default function VisualSiteEditor(){
   });
   doc.body.appendChild(overlay);overlayRef.current=overlay as unknown as HTMLDivElement;
   const reposition=()=>updateOverlay();
-  const click=(ev:MouseEvent)=>{
-   const target=ev.target as HTMLElement|null;if(!target||target.closest('[data-editor-overlay]'))return;
-   const el=target.closest('img,h1,h2,h3,h4,h5,p,a,button,li,blockquote,figcaption,td,th,label,span,strong,em,small,section,article,header,footer,nav,div') as HTMLElement|null;
-   if(!el||el===doc.body||el===doc.documentElement)return;
-   ev.preventDefault();ev.stopPropagation();selectElement(el);
-  };
   const drag=(ev:PointerEvent)=>{
-   const handle=(ev.target as HTMLElement).closest('[data-handle]') as HTMLElement|null;
+   const target=ev.target as HTMLElement|null;
+   if(!target||target.closest('[data-editor-overlay]')===null){
+    const el=target?.closest('img,h1,h2,h3,h4,h5,p,a,button,li,blockquote,figcaption,td,th,label,span,strong,em,small,section,article,header,footer,nav,div') as HTMLElement|null;
+    if(el&&el!==doc.body&&el!==doc.documentElement){
+     ev.stopPropagation();
+     selectElement(el);
+    }
+    return;
+   }
+   const handle=target.closest('[data-handle]') as HTMLElement|null;
    const item=selectedRef.current;if(!handle||!item)return;
    ev.preventDefault();ev.stopPropagation();
    const el=item.el,mode=handle.dataset.handle||'move',startX=ev.clientX,startY=ev.clientY,r=el.getBoundingClientRect();
@@ -142,9 +145,9 @@ export default function VisualSiteEditor(){
    };
    doc.addEventListener('pointermove',move,true);doc.addEventListener('pointerup',up,true);
   };
-  doc.addEventListener('click',click,true);doc.addEventListener('pointerdown',drag,true);
+  doc.addEventListener('pointerdown',drag,true);
   doc.addEventListener('scroll',reposition,true);doc.defaultView?.addEventListener('resize',reposition);
-  return()=>{doc.removeEventListener('click',click,true);doc.removeEventListener('pointerdown',drag,true);doc.removeEventListener('scroll',reposition,true);doc.defaultView?.removeEventListener('resize',reposition);overlay.remove();};
+  return()=>{doc.removeEventListener('pointerdown',drag,true);doc.removeEventListener('scroll',reposition,true);doc.defaultView?.removeEventListener('resize',reposition);overlay.remove();};
  },[selectElement,updateOverlay]);
 
  useEffect(()=>{const f=frame.current;if(!f)return;f.onload=()=>{const cleanup=bindFrame();(f as any).__editorCleanup=cleanup;};return()=>{(f as any).__editorCleanup?.();};},[bindFrame,lang,reload]);
