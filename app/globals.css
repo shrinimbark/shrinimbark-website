@@ -1579,3 +1579,128 @@ img,video,iframe{max-width:100%}
     flex:1 1 calc(50% - 8px)!important;padding:9px 8px!important;font-size:13px!important;
   }
 }
+
+
+/* ACCESSIBILITY TYPOGRAPHY — comfortable reading without browser zoom. */
+html{font-size:17px}
+body{font-size:16px;line-height:1.7}
+.article-prose{font-size:19px!important;line-height:1.95!important;max-width:78ch}
+.article-prose p{margin-bottom:1.05em!important}
+.article-prose h2{font-size:30px!important;line-height:1.5!important}
+.article-prose h2.article-heading{font-size:34px!important}
+.article-prose h3{font-size:24px!important;line-height:1.6!important}
+.content-main,.page-content,.topic-content{font-size:18px;line-height:1.9}
+.content-main p,.page-content p,.topic-content p{line-height:1.95}
+@media(min-width:1000px){
+  body{font-size:17px}
+  .article-prose{font-size:20px!important;line-height:2!important}
+  .article-prose h2{font-size:32px!important}
+  .article-prose h2.article-heading{font-size:36px!important}
+  .article-prose h3{font-size:25px!important}
+}
+
+/* PHONE HOMEPAGE OVERVIEW — compact information architecture, not a shrunken desktop canvas.
+   Long-form article pages remain naturally scrollable and use the larger reading typography above. */
+@media(max-width:700px){
+  .topbar{height:24px!important;padding:0 12px!important;font-size:10px!important}
+  .toplinks,.lang-switch{gap:9px!important}
+  .masthead{
+    height:auto!important;min-height:0!important;
+    padding:10px 12px 12px!important;
+    display:grid!important;grid-template-columns:minmax(0,1fr) minmax(150px,1.15fr) minmax(0,1fr)!important;
+    gap:8px!important;align-items:center!important;
+  }
+  .masthead:before,.masthead:after,.mast-ornament,.mast-rule{display:none!important}
+  .masthead .masthead-left,.masthead .masthead-right{position:static!important;width:100%!important;height:auto!important;max-width:100%!important}
+  .masthead .masthead-left img,.masthead .masthead-right img{width:100%!important;height:clamp(66px,19vw,112px)!important;object-fit:contain!important}
+  .masthead .masthead-center{position:static!important;width:auto!important;max-width:none!important}
+  .masthead .brand-hi{font-size:clamp(16px,4vw,22px)!important;line-height:1.35!important}
+  .masthead .brand-en{font-size:11px!important;letter-spacing:1px!important}
+  .masthead .brand-tag,.masthead .invocation{font-size:9px!important;line-height:1.4!important}
+  .masthead .seal,.masthead .masthead-logo{width:34px!important;height:34px!important;margin:2px auto!important}
+  .mainnav .nav-inner{min-height:38px!important;padding:0 12px!important}
+  .homepage-root{gap:0!important}
+  .homepage-root>.acharya-band{
+    display:grid!important;grid-template-columns:minmax(0,0.78fr) minmax(0,1.22fr)!important;
+    gap:12px!important;align-items:center!important;
+    width:100%!important;margin:10px auto 14px!important;
+    padding:10px 12px!important;
+  }
+  .homepage-root>.acharya-band>.acharya-image{
+    grid-column:1!important;grid-row:1!important;
+    width:100%!important;max-width:none!important;height:auto!important;
+    aspect-ratio:0.78!important;margin:0!important;
+  }
+  .homepage-root>.acharya-band>.acharya-copy{
+    grid-column:2!important;grid-row:1!important;
+    width:100%!important;padding:2px!important;
+  }
+  .homepage-root>.acharya-band .eyebrow{font-size:11px!important}
+  .homepage-root>.acharya-band .acharya-copy h2{font-size:clamp(17px,4vw,22px)!important;line-height:1.4!important;margin:5px 0!important}
+  .homepage-root>.acharya-band .acharya-copy h3{font-size:13px!important;line-height:1.5!important;margin:4px 0!important}
+  .homepage-root>.acharya-band .acharya-copy p{font-size:12px!important;line-height:1.55!important;margin:5px 0!important}
+  .homepage-root>.acharya-band .acharya-side{
+    margin:7px 0 0!important;padding:6px!important;gap:5px!important;
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .homepage-root>.acharya-band .acharya-side h3{font-size:12px!important;margin:0!important}
+  .homepage-root>.acharya-band .acharya-side a{
+    min-width:0!important;min-height:28px!important;padding:4px 5px!important;
+    font-size:10.5px!important;line-height:1.3!important;
+  }
+  .homepage-root>.department-section{
+    padding:14px 12px!important;margin:0!important;
+  }
+  .homepage-root .section-heading{margin:0 auto 10px!important;padding:0 4px!important}
+  .homepage-root .section-heading .eyebrow{font-size:11px!important}
+  .homepage-root .section-heading h2{font-size:clamp(17px,4.2vw,23px)!important;line-height:1.45!important;margin:4px 0!important}
+  .homepage-root .section-heading p{font-size:12px!important;line-height:1.5!important;margin:3px 0!important}
+  .homepage-root .department-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .homepage-root .department-card{
+    min-height:0!important;padding:9px 8px!important;
+    border-radius:8px!important;transform:none!important;
+  }
+  .homepage-root .department-card h3,.homepage-root .department-card strong{font-size:12px!important;line-height:1.4!important}
+  .homepage-root .department-card p{font-size:10.5px!important;line-height:1.45!important}
+  .homepage-root .department-card a{font-size:11px!important}
+  .homepage-root .home-news-strip{
+    margin:8px 12px!important;padding:8px 10px!important;
+    min-height:0!important;gap:6px!important;flex-wrap:wrap!important;
+    font-size:11px!important;line-height:1.45!important;
+  }
+  .homepage-root .home-news-strip strong{font-size:12px!important}
+  .homepage-root .home-news-strip span{font-size:10.5px!important}
+  .homepage-root .home-calendar-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;margin:7px auto 10px!important;padding:0 12px!important;
+  }
+  .homepage-root .home-calendar-card{padding:9px!important;min-width:0!important}
+  .homepage-root .home-calendar-card .eyebrow{font-size:10px!important}
+  .homepage-root .home-calendar-card h2{font-size:12px!important;line-height:1.45!important;margin:4px 0!important}
+  .homepage-root .home-calendar-card p{font-size:10.5px!important;line-height:1.45!important}
+  .homepage-root .home-calendar-card a{font-size:10.5px!important}
+  .homepage-root .home-social-strip{margin:6px 12px!important;padding:8px!important;gap:5px!important}
+  .homepage-root .lower-panels{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:6px!important;margin:8px 12px!important;
+  }
+  .homepage-root .lower-panel{padding:8px 7px!important;min-width:0!important}
+  .homepage-root .lower-panel h2{font-size:11.5px!important;line-height:1.4!important;gap:3px!important}
+  .homepage-root .lower-panel p{font-size:10px!important;line-height:1.4!important}
+  .homepage-root .lower-panel a{font-size:10px!important}
+  .homepage-root .closing-quote{padding:10px 8px!important;margin-top:6px!important}
+  .homepage-root .closing-quote h2{font-size:15px!important;margin:0!important}
+  .homepage-root .closing-quote p{font-size:10px!important;margin:3px 0 0!important}
+  .site-footer{padding-top:12px!important;padding-bottom:12px!important}
+}
+
+/* Article pages are not condensed: comfortable Hindi/Sanskrit line length and touch-safe spacing. */
+@media(max-width:700px){
+  .article-prose{font-size:18px!important;line-height:1.95!important;max-width:100%!important}
+  .article-prose p{margin-bottom:1.1em!important;text-align:start!important}
+  .article-prose h2{font-size:25px!important;line-height:1.55!important;margin:28px 0 12px!important}
+  .article-prose h2.article-heading{font-size:28px!important}
+  .article-prose h3{font-size:21px!important;line-height:1.65!important;margin:22px 0 9px!important}
+  .article-prose .article-verse{font-size:18px!important;line-height:1.75!important}
+  .content-main,.page-content,.topic-content{font-size:17px!important;line-height:1.9!important}
+}
