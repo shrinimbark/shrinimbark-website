@@ -53,6 +53,7 @@ export default function VisualSiteEditor(){
   const overlay=overlayRef.current,el=selectedRef.current?.el;
   if(!overlay||!el||!el.isConnected)return;
   const r=el.getBoundingClientRect();
+  overlay.style.display='block';
   overlay.style.left=Math.max(0,r.left)+'px';overlay.style.top=Math.max(0,r.top)+'px';
   overlay.style.width=Math.max(24,r.width)+'px';overlay.style.height=Math.max(24,r.height)+'px';
  },[]);
@@ -61,7 +62,7 @@ export default function VisualSiteEditor(){
   const item=selectedRef.current;if(!item)return;
   const el=item.el;
   if(item.kind==='text')setDirectText(el,text);
-  if(item.kind==='image'&&image){if(el instanceof HTMLImageElement)el.src=image;else{const img=el.querySelector('img');if(img)img.src=image;}}
+  if(item.kind==='image'&&image){if(el.tagName==='IMG')(el as HTMLImageElement).src=image;else{const img=el.querySelector('img');if(img)img.src=image;}}
   if(size)el.style.setProperty('font-size',size+'px','important');
   if(font!=='inherit')el.style.setProperty('font-family',font,'important');
   if(color)el.style.setProperty('color',color,'important');
@@ -79,11 +80,11 @@ export default function VisualSiteEditor(){
   const doc=frame.current?.contentDocument;if(!doc)return;
   doc.querySelectorAll('[data-editor-picked="1"]').forEach(x=>x.removeAttribute('data-editor-picked'));
   el.setAttribute('data-editor-picked','1');
-  const kind:Picked['kind']=el instanceof HTMLImageElement?'image':(['H1','H2','H3','H4','P','SPAN','STRONG','EM','SMALL','LABEL','A','BUTTON'].includes(el.tagName)?'text':'element');
+  const kind:Picked['kind']=el.tagName==='IMG'?'image':(['H1','H2','H3','H4','P','SPAN','STRONG','EM','SMALL','LABEL','A','BUTTON'].includes(el.tagName)?'text':'element');
   const item={el,path:selectorPath(el),kind,label:el.getAttribute('aria-label')||el.innerText?.trim().slice(0,70)||el.getAttribute('alt')||el.tagName.toLowerCase()};
   selectedRef.current=item;setSelected(item);
   setText(kind==='text'?(directText(el)?.nodeValue||el.innerText||''):'');
-  const img=el instanceof HTMLImageElement?el:el.querySelector('img');
+  const img=el.tagName==='IMG'?el as HTMLImageElement:el.querySelector('img');
   setImage(img?.getAttribute('src')||'');
   const cs=getComputedStyle(el);setSize(String(Math.round(parseFloat(cs.fontSize)||18)));
   setFont(cs.fontFamily||'inherit');setColor(rgbHex(cs.color));setBackground(cs.backgroundColor==='rgba(0, 0, 0, 0)'?'transparent':rgbHex(cs.backgroundColor));
@@ -165,7 +166,7 @@ export default function VisualSiteEditor(){
   }catch(e){setNotice(e instanceof Error?e.message:'बदलाव सुरक्षित नहीं हुआ।');}finally{setBusy(false);}
  };
  const uploadImage=async(file?:File)=>{if(!file)return;setUploadBusy(true);try{const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();if(!r.ok)throw new Error(d.error||'चित्र अपलोड नहीं हुआ।');setImage(d.url);setNotice('चित्र अपलोड हो गया। पूर्वावलोकन में लागू किया जा रहा है।');}catch(e){setNotice(e instanceof Error?e.message:'चित्र अपलोड नहीं हुआ।');}finally{setUploadBusy(false);}};
- const toggleHidden=()=>{const item=selectedRef.current;if(!item)return;const next=!hidden;setHidden(next);item.el.style.display=next?'none':'';setDirty(true);setNotice(next?'चयनित वस्तु छिपाई गई।':'चयनित वस्तु फिर दिखाई गई।');};
+ const toggleHidden=()=>{const item=selectedRef.current;if(!item)return;const next=!hidden;setHidden(next);item.el.style.display=next?'none':'';if(!next)requestAnimationFrame(updateOverlay);setDirty(true);setNotice(next?'चयनित वस्तु छिपाई गई।':'चयनित वस्तु फिर दिखाई गई।');};
  const refresh=()=>{selectedRef.current=null;setSelected(null);setDirty(false);setReload(x=>x+1);setNotice('वेबसाइट का पूर्वावलोकन फिर से लोड हो रहा है।');};
  return <section className="new-editor">
   <header className="new-editor-head"><div><span>VISUAL WEBSITE EDITOR</span><h2>वेबसाइट को सीधे चुनकर संपादित करें</h2><p>किसी भी पाठ, चित्र या बॉक्स को चुनें। बदलाव तुरन्त पूर्वावलोकन में दिखेंगे।</p></div><div className="new-editor-actions"><select value={lang} onChange={e=>{setLang(e.target.value as Lang);setSelected(null);selectedRef.current=null;}}>{(Object.keys(languageNames) as Lang[]).map(k=><option key={k} value={k}>{languageNames[k]}</option>)}</select><button type="button" onClick={refresh}><RefreshCw size={15}/> पुनः लोड</button></div></header>
