@@ -12,7 +12,7 @@ function selectorPath(el:Element){
   if(node.id){part+='#'+node.id;parts.unshift(part);break;}
   const classes=Array.from(node.classList).filter(x=>/^[a-zA-Z_-][a-zA-Z0-9_-]*$/.test(x)).slice(0,2);
   if(classes.length)part+='.'+classes.join('.');
-  const parent=node.parentElement;
+  const parent:HTMLElement|null=node.parentElement;
   if(parent){const peers=Array.from(parent.children).filter(x=>x.tagName===node!.tagName);if(peers.length>1)part+=':nth-of-type('+(peers.indexOf(node)+1)+')';}
   parts.unshift(part);node=parent;
  }
