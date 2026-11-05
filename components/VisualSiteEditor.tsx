@@ -32,6 +32,7 @@ export default function VisualSiteEditor(){
  const [selected,setSelected]=useState<Picked|null>(null);
  const [text,setText]=useState('');
  const [image,setImage]=useState('');
+ const [uploadBusy,setUploadBusy]=useState(false);
  const [font,setFont]=useState('inherit');
  const [size,setSize]=useState('18');
  const [color,setColor]=useState('#39252a');
@@ -163,6 +164,7 @@ export default function VisualSiteEditor(){
    setDirty(false);setNotice('सफलतापूर्वक सुरक्षित। सार्वजनिक वेबसाइट पर लागू होने में Vercel deployment का समय लग सकता है।');
   }catch(e){setNotice(e instanceof Error?e.message:'बदलाव सुरक्षित नहीं हुआ।');}finally{setBusy(false);}
  };
+ const uploadImage=async(file?:File)=>{if(!file)return;setUploadBusy(true);try{const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();if(!r.ok)throw new Error(d.error||'चित्र अपलोड नहीं हुआ।');setImage(d.url);setNotice('चित्र अपलोड हो गया। पूर्वावलोकन में लागू किया जा रहा है।');}catch(e){setNotice(e instanceof Error?e.message:'चित्र अपलोड नहीं हुआ।');}finally{setUploadBusy(false);}};
  const toggleHidden=()=>{const item=selectedRef.current;if(!item)return;const next=!hidden;setHidden(next);item.el.style.display=next?'none':'';setDirty(true);setNotice(next?'चयनित वस्तु छिपाई गई।':'चयनित वस्तु फिर दिखाई गई।');};
  const refresh=()=>{selectedRef.current=null;setSelected(null);setDirty(false);setReload(x=>x+1);setNotice('वेबसाइट का पूर्वावलोकन फिर से लोड हो रहा है।');};
  return <section className="new-editor">
@@ -172,7 +174,7 @@ export default function VisualSiteEditor(){
    <aside className="new-editor-inspector"><div className="new-editor-inspector-title"><strong>चयनित वस्तु</strong><span>{selected?selected.label:'अभी कोई चयन नहीं'}</span></div>
     {!selected?<div className="new-editor-empty"><MousePointer2 size={30}/><p>पूर्वावलोकन में किसी भी वस्तु पर क्लिक करें। उसके संपादन विकल्प यहाँ खुलेंगे।</p></div>:<>
      {selected.kind==='text'&&<label>पाठ<textarea value={text} onChange={e=>setText(e.target.value)} rows={3}/></label>}
-     {selected.kind==='image'&&<label>चित्र URL<input value={image} onChange={e=>setImage(e.target.value)}/><small>अपलोड की गई फाइल का /uploads/... पता भी दे सकते हैं।</small></label>}
+     {selected.kind==='image'&&<label>चित्र बदलें<input value={image} onChange={e=>setImage(e.target.value)} placeholder="/uploads/... या चित्र URL"/><input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>uploadImage(e.target.files?.[0])} disabled={uploadBusy}/><small>{uploadBusy?'चित्र अपलोड हो रहा है…':'नया चित्र अपलोड करें या उसका पता दें।'}</small></label>}
      <div className="new-editor-grid"><label>फॉन्ट आकार (px)<input type="number" min="1" max="2000" value={size} onChange={e=>setSize(e.target.value)}/></label><label>चौड़ाई (px)<input type="number" min="8" max="3000" value={width} onChange={e=>setWidth(e.target.value)}/></label><label>ऊँचाई (px)<input type="number" min="8" max="3000" value={height} onChange={e=>setHeight(e.target.value)}/></label><label>मोटाई<select value={weight} onChange={e=>setWeight(e.target.value)}><option value="300">हल्की</option><option value="400">सामान्य</option><option value="500">मध्यम</option><option value="600">अर्ध-मोटी</option><option value="700">मोटी</option><option value="800">अधिक मोटी</option></select></label></div>
      <label>फॉन्ट परिवार<select value={font} onChange={e=>setFont(e.target.value)}><option value="inherit">मूल फॉन्ट</option><option value="'Noto Serif Devanagari',serif">Noto Serif Devanagari</option><option value="'Cormorant Garamond',serif">Cormorant Garamond</option><option value="serif">Serif</option><option value="sans-serif">Sans Serif</option><option value="Georgia,serif">Georgia</option></select></label>
      <div className="new-editor-grid"><label>अक्षर रंग<input type="color" value={color} onChange={e=>setColor(e.target.value)}/></label><label>बैकग्राउंड<input type="color" value={background===''||background==='transparent'?'#ffffff':background} onChange={e=>setBackground(e.target.value)}/></label></div>
