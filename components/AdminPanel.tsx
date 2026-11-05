@@ -1,51 +1,61 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { LockKeyhole, LogOut, Save, Upload, FileText, Image as ImageIcon, ExternalLink } from 'lucide-react';
-import SiteDesignEditor from '@/components/SiteDesignEditor';
-import HomePageEditor from '@/components/HomePageEditor';
-import FeatureCardsEditor from '@/components/FeatureCardsEditor';
-import RecordManager from '@/components/RecordManager';
-import DepartmentVisualEditor from '@/components/DepartmentVisualEditor';
+
+import {useEffect,useState} from 'react';
+import {LockKeyhole,LogOut,ExternalLink} from 'lucide-react';
 import VisualSiteEditor from '@/components/VisualSiteEditor';
-const sections = [
-['sampradaya','सम्प्रदाय परिचय',['परिचय एवं स्वरूप','नामकरण एवं इतिहास','सम्प्रदाय की विशेषताएँ','शाखाएँ एवं उपशाखाएँ','वैष्णव परम्पराओं में स्थान']],
-['nimbarkacharya','श्रीनिम्बार्काचार्य',['प्राकट्य एवं जीवनचरित्र','गुरु एवं शिक्षा','दर्शन एवं उपदेश','ग्रन्थ एवं रचनाएँ','प्राकट्य स्थल एवं परम्पराएँ','ऐतिहासिक प्रमाण']],
-['parampara','इतिहास एवं गुरु-परम्परा',['सनकादि परम्परा','आचार्य परम्परा','गुरु-शिष्य क्रम','पीठवार परम्पराएँ','प्रमुख ऐतिहासिक सन्त','कालक्रम एवं वंशवृक्ष']],
-['darshan','दर्शन एवं सिद्धान्त',['प्रस्थानत्रयी','द्वैताद्वैत वेदान्त','तत्त्वत्रय','ब्रह्म, जीव एवं जगत्','भक्ति एवं प्रपत्ति','मोक्ष एवं परमपुरुषार्थ','राधाकृष्ण तत्त्व','तुलनात्मक वेदान्त']],
-['granth','ग्रन्थ एवं शास्त्र',['मूल आचार्य ग्रन्थ','ब्रह्मसूत्र भाष्य','गीता भाष्य एवं टीका','उपनिषद् एवं वेदान्त','भक्ति एवं स्तोत्र साहित्य','पाञ्चरात्र एवं संहिता','नित्यकर्म एवं पद्धति ग्रन्थ']],
-['acharya','आचार्य एवं सन्त',['प्राचीन आचार्य','मध्यकालीन आचार्य','आधुनिक आचार्य','सन्त एवं महात्मा','विद्वान एवं टीकाकार','जीवनचरित्र निर्देशिका']],
-['upasana','उपासना एवं साधना',['युगलोपासना','गुरु उपासना','मन्त्र एवं जप','ध्यान एवं मानस सेवा','भक्ति साधना','शालग्राम उपासना','यन्त्र एवं योगपीठ']],
-['nityakarma','नित्यकर्म एवं सपर्या',['वैदिक सन्ध्या','वैष्णव तान्त्रिक सन्ध्या','आचमन एवं प्राणायाम','न्यास विधान','तिलक एवं जप','नित्य पूजा','उपचार एवं सेवा','उत्सव एवं विशेष पूजा']],
-['peeth','पीठ, मठ एवं मन्दिर',['आचार्य पीठ','प्रमुख मठ एवं आश्रम','मन्दिर निर्देशिका','शाखाएँ एवं गद्दियाँ','संस्थागत इतिहास','सम्पर्क एवं व्यवस्थापन']],
-['tirth','तीर्थ एवं पवित्र स्थल',['ब्रजमण्डल','वृन्दावन एवं गोवर्धन','प्रमुख निम्बार्क तीर्थ','आचार्य साधना स्थल','समाधि एवं प्राकट्य स्थल','राज्यवार तीर्थ']],
-['library','डिजिटल पुस्तकालय',['संस्कृत ग्रन्थ','हिन्दी ग्रन्थ','अंग्रेजी ग्रन्थ','दुर्लभ पुस्तकें','पाण्डुलिपियाँ','स्तोत्र एवं भजन','ऑडियो पुस्तकालय','PDF संग्रह']],
-['research','शोध एवं अभिलेखागार',['शिलालेख एवं ताम्रपत्र','ऐतिहासिक दस्तावेज','शोधपत्र एवं शोध प्रबन्ध','पाण्डुलिपि सूची','पुराने चित्र एवं अभिलेख','शोधकर्ता निर्देशिका','सन्दर्भ एवं ग्रन्थसूची']],
-['events','समाचार एवं उत्सव',['समाचार','आचार्य जयन्तियाँ','वार्षिक उत्सव कैलेंडर','धर्म सम्मेलन','कथा एवं सत्संग','ग्रन्थ प्रकाशन']],
-['media','भजन, प्रवचन एवं मीडिया',['प्रवचन','वीडियो व्याख्यान','भजन एवं कीर्तन','संस्कृत पाठ','चित्र दीर्घा','वृत्तचित्र']],
-['global','वैश्विक निम्बार्क परिवार',['भारत के केन्द्र','विदेशी केन्द्र','वैश्विक मन्दिर मानचित्र','विद्वान एवं शोधकर्ता','युवा एवं विद्यार्थी','स्वयंसेवक एवं सदस्यता']],
-['support','प्रकाशन एवं सहयोग',['प्रकाशित पुस्तकें','डिजिटल प्रकाशन','अनुवाद परियोजनाएँ','पाण्डुलिपि संरक्षण','शोध सहयोग','दान एवं सेवा','सम्पर्क']]
-] as const;
-type Lang = 'hi'|'sa'|'en';
-type RecordData = { title:string; summary:string; body:string; status:'draft'|'published'; source:string; author:string; image:string; pdf:string };
-const empty:RecordData={title:'',summary:'',body:'',status:'draft',source:'',author:'',image:'',pdf:''};
-const labels:Record<Lang,string>={hi:'हिन्दी',sa:'संस्कृत',en:'English'};
+
 export default function AdminPanel(){
- const [logged,setLogged]=useState(false),[authChecked,setAuthChecked]=useState(false),[password,setPassword]=useState(''),[busy,setBusy]=useState(false),[notice,setNotice]=useState('');
- const [openSection,setOpenSection]=useState<string|null>('visual');
- const [lang,setLang]=useState<Lang>('hi'),[section,setSection]=useState('sampradaya'),[topic,setTopic]=useState(0),[selectedSlug,setSelectedSlug]=useState<string|null>(null),[record,setRecord]=useState<RecordData>(empty);
- const [inventory,setInventory]=useState<Array<{lang:Lang;section:string;slug:string;path:string;title:string;status:'draft'|'published'}>>([]),[inventoryBusy,setInventoryBusy]=useState(false),[inventoryQuery,setInventoryQuery]=useState('');
- useEffect(()=>{let active=true;fetch('/api/admin/session',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(active)setLogged(Boolean(d.authenticated));}).catch(()=>{}).finally(()=>{if(active)setAuthChecked(true);});return()=>{active=false;}},[]);
- const current=sections.find(s=>s[0]===section)!; const slug=selectedSlug||`topic-${String(topic+1).padStart(2,'0')}`;
- const filteredInventory=inventory.filter(item=>{const s=sections.find(x=>x[0]===item.section);const n=Number(item.slug.slice(6))-1;return `${item.title} ${s?.[1]||item.section} ${s?.[2][n]||item.slug} ${item.lang} ${item.status}`.toLowerCase().includes(inventoryQuery.toLowerCase());});
- async function login(e:React.FormEvent){e.preventDefault();setBusy(true);setNotice('');const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});const d=await r.json();setBusy(false);if(r.ok){setLogged(true);setNotice('आप सुरक्षित रूप से लॉगिन हो गए हैं।')}else setNotice(d.error||'लॉगिन असफल।')}
- async function loadInventory(){setInventoryBusy(true);try{const r=await fetch('/api/admin/content/list');const d=await r.json();if(r.ok)setInventory(d.files||[]);else setNotice(d.error||'लेख सूची नहीं मिली।');}catch{setNotice('लेख सूची प्राप्त नहीं हो सकी।');}finally{setInventoryBusy(false);}}
- async function load(){setBusy(true);setNotice('सामग्री देखी जा रही है…');const r=await fetch(`/api/admin/content?lang=${lang}&section=${section}&slug=${slug}`);const d=await r.json();setRecord(d.content?{...empty,...d.content}: {...empty,title:current[2][topic]});setNotice(d.content?'पहले से सुरक्षित सामग्री लोड हो गई।':'यह नया विषय है।');setBusy(false)}
- useEffect(()=>{if(logged){load();loadInventory();}},[logged,lang,section,topic,selectedSlug]);
- async function save(status:'draft'|'published'){setBusy(true);setNotice('GitHub पर सुरक्षित किया जा रहा है…');const r=await fetch('/api/admin/content',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ ...record,lang,section,slug,status })});const d=await r.json();setBusy(false);setNotice(r.ok?d.message:(d.error||'सहेजना असफल रहा।'));if(r.ok){setRecord(v=>({...v,status}));loadInventory();}}
- async function upload(file?:File){if(!file)return;setBusy(true);setNotice('फ़ाइल अपलोड हो रही है…');const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();setBusy(false);if(r.ok){const key=file.type==='application/pdf'?'pdf':'image';setRecord(v=>({...v,[key]:d.url}));setNotice('फ़ाइल अपलोड हो गई।');}else setNotice(d.error||'अपलोड असफल।')}
- async function logout(){await fetch('/api/admin/logout',{method:'POST'});setLogged(false);setPassword('');setNotice('')}
- const field=(label:string,key:'title'|'summary'|'body'|'source'|'author',area=false)=><label className="admin-field"><span>{label}</span>{area?<textarea rows={key==='body'?14:3} value={record[key]} onChange={e=>setRecord(v=>({...v,[key]:e.target.value}))}/>:<input value={record[key]} onChange={e=>setRecord(v=>({...v,[key]:e.target.value}))}/>}</label>;
- return <main className="admin-shell"><header className="admin-head"><div><div className="admin-kicker">SHRI NIMBARKA SAMPRADAYA</div><h1>प्रशासन पटल</h1><p>लेख, ग्रन्थ-सन्दर्भ, चित्र और PDF का प्रबन्धन</p></div><a href="/hi" target="_blank" rel="noreferrer">वेबसाइट देखें <ExternalLink size={15}/></a></header>
- {!logged&&!authChecked?<div className="admin-login"><p>प्रशासन सत्र जाँचा जा रहा है…</p></div>:!logged?<form className="admin-login" onSubmit={login}><div className="admin-lock"><LockKeyhole size={28}/></div><h2>प्रशासक लॉगिन</h2><p>यह क्षेत्र केवल अधिकृत सम्पादक के लिए है।</p><label className="admin-field"><span>पासवर्ड</span><input type="password" value={password} onChange={e=>setPassword(e.target.value)} required autoComplete="current-password"/></label><button className="admin-primary" disabled={busy}>{busy?'कृपया प्रतीक्षा करें':'लॉगिन करें'}</button>{notice&&<p className="admin-notice">{notice}</p>}</form>:<><div className="admin-toolbar"><span><span className="admin-live-dot"/> लॉगिन सक्रिय</span><button onClick={logout}><LogOut size={15}/> लॉगआउट</button></div><details className="admin-accordion" open={openSection==='visual'}><summary onClick={e=>{e.preventDefault();setOpenSection(openSection==='visual'?null:'visual')}}><span><strong>वेबसाइट डिजाइन एवं प्रत्यक्ष संपादन</strong><small>किसी भी पाठ, चित्र या वस्तु को चुनें, खींचें, आकार बदलें और सुरक्षित करें</small></span><span className="accordion-action">खोलें +</span></summary><div className="admin-accordion-content"><VisualSiteEditor/></div></details><details className="admin-accordion admin-legacy-tools"><summary><span><strong>लेख एवं सामग्री प्रबंधन</strong><small>लेख, ग्रन्थ, आचार्य और सुरक्षित सामग्री — आवश्यकता पर खोलें</small></span><span className="accordion-action">खोलें +</span></summary><div className="admin-legacy-content"><details className="admin-accordion" open={openSection==='records'}><summary onClick={e=>{e.preventDefault();setOpenSection(openSection==='records'?null:'records')}}><span><strong>आचार्य, सन्त, स्थान एवं ग्रन्थ निर्देशिका</strong><small>नई प्रविष्टि जोड़ें; प्रत्येक का स्वतंत्र पृष्ठ बनाएँ</small></span><span className="accordion-action">खोलें +</span></summary><div className="admin-accordion-content"><RecordManager/></div></details><details className="admin-accordion" open={openSection==='inventory'}><summary onClick={e=>{e.preventDefault();setOpenSection(openSection==='inventory'?null:'inventory')}}><span><strong>सभी सुरक्षित लेख</strong><small>लेख खोजें, स्थिति देखें और संपादन के लिए चुनें</small></span><span className="accordion-action">खोलें +</span></summary><div className="admin-accordion-content"><section className="admin-inventory"><div className="admin-editor-title"><div><span className="admin-kicker">CONTENT LIBRARY</span><h2>सभी सुरक्षित लेख</h2></div><button className="admin-secondary" onClick={loadInventory} disabled={inventoryBusy}>{inventoryBusy?'सूची लोड हो रही है…':'सूची ताज़ा करें'}</button></div><input className="admin-inventory-search" placeholder="विभाग, विषय या भाषा खोजें…" value={inventoryQuery} onChange={e=>setInventoryQuery(e.target.value)}/><div className="admin-inventory-list">{filteredInventory.map(item=>{const s=sections.find(x=>x[0]===item.section);const n=Number(item.slug.slice(6))-1;return <button key={item.path} className="admin-inventory-item" onClick={()=>{setLang(item.lang);setSection(item.section);setTopic(Math.max(0,n));setSelectedSlug(item.slug);setOpenSection('articles');}}><span><strong>{item.title||s?.[2][n]||item.slug}</strong><small>{s?.[1]||item.section} · {labels[item.lang]} · {item.slug} · {item.status==='published'?'प्रकाशित':'ड्राफ्ट'}</small></span><span className={`admin-status ${item.status}`}>{item.status==='published'?'प्रकाशित':'ड्राफ्ट'} →</span></button>;})}{!filteredInventory.length&&<p className="admin-hint">{inventoryBusy?'':'इस खोज से कोई लेख नहीं मिला।'}</p>}</div></section></div></details><details className="admin-accordion" open={openSection==='articles'}><summary onClick={e=>{e.preventDefault();setOpenSection(openSection==='articles'?null:'articles')}}><span><strong>लेख चुनें एवं संपादित करें</strong><small>भाषा, विभाग और विषय चुनकर लेख खोलें</small></span><span className="accordion-action">खोलें +</span></summary><div className="admin-accordion-content"><section className="admin-layout"><aside className="admin-sidebar"><h2>विषय चुनें</h2><label className="admin-field"><span>भाषा</span><select value={lang} onChange={e=>{setSelectedSlug(null);setLang(e.target.value as Lang)}}>{Object.entries(labels).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label><label className="admin-field"><span>विभाग</span><select value={section} onChange={e=>{setSelectedSlug(null);setSection(e.target.value);setTopic(0)}}>{sections.map(s=><option key={s[0]} value={s[0]}>{s[1]}</option>)}</select></label><label className="admin-field"><span>विषय</span><select value={topic} onChange={e=>{setSelectedSlug(null);setTopic(Number(e.target.value))}}>{current[2].map((v,i)=><option key={i} value={i}>{String(i+1).padStart(2,'0')} — {v}</option>)}</select></label><button className="admin-secondary" onClick={load} disabled={busy}>सामग्री फिर से खोलें</button><div className="admin-hint">सभी सुरक्षित लेख ऊपर की लेख-सूची में मिलेंगे। किसी लेख पर दबाएँ, उसकी भाषा और विषय खुलेंगे; फिर शीर्षक, परिचय, पूरा पाठ, स्रोत तथा चित्र/PDF में सुधार करके ड्राफ्ट सुरक्षित या प्रकाशित करें।</div></aside><div className="admin-editor"><div className="admin-editor-title"><div><span className="admin-kicker">{current[1]} · {labels[lang]}</span><h2>विषय सामग्री सम्पादित करें</h2><p>{record.title||'चयनित विषय की सामग्री'}</p></div><span className={`admin-status ${record.status}`}>{record.status==='published'?'प्रकाशित':'ड्राफ्ट'}</span></div>{field('लेख का शीर्षक','title')}{field('संक्षिप्त परिचय','summary',true)}{field('मुख्य लेख — यहाँ पूरा पाठ लिखें','body',true)}<details className="admin-card-editor" style={{margin:'14px 0'}}><summary><strong>लेख का जीवित पूर्वावलोकन</strong><span>वर्तमान भाषा · बिना प्रकाशित किए</span></summary><div className="admin-card-editor-body" style={{background:'#fffaf0',color:'#39252a',padding:18,borderRadius:8}}><div style={{fontSize:11,color:'#98713b',marginBottom:8}}>{current[1]} · {labels[lang]}</div><h2 style={{fontSize:25,color:'#4b1728',lineHeight:1.5}}>{record.title||'लेख का शीर्षक'}</h2>{record.summary&&<p style={{fontSize:16,fontWeight:600,lineHeight:1.8}}>{record.summary}</p>}<div style={{whiteSpace:'pre-wrap',lineHeight:1.9,fontFamily:'inherit'}}>{record.body||'लेख का पाठ यहाँ दिखाई देगा।'}</div>{(record.author||record.source)&&<p style={{borderTop:'1px solid #d7c59f',paddingTop:10,marginTop:14,fontSize:12}}>{record.author} {record.source}</p>}</div></details><p className="admin-hint">किसी शब्द को दूसरे लेख या विभाग से जोड़ने के लिए इस प्रकार लिखें: [श्रीनिम्बार्काचार्य](/hi/nimbarkacharya/topic-01)। हिन्दी, संस्कृत और English पृष्ठों के लिए सही भाषा-पथ दें। प्रकाशित लेख में वही शब्द क्लिक करने योग्य होगा।</p><div className="admin-two">{field('लेखक / संकलक','author')}{field('मूल स्रोत एवं पृष्ठ / श्लोक सन्दर्भ','source',true)}</div><div className="admin-upload-grid"><div className="admin-upload"><ImageIcon/><strong>चित्र जोड़ें</strong><input type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>upload(e.target.files?.[0])}/>{record.image&&<a href={record.image} target="_blank">अपलोड किया चित्र देखें</a>}</div><div className="admin-upload"><FileText/><strong>PDF / ग्रन्थ जोड़ें</strong><input type="file" accept="application/pdf" onChange={e=>upload(e.target.files?.[0])}/>{record.pdf&&<a href={record.pdf} target="_blank">PDF खोलें</a>}</div></div><div className="admin-field"><span>प्रकाशन स्थिति</span><p className="admin-hint">ड्राफ्ट सार्वजनिक नहीं होगा। प्रकाशित करने पर लेख वेबसाइट के विषय-पृष्ठ पर दिखाई देगा।</p></div><div className="admin-actions"><button className="admin-secondary" disabled={busy} onClick={()=>save('draft')}><Save size={16}/> ड्राफ्ट सुरक्षित करें</button><button className="admin-primary" disabled={busy||!record.title.trim()} onClick={()=>save('published')}><Upload size={16}/> प्रकाशित करें</button></div>{notice&&<p className="admin-notice">{notice}</p>}<p className="admin-footnote">सहेजने पर वेबसाइट के GitHub भण्डार में सुरक्षित प्रति बनेगी और Vercel स्वतः नया संस्करण प्रकाशित करेगा।</p></div></section></div></details></div></details></>}
- </main>
+ const [logged,setLogged]=useState(false);
+ const [authChecked,setAuthChecked]=useState(false);
+ const [password,setPassword]=useState('');
+ const [busy,setBusy]=useState(false);
+ const [notice,setNotice]=useState('');
+
+ useEffect(()=>{
+  let active=true;
+  fetch('/api/admin/session',{cache:'no-store'})
+   .then(r=>r.json())
+   .then(d=>{if(active)setLogged(Boolean(d.authenticated));})
+   .catch(()=>{if(active)setNotice('प्रशासन सत्र की जाँच नहीं हो सकी।');})
+   .finally(()=>{if(active)setAuthChecked(true);});
+  return()=>{active=false;};
+ },[]);
+
+ async function login(e:React.FormEvent){
+  e.preventDefault();setBusy(true);setNotice('');
+  try{
+   const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});
+   const d=await r.json();
+   if(!r.ok)throw new Error(d.error||'लॉगिन असफल।');
+   setLogged(true);setPassword('');setNotice('सुरक्षित लॉगिन सफल।');
+  }catch(error){setNotice(error instanceof Error?error.message:'लॉगिन असफल।');}
+  finally{setBusy(false);}
+ }
+
+ async function logout(){
+  setBusy(true);
+  try{await fetch('/api/admin/logout',{method:'POST'});setLogged(false);setNotice('आप लॉगआउट हो गए हैं।');}
+  finally{setBusy(false);}
+ }
+
+ return <main className="admin-shell admin-shell-rebuilt">
+  <header className="admin-head">
+   <div><div className="admin-kicker">SHRI NIMBARKA SAMPRADAYA</div><h1>वेबसाइट सम्पादन केन्द्र</h1><p>एक ही स्थान से वेबसाइट को सीधे देखकर संपादित करें।</p></div>
+   <a href="/hi" target="_blank" rel="noreferrer">वेबसाइट देखें <ExternalLink size={15}/></a>
+  </header>
+  {!authChecked?<div className="admin-login"><p>प्रशासन सत्र जाँचा जा रहा है…</p></div>:!logged?
+   <form className="admin-login" onSubmit={login}>
+    <div className="admin-lock"><LockKeyhole size={28}/></div><h2>प्रशासक लॉगिन</h2><p>वेबसाइट संपादित करने के लिए लॉगिन करें।</p>
+    <label className="admin-field"><span>पासवर्ड</span><input type="password" value={password} onChange={e=>setPassword(e.target.value)} required autoComplete="current-password"/></label>
+    <button className="admin-primary" disabled={busy}>{busy?'कृपया प्रतीक्षा करें':'लॉगिन करें'}</button>
+    {notice&&<p className="admin-notice">{notice}</p>}
+   </form>
+  :
+   <>
+    <div className="admin-toolbar"><span><span className="admin-live-dot"/> संपादन सत्र सक्रिय</span><button type="button" onClick={logout} disabled={busy}><LogOut size={15}/> लॉगआउट</button></div>
+    <VisualSiteEditor/>
+    {notice&&<p className="admin-notice">{notice}</p>}
+   </>
+  }
+ </main>;
 }
