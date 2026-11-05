@@ -9,7 +9,7 @@ function clean(data:any):Edit|null{
  if(typeof data.text==='string')edit.text=data.text.slice(0,5000);
  if(typeof data.image==='string'&&/^\/(uploads|images)\/[a-zA-Z0-9_./-]+$/.test(data.image))edit.image=data.image;
  if(typeof data.href==='string'&&data.href.length<500&&!data.href.startsWith('//'))edit.href=data.href;
- if(data.style&&typeof data.style==='object'){edit.style={};const allowed=['maxWidth','minHeight','fontSize','textAlign','padding','border','borderRadius','width','height'];for(const k of allowed)if(typeof data.style[k]==='string'&&data.style[k].length<80)(edit.style as Record<string,string>)[k]=data.style[k];}
+ if(data.style&&typeof data.style==='object'){edit.style={};const allowed=['maxWidth','minHeight','fontSize','fontFamily','color','backgroundColor','fontWeight','lineHeight','letterSpacing','textAlign','padding','border','borderRadius','width','height','position','inset','display','margin','objectFit','objectPosition','transform','boxSizing'];for(const k of allowed)if(typeof data.style[k]==='string'&&data.style[k].length<80)(edit.style as Record<string,string>)[k]=data.style[k];}
  if(typeof data.hidden==='boolean')edit.hidden=data.hidden;if(data.resetImageSize===true)edit.resetImageSize=true;
  return edit;
 }

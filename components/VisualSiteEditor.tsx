@@ -1,84 +1,193 @@
 'use client';
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {ArrowDown,ArrowUp,Eye,EyeOff,ExternalLink,GripVertical,Image as ImageIcon,MousePointer2,RefreshCw,Save,Upload} from 'lucide-react';
+import {Eye,EyeOff,Image as ImageIcon,MousePointer2,RefreshCw,Save,Move,Maximize2} from 'lucide-react';
 
-type Target={label:string;kind:'text'|'image'|'link'|'section'|'card';selector:string;tag:string;path?:string};
-function selectorPath(el:Element){const parts:string[]=[];let node:Element|null=el;while(node&&node.tagName.toLowerCase()!=='html'){let part=node.tagName.toLowerCase();if(node.id){part+='#'+node.id;parts.unshift(part);break;}const cls=Array.from(node.classList).filter(x=>/^[a-zA-Z_-][a-zA-Z0-9_-]*$/.test(x)).slice(0,2);if(cls.length)part+='.'+cls.join('.');const parent:Element|null=node.parentElement;if(parent){const peers=Array.from(parent.children).filter((x:Element)=>x.tagName===node!.tagName);if(peers.length>1)part+=':nth-of-type('+(peers.indexOf(node)+1)+')';}parts.unshift(part);node=parent;}return parts.join(' > ');}
-const targets='a,button,img,h1,h2,h3,h4,p,span,strong,em,small,label,.brand-hi,.brand-en,.brand-tag,.nav-home,.department-card,.feature-card,.acharya-band,.department-section,.feature-section,.home-news-strip,.home-calendar-grid,.home-social-strip,.lower-panels,.closing-quote,.topbar,.masthead,.mainnav,footer,.footer-columns>div,.footer-bottom>*';
-function describe(el:Element):Target{
- const c=String((el as HTMLElement).className||'');
- if(el.tagName==='IMG')return {label:el.closest('.acharya-image')?'आचार्य परिचय चित्र':el.closest('.masthead-painting-left')?'बायाँ चित्र':el.closest('.masthead-painting-right')?'दायाँ चित्र':el.closest('.seal')?'मुख्य प्रतीक चित्र':'चयनित चित्र',kind:'image',selector:'img',tag:'चित्र'};
- if(c.includes('department-card'))return {label:'विभाग कार्ड',kind:'card',selector:'.department-card',tag:'कार्ड'};
- if(c.includes('feature-card'))return {label:'विशेष संग्रह कार्ड',kind:'card',selector:'.feature-card',tag:'कार्ड'};
- if(c.includes('acharya-band'))return {label:'आचार्य परिचय खण्ड',kind:'section',selector:'.acharya-band',tag:'खण्ड'};
- if(c.includes('department-section'))return {label:'परम्परा का परिचय — विभाग खण्ड',kind:'section',selector:'.department-section',tag:'खण्ड'};
- if(c.includes('feature-section'))return {label:'ज्ञान एवं संस्कृति वैभव — विशेष संग्रह',kind:'section',selector:'.feature-section',tag:'खण्ड'};
- if(c.includes('home-news-strip'))return {label:'समाचार पट्टी',kind:'section',selector:'.home-news-strip',tag:'खण्ड'};
- if(c.includes('home-calendar'))return {label:'आज का दिन / पञ्चाङ्ग',kind:'section',selector:'.home-calendar-grid',tag:'खण्ड'};
- if(c.includes('home-social-strip'))return {label:'हमसे जुड़े रहें',kind:'section',selector:'.home-social-strip',tag:'खण्ड'};
- if(c.includes('lower-panels'))return {label:'समाचार, आयोजन, शोध एवं प्रकाशन',kind:'section',selector:'.lower-panels',tag:'खण्ड'};
- if(c.includes('closing-quote'))return {label:'समापन मंगल-वाक्य',kind:'section',selector:'.closing-quote',tag:'खण्ड'};
- if(c.includes('topbar-invocation'))return {label:'शीर्ष पट्टी का संस्कृत वाक्य',kind:'text',selector:'.topbar-invocation',tag:'शीर्ष पट्टी'};
- if(el.tagName==='A')return {label:'लिंक / मेनू विकल्प',kind:'link',selector:'a',tag:'लिंक'};
- if(['H1','H2','H3','H4','P','SPAN','STRONG','EM','SMALL','LABEL'].includes(el.tagName))return {label:'शीर्षक / पाठ सामग्री',kind:'text',selector:el.tagName.toLowerCase(),tag:'पाठ'};
- if(c.includes('topbar')||el.closest('.topbar'))return {label:'सबसे ऊपर की पट्टी',kind:'section',selector:'.topbar',tag:'शीर्ष पट्टी'};
- if(c.includes('masthead')||el.closest('.masthead'))return {label:'मुख्य परिचय / चित्र और नाम',kind:'section',selector:'.masthead',tag:'मुख्य शीर्ष'};
- if(c.includes('mainnav')||el.closest('.mainnav'))return {label:'मुख्य विभाग नेविगेशन',kind:'section',selector:'.mainnav',tag:'मुख्य नेविगेशन'};
- if(c.includes('footer')||el.closest('footer'))return {label:'पादलेख',kind:'section',selector:'footer',tag:'पादलेख'};
- return {label:'पाठ सामग्री',kind:'text',selector:el.tagName.toLowerCase(),tag:el.tagName.toLowerCase()};
+type Lang='hi'|'sa'|'en';
+type Picked={el:HTMLElement;path:string;kind:'text'|'image'|'element';label:string};
+const languageNames:Record<Lang,string>={hi:'हिन्दी',sa:'संस्कृत',en:'English'};
+function selectorPath(el:Element){
+ const parts:string[]=[];let node:Element|null=el;
+ while(node&&node.tagName.toLowerCase()!=='html'){
+  let part=node.tagName.toLowerCase();
+  if(node.id){part+='#'+node.id;parts.unshift(part);break;}
+  const classes=Array.from(node.classList).filter(x=>/^[a-zA-Z_-][a-zA-Z0-9_-]*$/.test(x)).slice(0,2);
+  if(classes.length)part+='.'+classes.join('.');
+  const parent:HTMLElement|null=node.parentElement;
+  if(parent){const peers=Array.from(parent.children).filter(x=>x.tagName===node!.tagName);if(peers.length>1)part+=':nth-of-type('+(peers.indexOf(node)+1)+')';}
+  parts.unshift(part);node=parent;
+ }
+ return parts.join(' > ');
+}
+function directText(el:HTMLElement){return Array.from(el.childNodes).find(n=>n.nodeType===Node.TEXT_NODE) as Text|undefined;}
+function setDirectText(el:HTMLElement,value:string){
+ const node=directText(el);
+ if(node)node.nodeValue=value;
+ else el.insertBefore(el.ownerDocument.createTextNode(value),el.firstChild);
 }
 export default function VisualSiteEditor(){
  const frame=useRef<HTMLIFrameElement>(null);
- const [lang,setLang]=useState('hi'),[selected,setSelected]=useState<Target|null>(null),[textValue,setTextValue]=useState(''),[href,setHref]=useState(''),[imageUrl,setImageUrl]=useState(''),[width,setWidth]=useState(''),[height,setHeight]=useState(''),[fontSize,setFontSize]=useState(''),[hidden,setHidden]=useState(false),[align,setAlign]=useState('left'),[maxWidth,setMaxWidth]=useState(''),[padding,setPadding]=useState(''),[boxStyle,setBoxStyle]=useState('inherit'),[hiddenItems,setHiddenItems]=useState<string[]>([]),[notice,setNotice]=useState('बाईं ओर वेबसाइट के जिस वास्तविक भाग को बदलना है, उसी पर क्लिक करें।'),[dirty,setDirty]=useState(false),[busy,setBusy]=useState(false);
- const picked=()=>frame.current?.contentDocument?.querySelector('[data-visual-selected="yes"]') as HTMLElement|null;
- const bind=useCallback(()=>{
-  const doc=frame.current?.contentDocument;if(!doc)return;
-  const style=doc.getElementById('visual-editor-style')||doc.createElement('style');style.id='visual-editor-style';style.textContent='[data-visual-hover="yes"]{outline:2px dashed #bd914a!important;outline-offset:3px;cursor:crosshair!important}[data-visual-selected="yes"]{outline:3px solid #9d6c22!important;outline-offset:3px;cursor:move!important}';doc.head.appendChild(style);
-  const hover=(e:Event)=>{const el=(e.target as Element|null)?.closest(targets);if(el)el.setAttribute('data-visual-hover','yes')};
-  const out=(e:Event)=>{(e.target as Element|null)?.closest('[data-visual-hover="yes"]')?.removeAttribute('data-visual-hover')};
-  const click=(e:Event)=>{const el=(e.target as Element|null)?.closest(targets) as HTMLElement|null;if(!el)return;e.preventDefault();e.stopPropagation();doc.querySelectorAll('[data-visual-selected="yes"]').forEach(x=>x.removeAttribute('data-visual-selected'));el.setAttribute('data-visual-selected','yes');const d=describe(el);setSelected({...d,path:selectorPath(el)});setTextValue(el.innerText||el.getAttribute('alt')||'');setHref(el.closest('a')?.getAttribute('href')||'');setImageUrl(el.tagName==='IMG'?(el as HTMLImageElement).getAttribute('src')||'':'');if(el.closest('.acharya-image'))fetch('/api/admin/site-design',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d.settings?.acharyaImage)setImageUrl(d.settings.acharyaImage)}).catch(()=>{});setWidth(String(Math.round(el.getBoundingClientRect().width)));setHeight(String(Math.round(el.getBoundingClientRect().height)));setFontSize(String(parseFloat(getComputedStyle(el).fontSize)||16));setAlign(getComputedStyle(el).textAlign||'left');setMaxWidth(String(Math.round(parseFloat(getComputedStyle(el).maxWidth)||el.getBoundingClientRect().width)));setPadding(String(parseFloat(getComputedStyle(el).padding)||0));setBoxStyle(getComputedStyle(el).borderRadius!=='0px'?'box':'plain');setHidden(getComputedStyle(el).display==='none');setNotice('चयनित: '+d.label);};
-  const drag=(e:DragEvent)=>{const el=(e.target as Element|null)?.closest(targets) as HTMLElement|null;if(!el)return;el.setAttribute('data-visual-dragging','yes');e.dataTransfer?.setData('text/plain','visual-move');if(e.dataTransfer)e.dataTransfer.effectAllowed='move';};
-  const over=(e:DragEvent)=>{if(doc.querySelector('[data-visual-dragging="yes"]'))e.preventDefault()};
-  const drop=(e:DragEvent)=>{const from=doc.querySelector('[data-visual-dragging="yes"]') as HTMLElement|null;const to=(e.target as Element|null)?.closest(targets) as HTMLElement|null;if(!from||!to||from===to||from.parentElement!==to.parentElement)return;e.preventDefault();const r=to.getBoundingClientRect();const after=e.clientY>r.top+r.height/2;to.parentElement?.insertBefore(from,after?to.nextSibling:to);from.removeAttribute('data-visual-dragging');from.setAttribute('data-visual-selected','yes');setNotice('क्रम पूर्वावलोकन में बदला गया। सुरक्षित करने के लिए नीचे “क्रम सुरक्षित करें” दबाएँ।');setDirty(true)};
-  const end=()=>doc.querySelectorAll('[data-visual-dragging]').forEach(x=>x.removeAttribute('data-visual-dragging'));
-  doc.addEventListener('mouseover',hover,true);doc.addEventListener('mouseout',out,true);doc.addEventListener('click',click,true);doc.addEventListener('dragstart',drag,true);doc.addEventListener('dragover',over,true);doc.addEventListener('drop',drop,true);doc.addEventListener('dragend',end,true);
-  doc.querySelectorAll(targets).forEach(el=>{(el as HTMLElement).draggable=true});
-  return()=>{doc.removeEventListener('mouseover',hover,true);doc.removeEventListener('mouseout',out,true);doc.removeEventListener('click',click,true);doc.removeEventListener('dragstart',drag,true);doc.removeEventListener('dragover',over,true);doc.removeEventListener('drop',drop,true);doc.removeEventListener('dragend',end,true)};
+ const selectedRef=useRef<Picked|null>(null);
+ const overlayRef=useRef<HTMLDivElement|null>(null);
+ const [lang,setLang]=useState<Lang>('hi');
+ const [selected,setSelected]=useState<Picked|null>(null);
+ const [text,setText]=useState('');
+ const [image,setImage]=useState('');
+ const [uploadBusy,setUploadBusy]=useState(false);
+ const [font,setFont]=useState('inherit');
+ const [size,setSize]=useState('18');
+ const [color,setColor]=useState('#39252a');
+ const [background,setBackground]=useState('transparent');
+ const [weight,setWeight]=useState('400');
+ const [lineHeight,setLineHeight]=useState('1.6');
+ const [align,setAlign]=useState('left');
+ const [width,setWidth]=useState('');
+ const [height,setHeight]=useState('');
+ const [hidden,setHidden]=useState(false);
+ const [notice,setNotice]=useState('वेबसाइट में किसी भी पाठ, चित्र या वस्तु को चुनें।');
+ const [busy,setBusy]=useState(false);
+ const [dirty,setDirty]=useState(false);
+ const [reload,setReload]=useState(0);
+ const [device,setDevice]=useState<'desktop'|'mobile'>('desktop');
+
+ const updateOverlay=useCallback(()=>{
+  const overlay=overlayRef.current,el=selectedRef.current?.el;
+  if(!overlay||!el||!el.isConnected)return;
+  const r=el.getBoundingClientRect();
+  overlay.style.display='block';
+  overlay.style.left=Math.max(0,r.left)+'px';overlay.style.top=Math.max(0,r.top)+'px';
+  overlay.style.width=Math.max(24,r.width)+'px';overlay.style.height=Math.max(24,r.height)+'px';
  },[]);
- useEffect(()=>{let cleanup:(()=>void)|undefined;const timer=setTimeout(()=>cleanup=bind(),400);return()=>{clearTimeout(timer);cleanup?.()}},[bind,lang]);
- useEffect(()=>{fetch('/api/admin/site-design',{cache:'no-store'}).then(r=>r.json()).then(d=>setHiddenItems(String(d.settings?.hiddenSections||'').split(',').filter(Boolean))).catch(()=>{});},[]);
- const refresh=()=>{if(frame.current)frame.current.src='/'+lang+'?visualEditor='+Date.now();setSelected(null);setDirty(false);setNotice('वेबसाइट फिर से लोड हो रही है।')};
- const writeText=(el:HTMLElement,value:string)=>{const direct=Array.from(el.childNodes).filter(n=>n.nodeType===Node.TEXT_NODE) as Text[];if(direct.length){direct[0].nodeValue=value;direct.slice(1).forEach(n=>n.remove());}else el.insertBefore(el.ownerDocument.createTextNode(value),el.firstChild);};
- const applyText=()=>{const el=picked();if(!el)return;if(el.tagName==='IMG')(el as HTMLImageElement).alt=textValue;else writeText(el,textValue);setDirty(true);setNotice('चयनित पाठ का पूर्वावलोकन बदला गया है; सुरक्षित करना न भूलें।')};
- const applyLink=()=>{const el=picked();if(!el)return;const a=el.closest('a')|| (el.tagName==='A'?el:null);if(a)a.setAttribute('href',href);else setNotice('इस चयनित वस्तु पर लिंक लागू करने के लिए पहले कार्ड या लिंक चुनें।');setDirty(true)};
- const applyImage=()=>{const el=picked();if(!el)return;const img=el.tagName==='IMG'?el:el.querySelector('img');if(img)(img as HTMLImageElement).src=imageUrl;else el.style.backgroundImage='url("'+imageUrl+'")';setDirty(true);setNotice('चित्र का पूर्वावलोकन बदल गया है।')};
- const applySize=()=>{const el=picked();if(!el)return;const tag=el.tagName.toLowerCase();const textOnly=selected?.kind==='text'||selected?.kind==='link';if(textOnly){if(fontSize)el.style.setProperty('font-size',fontSize+'px','important');el.style.setProperty('text-align',align,'important');}else if(tag==='img'){el.style.width=width?width+'px':'auto';el.style.height=height?height+'px':'auto';el.style.maxWidth='100%';el.style.objectFit='contain'}else{el.style.width='100%';el.style.maxWidth=maxWidth?maxWidth+'px':'';el.style.height='auto';el.style.minHeight=height?height+'px':'';el.style.boxSizing='border-box';el.style.marginLeft='auto';el.style.marginRight='auto';if(fontSize)el.style.setProperty('font-size',fontSize+'px','important');el.style.textAlign=align;if(padding)el.style.padding=padding+'px';if(boxStyle==='box'){el.style.border='1px solid #c9b58d';el.style.borderRadius='10px';el.style.padding=padding?padding+'px':'16px'}else if(boxStyle==='plain'){el.style.border='0';el.style.borderRadius='0'}}setDirty(true);setNotice(textOnly?'केवल चुने हुए अक्षरों का फ़ॉन्ट आकार बदला गया है; बॉक्स का आकार नहीं।':'चयनित खण्ड या चित्र का आकार बदला गया है।')};
- const toggle=()=>{const el=picked();if(!el)return;el.style.display=hidden?'':'none';setHidden(!hidden);setDirty(true)};
- const saveHidden=async(key:string,show:boolean)=>{try{const r=await fetch('/api/admin/site-design');const d=await r.json();if(!r.ok)throw new Error(d.error||'विन्यास नहीं पढ़ा गया');const next=show?hiddenItems.filter(x=>x!==key):Array.from(new Set([...hiddenItems,key]));const put=await fetch('/api/admin/site-design',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({...d.settings,hiddenSections:next.join(',')})});const out=await put.json();if(!put.ok)throw new Error(out.error||'स्थिति सुरक्षित नहीं हुई');setHiddenItems(next);setNotice(show?'खण्ड फिर दिखाने के लिए सुरक्षित हुआ।':'खण्ड छिपा दिया गया; सूची में सुरक्षित रहेगा।')}catch(e){setNotice(e instanceof Error?e.message:'स्थिति सुरक्षित नहीं हुई')}};
- const move=(dir:-1|1)=>{const el=picked();if(!el?.parentElement)return;if(dir<0&&el.previousElementSibling)el.parentElement.insertBefore(el,el.previousElementSibling);if(dir>0&&el.nextElementSibling)el.parentElement.insertBefore(el.nextElementSibling,el);setDirty(true);setNotice('क्रम बदला गया।')};
- const saveOrder=async()=>{try{const res=await fetch('/api/admin/site-design');const d=await res.json();if(!res.ok)throw new Error(d.error||'विन्यास नहीं पढ़ा गया');const doc=frame.current?.contentDocument;const main=doc?.querySelector('main');if(!main)throw new Error('मुखपृष्ठ खण्ड नहीं मिले');const order=Array.from(main.children).map(el=>{const c=String((el as HTMLElement).className||'');return c.includes('department-section')?'departments':c.includes('acharya-band')?'acharya':c.includes('feature-section')?'features':c.includes('home-news-strip')?'news':c.includes('home-calendar')?'calendar':c.includes('home-social-strip')?'social':c.includes('lower-panels')?'lower':c.includes('closing-quote')?'closing':''}).filter(Boolean);const settings={...d.settings,sectionOrder:order.join(',')};const put=await fetch('/api/admin/site-design',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(settings)});const out=await put.json();if(!put.ok)throw new Error(out.error||'क्रम सुरक्षित नहीं हुआ');setDirty(false);setNotice('मुखपृष्ठ के खण्डों का क्रम सुरक्षित हो गया। वेबसाइट पुनः लोड करें।')}catch(e){setNotice(e instanceof Error?e.message:'क्रम सुरक्षित नहीं हुआ।')}};
- const resetImageSize=()=>{const el=picked();if(!el)return;const img=el.tagName==='IMG'?el as HTMLImageElement:el.querySelector('img');if(!img)return;['width','height','maxWidth','maxHeight','objectFit','objectPosition','transform'].forEach(k=>img.style.removeProperty(k.replace(/[A-Z]/g,m=>'-'+m.toLowerCase())));setWidth('');setHeight('');setDirty(true);setNotice('चित्र का पूर्वनिर्धारित CSS आकार पूर्वावलोकन में बहाल किया गया है। सुरक्षित करना न भूलें।')};
- const saveChanges=async()=>{if(!selected)return;setBusy(true);setNotice('वेबसाइट में बदलाव सुरक्षित किए जा रहे हैं…');try{const textOnly=selected.kind==='text'||selected.kind==='link';const style:Record<string,string>=textOnly?{fontSize:fontSize?fontSize+'px':'',textAlign:align}:{maxWidth:maxWidth?maxWidth+'px':'',minHeight:selected.kind==='image'?'':height?height+'px':'',width:selected.kind==='image'&&width?width+'px':'',height:selected.kind==='image'&&height?height+'px':'',fontSize:fontSize?fontSize+'px':'',textAlign:align,padding:padding?padding+'px':'',...(boxStyle==='box'?{border:'1px solid #c9b58d',borderRadius:'10px'}:boxStyle==='plain'?{border:'0',borderRadius:'0'}:{})};const payload:any={path:selected.path||selected.selector,lang};if(selected.kind==='text'||selected.kind==='link')payload.text=textValue;if(selected.kind==='image'&&selected.label.includes('चित्र')&&notice.includes('पूर्वनिर्धारित'))payload.resetImageSize=true;if(imageUrl&&['image','card','section'].includes(selected.kind))payload.image=imageUrl;if(['link','card'].includes(selected.kind)&&href)payload.href=href;payload.style=Object.fromEntries(Object.entries(style).filter(([,v])=>v));payload.hidden=hidden;if(selected.kind==='image'&&selected.label==='आचार्य परिचय चित्र'&&imageUrl){const current=await fetch('/api/admin/site-design',{cache:'no-store'});const settings=await current.json();if(!current.ok)throw new Error(settings.error||'आचार्य चित्र की सेटिंग नहीं पढ़ी गई');const saved=await fetch('/api/admin/site-design',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({...settings.settings,acharyaImage:imageUrl})});const result=await saved.json();if(!saved.ok)throw new Error(result.error||'आचार्य चित्र सुरक्षित नहीं हुआ');setDirty(false);setNotice('आचार्य का नया चित्र वेबसाइट की मूल सेटिंग में सुरक्षित हो गया है। अब पुनः लोड करें।');return;}const r=await fetch('/api/admin/visual-edits',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const d=await r.json();if(!r.ok)throw new Error(d.error||'बदलाव सुरक्षित नहीं हुआ');setDirty(false);setNotice('बदलाव सुरक्षित हो गया है। सार्वजनिक वेबसाइट को पुनः लोड करके जाँचें।');}catch(e){setNotice(e instanceof Error?e.message:'बदलाव सुरक्षित नहीं हुआ।')}finally{setBusy(false)}};
- const swapMastheadImages=async()=>{const doc=frame.current?.contentDocument;const left=doc?.querySelector('.masthead-painting-left img') as HTMLImageElement|null;const right=doc?.querySelector('.masthead-painting-right img') as HTMLImageElement|null;if(!left||!right){setNotice('दोनों पार्श्व चित्र उपलब्ध नहीं हैं।');return;}const leftSrc=left.getAttribute('src')||'',rightSrc=right.getAttribute('src')||'';const leftPath=selectorPath(left),rightPath=selectorPath(right);left.src=rightSrc;right.src=leftSrc;setBusy(true);try{const r=await fetch('/api/admin/visual-edits',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({edits:[{path:leftPath,lang,image:rightSrc},{path:rightPath,lang,image:leftSrc}]})});const d=await r.json();if(!r.ok)throw new Error(d.error||'चित्रों की अदला-बदली सुरक्षित नहीं हुई।');setDirty(false);setNotice('बायाँ और दायाँ चित्र बदलकर वेबसाइट में सुरक्षित कर दिए गए हैं।');}catch(e){left.src=leftSrc;right.src=rightSrc;setNotice(e instanceof Error?e.message:'चित्रों की अदला-बदली असफल रही।');}finally{setBusy(false)}};
- const upload=async(file?:File)=>{if(!file)return;const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();if(r.ok){setImageUrl(d.url);setNotice('चित्र अपलोड हो गया। अब चित्र पूर्वावलोकन लागू करें।')}else setNotice(d.error||'चित्र अपलोड नहीं हुआ।')};
- return <section className="visual-admin">
-  <div className="visual-admin-head"><div><strong>वास्तविक वेबसाइट — दृश्य सम्पादन</strong><p>यही वेबसाइट यहाँ दिखाई देती है। जिस वस्तु को बदलना हो, उसी पर क्लिक करें; कार्ड और खण्ड को पकड़कर खींचें।</p></div><div className="visual-admin-tools"><select value={lang} onChange={e=>{setLang(e.target.value);setSelected(null)}}><option value="hi">हिन्दी</option><option value="sa">संस्कृत</option><option value="en">English</option></select><button type="button" onClick={refresh}><RefreshCw size={14}/> पुनः लोड</button><a href={'/'+lang} target="_blank" rel="noreferrer"><ExternalLink size={14}/> अलग खोलें</a></div></div>
-  <div className="visual-admin-grid"><div className="visual-admin-screen"><div className="visual-admin-screenbar"><span>● लाइव वेबसाइट दृश्य · {lang.toUpperCase()}</span><small>क्लिक करके चुनें · पकड़कर खींचकर स्थान बदलें</small></div><iframe ref={frame} key={lang} src={'/'+lang+'?visualEditor=1'} title="वास्तविक वेबसाइट" onLoad={()=>setTimeout(bind,250)}/></div>
-   <aside className="visual-admin-side"><div className="visual-admin-sidehead"><MousePointer2 size={17}/><strong>चयनित स्थान का संपादन</strong></div>
-   {!selected?<div className="visual-admin-empty"><MousePointer2 size={30}/><strong>अभी कोई स्थान नहीं चुना गया</strong><p>उदाहरण: ऊपर की पट्टी का मंगल-वाक्य, हिन्दी/संस्कृत/English, बायाँ-दायाँ चित्र, मुख्य प्रतीक, परिचय शीर्षक, 16 विभाग कार्ड, आचार्य खण्ड, विशेष संग्रह कार्ड, समाचार, पञ्चाङ्ग या पादलेख—जिसे बदलना है उसी पर क्लिक करें।</p></div>:<>
-    <div className="visual-admin-selection"><small>{selected.tag}</small><strong>{selected.label}</strong><span>{selected.kind==='image'?'चित्र':selected.kind==='card'?'कार्ड':selected.kind==='section'?'वेबसाइट खण्ड':selected.kind==='link'?'लिंक':'पाठ'}</span></div>
-    <div className="visual-admin-actions"><button onClick={()=>move(-1)}><ArrowUp size={14}/> ऊपर</button><button onClick={()=>move(1)}><ArrowDown size={14}/> नीचे</button><button onClick={toggle}>{hidden?<Eye size={14}/>:<EyeOff size={14}/>} {hidden?'दिखाएँ':'छिपाएँ'}</button></div>
-    {(selected.kind==='text'||selected.kind==='link')&&<div className="visual-admin-control"><label>चयनित पाठ / नाम</label><textarea rows={3} value={textValue} onChange={e=>setTextValue(e.target.value)}/><button onClick={applyText}>पूर्वावलोकन में पाठ बदलें</button></div>}
-    {(selected.kind==='image'||selected.kind==='card'||selected.kind==='section')&&<div className="visual-admin-control"><label>चित्र का पता</label><input value={imageUrl} onChange={e=>setImageUrl(e.target.value)} placeholder="/uploads/चित्र..."/><input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>upload(e.target.files?.[0])}/><button onClick={applyImage}><ImageIcon size={14}/> चित्र पूर्वावलोकन में बदलें</button></div>}
-    {(selected.kind==='link'||selected.kind==='card')&&<div className="visual-admin-control"><label>लिंक का पता</label><input value={href} onChange={e=>setHref(e.target.value)} placeholder="/hi/sampradaya"/><button onClick={applyLink}>लिंक पूर्वावलोकन में बदलें</button>{href&&<button onClick={()=>{if(frame.current)frame.current.src=href.startsWith('http')?href:'/'+lang+href;}}>इस लिंक का पृष्ठ खोलें</button>}</div>}
-    {selected.kind==='image'&&<div className="visual-admin-control"><button type="button" onClick={resetImageSize}>चित्र का मूल आकार / डिफॉल्ट बहाल करें</button><p>यह इस चित्र पर लगाए गए अतिरिक्त आकार और फिटिंग को हटाकर वेबसाइट का मूल आकार लौटाता है।</p></div>}
-    {selected.kind==='image'&&(selected.label==='बायाँ चित्र'||selected.label==='दायाँ चित्र')&&<div className="visual-admin-control"><button type="button" disabled={busy} onClick={swapMastheadImages}>बायाँ-दायाँ चित्र आपस में बदलें</button></div>}
-    <div className="visual-admin-control"><label>आकार और स्थिति — आसपास के खण्ड सुरक्षित रखते हुए</label><div className="visual-admin-size"><input type="number" value={maxWidth} onChange={e=>setMaxWidth(e.target.value)} placeholder="अधिकतम चौड़ाई px"/><input type="number" value={height} onChange={e=>setHeight(e.target.value)} placeholder="न्यूनतम ऊँचाई px"/><input type="number" value={fontSize} onChange={e=>setFontSize(e.target.value)} placeholder="अक्षर px"/></div><label>पाठ का स्थान</label><select value={align} onChange={e=>setAlign(e.target.value)}><option value="left">बायाँ</option><option value="center">मध्य</option><option value="right">दायाँ</option><option value="justify">दोनों ओर समान</option></select><label>बॉक्स या साधारण पाठ</label><select value={boxStyle} onChange={e=>setBoxStyle(e.target.value)}><option value="inherit">मूल रूप रहने दें</option><option value="box">रेखा वाला बॉक्स</option><option value="plain">बिना बॉक्स — साधारण पाठ</option></select><label>भीतरी खाली स्थान (px)</label><input type="number" value={padding} onChange={e=>setPadding(e.target.value)} placeholder="उदा. 16"/><button onClick={applySize}>पूर्वावलोकन में आकार और रूप लागू करें</button></div>
-    <button type="button" disabled={busy||!dirty} onClick={saveChanges}><Save size={14}/> {busy?'सुरक्षित हो रहा है…':'बदलाव सुरक्षित करें और वेबसाइट पर लागू करें'}</button><div className="visual-admin-note">{notice}</div>
-   </>}
+
+ const applyLive=useCallback(()=>{
+  const item=selectedRef.current;if(!item)return;
+  const el=item.el;
+  if(item.kind==='text')setDirectText(el,text);
+  if(item.kind==='image'&&image){if(el.tagName==='IMG')(el as HTMLImageElement).src=image;else{const img=el.querySelector('img');if(img)img.src=image;}}
+  if(size)el.style.setProperty('font-size',size+'px','important');
+  if(font!=='inherit')el.style.setProperty('font-family',font,'important');
+  if(color)el.style.setProperty('color',color,'important');
+  if(background)el.style.setProperty('background-color',background==='transparent'?'transparent':background,'important');
+  if(weight)el.style.setProperty('font-weight',weight,'important');
+  if(lineHeight)el.style.setProperty('line-height',lineHeight,'important');
+  if(align)el.style.setProperty('text-align',align,'important');
+  if(width)el.style.setProperty('width',width+'px','important');
+  if(height)el.style.setProperty('height',height+'px','important');
+  if(item.kind==='image'){el.style.setProperty('object-fit','contain','important');el.style.setProperty('max-width','100%','important');}
+  setDirty(true);requestAnimationFrame(updateOverlay);
+ },[text,image,size,font,color,background,weight,lineHeight,align,width,height,updateOverlay]);
+
+ const selectElement=useCallback((el:HTMLElement)=>{
+  const doc=frame.current?.contentDocument;if(!doc)return;
+  doc.querySelectorAll('[data-editor-picked="1"]').forEach(x=>x.removeAttribute('data-editor-picked'));
+  el.setAttribute('data-editor-picked','1');
+  const kind:Picked['kind']=el.tagName==='IMG'?'image':(['H1','H2','H3','H4','P','SPAN','STRONG','EM','SMALL','LABEL','A','BUTTON'].includes(el.tagName)?'text':'element');
+  const item={el,path:selectorPath(el),kind,label:el.getAttribute('aria-label')||el.innerText?.trim().slice(0,70)||el.getAttribute('alt')||el.tagName.toLowerCase()};
+  selectedRef.current=item;setSelected(item);
+  setText(kind==='text'?(directText(el)?.nodeValue||el.innerText||''):'');
+  const img=el.tagName==='IMG'?el as HTMLImageElement:el.querySelector('img');
+  setImage(img?.getAttribute('src')||'');
+  const cs=getComputedStyle(el);setSize(String(Math.round(parseFloat(cs.fontSize)||18)));
+  setFont(cs.fontFamily||'inherit');setColor(rgbHex(cs.color));setBackground(cs.backgroundColor==='rgba(0, 0, 0, 0)'?'transparent':rgbHex(cs.backgroundColor));
+  setWeight(cs.fontWeight||'400');setLineHeight(cs.lineHeight==='normal'?'1.6':cs.lineHeight);setAlign(cs.textAlign||'left');
+  setWidth(String(Math.round(el.getBoundingClientRect().width)));setHeight(String(Math.round(el.getBoundingClientRect().height)));
+  setHidden(cs.display==='none');setDirty(false);setNotice('चयनित: '+item.label);requestAnimationFrame(updateOverlay);
+ },[updateOverlay]);
+
+ function rgbHex(v:string){const m=v.match(/\d+/g);if(!m||m.length<3)return '#39252a';return '#'+m.slice(0,3).map(x=>Number(x).toString(16).padStart(2,'0')).join('');}
+
+ const bindFrame=useCallback(()=>{
+  const doc=frame.current?.contentDocument;if(!doc)return;
+  const style=doc.createElement('style');style.id='new-visual-editor-style';
+  style.textContent='[data-editor-picked="1"]{outline:2px solid #b58b45!important;outline-offset:2px!important;cursor:move!important} body *{cursor:crosshair}';
+  doc.getElementById(style.id)?.remove();doc.head.appendChild(style);
+  const overlay=doc.createElement('div');overlay.dataset.editorOverlay='1';
+  overlay.style.cssText='position:fixed;z-index:2147483647;pointer-events:none;box-sizing:border-box;border:2px solid #bd8c36;display:none;';
+  const names=['nw','n','ne','e','se','s','sw','w','move'];
+  names.forEach(name=>{
+   const h=doc.createElement('button');h.type='button';h.dataset.handle=name;h.setAttribute('aria-label',name);
+   const isMove=name==='move';const left=name.includes('w')?'-7px':name.includes('e')?'calc(100% - 5px)':name==='n'||name==='s'?'calc(50% - 5px)':isMove?'calc(50% - 13px)':'calc(50% - 5px)';
+   const top=name.includes('n')?'-7px':name.includes('s')?'calc(100% - 5px)':name==='e'||name==='w'?'calc(50% - 5px)':isMove?'calc(50% - 13px)':'calc(50% - 5px)';
+   h.style.cssText='position:absolute;left:'+left+';top:'+top+';width:'+(isMove?'26px':'10px')+';height:'+(isMove?'26px':'10px')+';padding:0;border:1px solid white;border-radius:'+(isMove?'50%':'2px')+';background:'+(isMove?'#4b1728':'#bd8c36')+';pointer-events:auto;touch-action:none;cursor:'+(isMove?'move':'nwse-resize')+';';
+   overlay.appendChild(h);
+  });
+  doc.body.appendChild(overlay);overlayRef.current=overlay as unknown as HTMLDivElement;
+  const reposition=()=>updateOverlay();
+  const drag=(ev:PointerEvent)=>{
+   const target=ev.target as HTMLElement|null;
+   if(!target||target.closest('[data-editor-overlay]')===null){
+    const el=target?.closest('img,h1,h2,h3,h4,h5,p,a,button,li,blockquote,figcaption,td,th,label,span,strong,em,small,section,article,header,footer,nav,div') as HTMLElement|null;
+    if(el&&el!==doc.body&&el!==doc.documentElement){
+     ev.stopPropagation();
+     selectElement(el);
+    }
+    return;
+   }
+   const handle=target.closest('[data-handle]') as HTMLElement|null;
+   const item=selectedRef.current;if(!handle||!item)return;
+   ev.preventDefault();ev.stopPropagation();
+   const el=item.el,mode=handle.dataset.handle||'move',startX=ev.clientX,startY=ev.clientY,r=el.getBoundingClientRect();
+   const startW=r.width,startH=r.height,oldTransform=el.style.transform;
+   const move=(e:PointerEvent)=>{
+    const dx=e.clientX-startX,dy=e.clientY-startY;
+    if(mode==='move'){
+     el.style.setProperty('transform',(oldTransform&&oldTransform!=='none'?oldTransform+' ':'')+'translate('+dx+'px,'+dy+'px)','important');
+    }else{
+     let w=startW,h=startH;if(mode.includes('e'))w+=dx;if(mode.includes('w'))w-=dx;if(mode.includes('s'))h+=dy;if(mode.includes('n'))h-=dy;
+     el.style.setProperty('width',Math.max(8,w)+'px','important');el.style.setProperty('height',Math.max(8,h)+'px','important');
+     el.style.setProperty('max-width','none','important');el.style.setProperty('box-sizing','border-box','important');
+    }
+    updateOverlay();
+   };
+   const up=()=>{
+    doc.removeEventListener('pointermove',move,true);doc.removeEventListener('pointerup',up,true);
+    const rr=el.getBoundingClientRect();setWidth(String(Math.round(rr.width)));setHeight(String(Math.round(rr.height)));
+    setDirty(true);setNotice('आकार या स्थान बदल गया है। अब “बदलाव सुरक्षित करें” दबाएँ।');
+   };
+   doc.addEventListener('pointermove',move,true);doc.addEventListener('pointerup',up,true);
+  };
+  doc.addEventListener('pointerdown',drag,true);
+  doc.addEventListener('scroll',reposition,true);doc.defaultView?.addEventListener('resize',reposition);
+  return()=>{doc.removeEventListener('pointerdown',drag,true);doc.removeEventListener('scroll',reposition,true);doc.defaultView?.removeEventListener('resize',reposition);overlay.remove();};
+ },[selectElement,updateOverlay]);
+
+ useEffect(()=>{const f=frame.current;if(!f)return;f.onload=()=>{const cleanup=bindFrame();(f as any).__editorCleanup=cleanup;};return()=>{(f as any).__editorCleanup?.();};},[bindFrame,lang,reload]);
+
+ useEffect(()=>{applyLive();},[applyLive]);
+
+ const save=async()=>{
+  const item=selectedRef.current;if(!item)return;setBusy(true);setNotice('बदलाव सुरक्षित हो रहे हैं…');
+  try{
+   const el=item.el,style:Record<string,string>={};
+   const css=['fontSize','fontFamily','color','backgroundColor','fontWeight','lineHeight','textAlign','width','height','transform','boxSizing','maxWidth','objectFit'];
+   css.forEach(k=>{const v=(el.style as any)[k];if(v)style[k]=v;});
+   const payload:any={path:item.path,lang,style,hidden};
+   if(item.kind==='text')payload.text=text;
+   if(item.kind==='image'&&image)payload.image=image;
+   const r=await fetch('/api/admin/visual-edits',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+   const d=await r.json();if(!r.ok)throw new Error(d.error||'बदलाव सुरक्षित नहीं हुआ।');
+   setDirty(false);setNotice('सफलतापूर्वक सुरक्षित। सार्वजनिक वेबसाइट पर लागू होने में Vercel deployment का समय लग सकता है।');
+  }catch(e){setNotice(e instanceof Error?e.message:'बदलाव सुरक्षित नहीं हुआ।');}finally{setBusy(false);}
+ };
+ const uploadImage=async(file?:File)=>{if(!file)return;setUploadBusy(true);try{const fd=new FormData();fd.append('file',file);const r=await fetch('/api/admin/upload',{method:'POST',body:fd});const d=await r.json();if(!r.ok)throw new Error(d.error||'चित्र अपलोड नहीं हुआ।');setImage(d.url);setNotice('चित्र अपलोड हो गया। पूर्वावलोकन में लागू किया जा रहा है।');}catch(e){setNotice(e instanceof Error?e.message:'चित्र अपलोड नहीं हुआ।');}finally{setUploadBusy(false);}};
+ const toggleHidden=()=>{const item=selectedRef.current;if(!item)return;const next=!hidden;setHidden(next);item.el.style.display=next?'none':'';if(!next)requestAnimationFrame(updateOverlay);setDirty(true);setNotice(next?'चयनित वस्तु छिपाई गई।':'चयनित वस्तु फिर दिखाई गई।');};
+ const refresh=()=>{selectedRef.current=null;setSelected(null);setDirty(false);setReload(x=>x+1);setNotice('वेबसाइट का पूर्वावलोकन फिर से लोड हो रहा है।');};
+ return <section className="new-editor">
+  <header className="new-editor-head"><div><span>VISUAL WEBSITE EDITOR</span><h2>वेबसाइट को सीधे चुनकर संपादित करें</h2><p>किसी भी पाठ, चित्र या बॉक्स को चुनें। बदलाव तुरन्त पूर्वावलोकन में दिखेंगे।</p></div><div className="new-editor-actions"><select value={lang} onChange={e=>{setLang(e.target.value as Lang);setSelected(null);selectedRef.current=null;}}>{(Object.keys(languageNames) as Lang[]).map(k=><option key={k} value={k}>{languageNames[k]}</option>)}</select><button type="button" onClick={refresh}><RefreshCw size={15}/> पुनः लोड</button></div></header>
+  <div className="new-editor-workspace">
+   <div className="new-editor-stage"><div className="new-editor-stagebar"><span><span className="new-editor-dot"/> लाइव वेबसाइट पूर्वावलोकन</span><div><button type="button" className={device==='desktop'?'active':''} onClick={()=>setDevice('desktop')}>PC</button><button type="button" className={device==='mobile'?'active':''} onClick={()=>setDevice('mobile')}>मोबाइल</button></div></div><div className="new-editor-framewrap"><iframe key={lang+'-'+reload} ref={frame} title="लाइव वेबसाइट संपादन पूर्वावलोकन" src={'/'+lang+'?visualEditor=1'} style={{width:device==='mobile'?'390px':'100%',maxWidth:'100%',height:'100%',border:0,background:'#fff'}} onLoad={()=>{}}/></div><div className="new-editor-hint"><MousePointer2 size={14}/> क्लिक करके चुनें · बीच के गोल हैंडल से खिसकाएँ · किनारों से आकार बदलें</div></div>
+   <aside className="new-editor-inspector"><div className="new-editor-inspector-title"><strong>चयनित वस्तु</strong><span>{selected?selected.label:'अभी कोई चयन नहीं'}</span></div>
+    {!selected?<div className="new-editor-empty"><MousePointer2 size={30}/><p>पूर्वावलोकन में किसी भी वस्तु पर क्लिक करें। उसके संपादन विकल्प यहाँ खुलेंगे।</p></div>:<>
+     {selected.kind==='text'&&<label>पाठ<textarea value={text} onChange={e=>setText(e.target.value)} rows={3}/></label>}
+     {selected.kind==='image'&&<label>चित्र बदलें<input value={image} onChange={e=>setImage(e.target.value)} placeholder="/uploads/... या चित्र URL"/><input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>uploadImage(e.target.files?.[0])} disabled={uploadBusy}/><small>{uploadBusy?'चित्र अपलोड हो रहा है…':'नया चित्र अपलोड करें या उसका पता दें।'}</small></label>}
+     <div className="new-editor-grid"><label>फॉन्ट आकार (px)<input type="number" min="1" max="2000" value={size} onChange={e=>setSize(e.target.value)}/></label><label>चौड़ाई (px)<input type="number" min="8" max="3000" value={width} onChange={e=>setWidth(e.target.value)}/></label><label>ऊँचाई (px)<input type="number" min="8" max="3000" value={height} onChange={e=>setHeight(e.target.value)}/></label><label>मोटाई<select value={weight} onChange={e=>setWeight(e.target.value)}><option value="300">हल्की</option><option value="400">सामान्य</option><option value="500">मध्यम</option><option value="600">अर्ध-मोटी</option><option value="700">मोटी</option><option value="800">अधिक मोटी</option></select></label></div>
+     <label>फॉन्ट परिवार<select value={font} onChange={e=>setFont(e.target.value)}><option value="inherit">मूल फॉन्ट</option><option value="'Noto Serif Devanagari',serif">Noto Serif Devanagari</option><option value="'Cormorant Garamond',serif">Cormorant Garamond</option><option value="serif">Serif</option><option value="sans-serif">Sans Serif</option><option value="Georgia,serif">Georgia</option></select></label>
+     <div className="new-editor-grid"><label>अक्षर रंग<input type="color" value={color} onChange={e=>setColor(e.target.value)}/></label><label>बैकग्राउंड<input type="color" value={background===''||background==='transparent'?'#ffffff':background} onChange={e=>setBackground(e.target.value)}/></label></div>
+     <div className="new-editor-grid"><label>पंक्ति ऊँचाई<input value={lineHeight} onChange={e=>setLineHeight(e.target.value)} placeholder="1.6"/></label><label>पाठ संरेखण<select value={align} onChange={e=>setAlign(e.target.value)}><option value="left">बायाँ</option><option value="center">मध्य</option><option value="right">दायाँ</option><option value="justify">दोनों ओर</option></select></label></div>
+     <div className="new-editor-buttonrow"><button type="button" onClick={toggleHidden}>{hidden?<Eye size={15}/>:<EyeOff size={15}/>} {hidden?'फिर दिखाएँ':'छिपाएँ'}</button><button type="button" disabled={!dirty||busy} onClick={save}><Save size={15}/> {busy?'सुरक्षित…':'बदलाव सुरक्षित करें'}</button></div>
+     <small className="new-editor-path">चयन पथ: {selected.path}</small>
+    </>}
+    <p className="new-editor-notice">{notice}</p>
    </aside>
   </div>
-  <div className="visual-admin-hidden"><strong>वेबसाइट से छिपाए गए खण्ड</strong><p>यह सूची उन खण्डों को याद रखने के लिए है जिन्हें आपने वेबसाइट पर छिपाया है।</p>{['departments','acharya','features','news','calendar','social','lower','closing'].map(k=>{const names:Record<string,string>={departments:'परम्परा का परिचय / मुख्य विभाग',acharya:'जगद्गुरु श्रीनिम्बार्काचार्य परिचय',features:'ज्ञान एवं संस्कृति वैभव — विशिष्ट संग्रह',news:'समाचार सूचना पट्टी',calendar:'आज का दिन एवं वार्षिक पञ्चाङ्ग',social:'हमसे जुड़े रहें',lower:'समाचार, आयोजन, शोध एवं प्रकाशन',closing:'समापन मंगल-वाक्य'};return <div className="visual-admin-hidden-row" key={k}><span>{names[k]}</span><b>{hiddenItems.includes(k)?'छिपा हुआ':'दिख रहा है'}</b><button type="button" onClick={()=>saveHidden(k,hiddenItems.includes(k))}>{hiddenItems.includes(k)?'फिर दिखाएँ':'छिपाएँ'}</button></div>})}</div>
-  <div className="visual-admin-foot"><GripVertical size={15}/><span>खींचकर क्रम बदलना अभी उसी सूची/पंक्ति के भीतर लागू होता है। “क्रम सुरक्षित करें” मुखपृष्ठ के मुख्य खण्डों का क्रम स्थायी करता है। पाठ, चित्र, लिंक और आकार के बदलाव “बदलाव सुरक्षित करें” दबाने पर स्थायी रूप से सुरक्षित होते हैं।</span>{selected?.kind==='section'&&<button onClick={saveOrder}><Save size={14}/> क्रम सुरक्षित करें</button>}</div>
  </section>;
 }
