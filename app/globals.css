@@ -1704,3 +1704,86 @@ body{font-size:16px;line-height:1.7}
   .article-prose .article-verse{font-size:18px!important;line-height:1.75!important}
   .content-main,.page-content,.topic-content{font-size:17px!important;line-height:1.9!important}
 }
+
+
+/* READABILITY PASS 2 — remove the tiny-text mobile treatment and improve desktop legibility. */
+@media(min-width:701px){
+  body{font-size:18px!important;line-height:1.75!important}
+  .topbar,.toplinks,.mainnav .nav-links a{font-size:13px!important}
+  .nav-home{font-size:14px!important}
+  .brand-hi{line-height:1.4!important}
+  .brand-en{font-size:18px!important}
+  .brand-tag,.invocation{font-size:14px!important;line-height:1.65!important}
+  .homepage-root .section-heading .eyebrow,
+  .homepage-root .acharya-copy .eyebrow{font-size:14px!important}
+  .homepage-root .section-heading h2{font-size:clamp(25px,2.2vw,34px)!important;line-height:1.5!important}
+  .homepage-root .section-heading p{font-size:16px!important;line-height:1.8!important}
+  .homepage-root .acharya-copy h2{font-size:clamp(27px,2.3vw,36px)!important}
+  .homepage-root .acharya-copy h3{font-size:18px!important}
+  .homepage-root .acharya-copy p{font-size:16px!important;line-height:1.9!important}
+  .homepage-root .acharya-side a{font-size:14px!important;min-height:44px!important}
+  .homepage-root .department-card h3{font-size:17px!important;line-height:1.5!important}
+  .homepage-root .department-card p{font-size:14px!important;line-height:1.65!important}
+  .homepage-root .department-card .card-arrow{font-size:14px!important}
+  .homepage-root .home-news-strip{font-size:14px!important}
+  .homepage-root .home-calendar-card .eyebrow{font-size:13px!important}
+  .homepage-root .home-calendar-card h2{font-size:18px!important;line-height:1.55!important}
+  .homepage-root .home-calendar-card p,.homepage-root .home-calendar-card a{font-size:14px!important;line-height:1.7!important}
+  .homepage-root .lower-panel h2{font-size:17px!important;line-height:1.5!important}
+  .homepage-root .lower-panel p,.homepage-root .lower-panel a{font-size:14px!important;line-height:1.7!important}
+}
+@media(max-width:700px){
+  /* Compact homepage dashboard: readable labels, less ornamental vertical space. */
+  .topbar{font-size:11px!important}
+  .masthead{padding:7px 9px 8px!important}
+  .masthead .masthead-left img,.masthead .masthead-right img{height:clamp(58px,17vw,88px)!important}
+  .masthead .brand-hi{font-size:clamp(16px,4.2vw,20px)!important}
+  .masthead .brand-en{font-size:11px!important;letter-spacing:.6px!important}
+  .masthead .brand-tag,.masthead .invocation{font-size:10px!important;line-height:1.45!important}
+  .homepage-root>.acharya-band{margin:7px auto 10px!important;padding:8px 10px!important;gap:9px!important}
+  .homepage-root>.acharya-band>.acharya-image{aspect-ratio:.82!important}
+  .homepage-root>.acharya-band .acharya-copy .eyebrow{font-size:12px!important}
+  .homepage-root>.acharya-band .acharya-copy h2{font-size:clamp(17px,4.5vw,21px)!important;line-height:1.45!important}
+  .homepage-root>.acharya-band .acharya-copy h3{font-size:14px!important;line-height:1.5!important}
+  .homepage-root>.acharya-band .acharya-copy p{font-size:12.5px!important;line-height:1.6!important}
+  .homepage-root>.acharya-band .acharya-side{margin:6px 0 0!important;padding:5px!important;gap:4px!important}
+  .homepage-root>.acharya-band .acharya-side h3{font-size:13px!important}
+  .homepage-root>.acharya-band .acharya-side a{font-size:11.5px!important;min-height:30px!important}
+  .homepage-root>.department-section{padding:10px 10px!important}
+  .homepage-root .section-heading{margin-bottom:8px!important}
+  .homepage-root .section-heading .eyebrow{font-size:12px!important}
+  .homepage-root .section-heading h2{font-size:clamp(18px,4.7vw,22px)!important;line-height:1.45!important}
+  .homepage-root .section-heading p{font-size:12.5px!important;line-height:1.55!important}
+  .homepage-root .department-grid{gap:7px!important}
+  .homepage-root .department-card{padding:9px 8px!important}
+  .homepage-root .department-card h3{font-size:13px!important;line-height:1.45!important}
+  .homepage-root .department-card p{font-size:11.5px!important;line-height:1.5!important}
+  .homepage-root .department-card .card-arrow{font-size:12px!important}
+  .homepage-root .all-departments button{font-size:12px!important;min-height:30px!important}
+  .homepage-root .home-news-strip{margin:6px 10px!important;padding:7px 9px!important;font-size:12px!important}
+  .homepage-root .home-news-strip strong{font-size:13px!important}
+  .homepage-root .home-news-strip span{font-size:11.5px!important}
+  .homepage-root .home-calendar-grid{gap:6px!important;padding:0 10px!important;margin:6px auto 8px!important}
+  .homepage-root .home-calendar-card{padding:8px!important}
+  .homepage-root .home-calendar-card .eyebrow{font-size:11px!important}
+  .homepage-root .home-calendar-card h2{font-size:13px!important;line-height:1.45!important}
+  .homepage-root .home-calendar-card p,.homepage-root .home-calendar-card a{font-size:11.5px!important;line-height:1.5!important}
+  .homepage-root .lower-panels{gap:5px!important;margin:6px 10px!important}
+  .homepage-root .lower-panel{padding:7px 6px!important}
+  .homepage-root .lower-panel h2{font-size:12.5px!important;line-height:1.45!important}
+  .homepage-root .lower-panel p,.homepage-root .lower-panel a{font-size:11.5px!important;line-height:1.5!important}
+  .homepage-root .closing-quote h2{font-size:17px!important}
+  .homepage-root .closing-quote p{font-size:11.5px!important}
+}
+/* Article reading sizes are deliberately independent of the compact homepage. */
+.article-prose,.content-main,.page-content,.topic-content{
+  font-size:19px!important;line-height:1.95!important;
+}
+.article-prose p,.content-main p,.page-content p,.topic-content p{line-height:1.95!important}
+@media(max-width:700px){
+  .article-prose,.content-main,.page-content,.topic-content{
+    font-size:18px!important;line-height:1.95!important;
+  }
+  .article-prose h2{font-size:25px!important}
+  .article-prose h3{font-size:21px!important}
+}
